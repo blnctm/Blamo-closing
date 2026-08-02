@@ -16,7 +16,7 @@ const HERO_COPY = {
   highlights: [
     "Word-for-word closing scripts",
     "Objection playbooks for tough stalls",
-    "8 training products from $2.99",
+    "7 training products from $2.99",
   ],
   primaryCta: "Browse the training",
   secondaryCta: "See how it works",
@@ -412,27 +412,8 @@ function ProductCard() {
       slug="starter-kit"
       ctaLabel="Buy now — $9.99"
       ctaAriaLabel="Get the Starter Kit — $9.99"
-      chipTitle="Close with clarity—not pressure."
-      chipSub="Built for same-day use"
-    />
-  );
-}
-
-/* ---------- 10 Steps of the Sale cover card ---------- */
-
-function TenStepsProductCard() {
-  return (
-    <ProductCoverCard
-      img="/cover-thumbs/10-steps-sale.png"
-      alt="The 10 Steps of the Sale cover"
-      badge={<QuickCardBadge />}
-      title="The 10 Steps of the Sale"
-      price="$2.99"
-      slug="ten-steps"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The 10 Steps of the Sale — $2.99"
-      chipTitle="Run the whole sale, start to finish."
-      chipSub="Built for the dealership floor"
+      chipTitle="The complete 10-step process"
+      chipSub="27-page packet · Meet & Greet → Follow-up"
     />
   );
 }
@@ -585,12 +566,6 @@ function Home() {
             <AuthNav />
             <div className="hidden items-center gap-5 lg:flex">
             <a
-              href="#ten-steps"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
-            >
-              The 10 Steps
-            </a>
-            <a
               href="#five-closes"
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
@@ -684,20 +659,22 @@ function Home() {
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Sound like a professional, not a closer
+              A complete process, not a bag of tricks
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">
-              The Starter Kit turns closing into a clear, repeatable skill — so
-              you can ask for the next step with confidence.
+              The Starter Kit packet runs every customer through the same ten
+              steps in order — so you never skip a step, never guess what comes
+              next, and always know what to say.
             </p>
           </div>
           <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
             {[
-              "Use five core closes in real conversations without sounding robotic or pushy.",
-              "Recognize buying signals and test for readiness before asking for a decision.",
-              "Translate your offer into the buyer’s business priorities, risks, and next steps.",
-              "Leave every call with a clear owner, date, and action instead of a vague “I’ll follow up.”",
-              "Adapt the words to your voice while keeping the structure that makes a close useful.",
+              "Run every customer through the full process in order — no skipped steps, no guessing what comes next.",
+              "Know exactly what to say at every moment: greeting lines and ice-breakers, needs-discovery questions, the walk-around talk track, test-drive guidance, and the paperwork walkthrough.",
+              "Handle price, financing, and feature objections with honest, no-pressure responses that keep the trust intact.",
+              "Negotiate to a genuine win-win: set your range before you sit down, trade value for value, and close deals both sides feel good about.",
+              "Turn one sale into many — delivery-day details and follow-up scripts that earn reviews, referrals, and repeat buyers.",
+              "Use it same-day: a checklist for every step, a one-page quick reference for the lot, and a 7-day practice plan.",
             ].map((benefit) => (
               <li key={benefit} className="flex items-start gap-4">
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
@@ -719,18 +696,17 @@ function Home() {
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Everything you need for the next conversation
+              Every step, every script, every checklist
             </h2>
           </div>
           <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
             <ul className="grid gap-4 sm:grid-cols-2">
               {[
-                "A grounded definition of closing as a natural next step—not a pressure trick.",
-                "The Assumptive, Alternative-Choice, Summary, Trial, and Honest Urgency closes.",
-                "Word-for-word scripts, best-use moments, cautions, and adaptations for each close.",
-                "A short framework for understanding the business you sell and the buyer’s business.",
-                "A pre-close readiness check, conversation checklist, objection prompts, and follow-through plan.",
-                "Practice drills and a one-page quick-reference card.",
+                "All 10 steps in order: Meet & Greet, Understand Needs, Showcase Features, Test Drive, Review Feedback, Address Objections, Negotiations, Paperwork, Delivery, and Follow-up.",
+                "The goal of each step, the process in the owner’s own words, and the one common mistake to avoid.",
+                "Word-for-word what-to-say lines and scripts for every step — from the first “Hi there, welcome in” to the follow-up call and email template.",
+                "A negotiation planning framework: know your range, listen for what the customer actually cares about, and find the win-win.",
+                "A checklist for every step, a 7-day first-week practice plan, and a quick-reference one-pager you can keep in your pocket.",
               ].map((item) => (
                 <li
                   key={item}
@@ -750,13 +726,11 @@ function Home() {
                 Delivered as a PDF
               </h3>
               <p className="mt-3 leading-relaxed text-slate-600">
-                One downloadable 12-page PDF with practical explanations,
-                scripts, checklists, and exercises designed for same-day use.
-                Download it right after checkout and keep it forever.
-              </p>
-              <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                The Starter Kit is the first release from Blamo Closing —
-                video training is coming next.
+                One downloadable 27-page PDF with the owner’s full ten-step
+                sales process, word-for-word scripts, per-step drills and
+                worksheets, a 7-day practice plan, and a pocket quick-reference
+                one-pager. Download it right after checkout and keep it
+                forever.
               </p>
             </aside>
           </div>
@@ -769,14 +743,13 @@ function Home() {
         <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            New reps and mid-level reps alike
+            Car dealership sales reps
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            This kit is for new sales reps who want a usable structure for
-            their next conversation and mid-level reps who want to make their
-            closing language clearer and more consistent. It works across many
-            consultative B2B and B2C sales settings; adapt the examples to your
-            offer, market, authority, and actual terms.
+            New reps who want a complete process to follow from their very
+            first greeting, and experienced reps who want to plug the gaps in
+            their current approach. The process is built on real dealership
+            sales floor work and applies to new and used cars alike.
           </p>
         </div>
       </section>
@@ -792,8 +765,9 @@ function Home() {
             Close your next conversation with clarity
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
-            Get the Starter Kit — a 12-page PDF you can put to work today.
-            Download it instantly after purchase.
+            Get the Sales Rep Starter Kit — a 27-page packet of the owner’s
+            complete 10-step process, from Meet & Greet to follow-up. Download
+            it instantly after purchase.
           </p>
           <div className="mt-12 flex justify-center">
             <ProductCard />
@@ -863,267 +837,6 @@ function Home() {
                   </span>
                 </summary>
                 <p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-       * THE 10 STEPS OF THE SALE — SECOND PRODUCT
-       * ═══════════════════════════════════════════════════════════ */}
-
-      {/* 10 Steps — product hero */}
-      <section
-        id="ten-steps"
-        className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <BgArt side="left" />
-        <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
-          <div className="text-center sm:text-left">
-            <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-              New · The 10 Steps of the Sale
-            </p>
-            <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
-              Sell the whole sale—{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
-                from the handshake to the follow-up call.
-              </span>
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:mx-0">
-              The complete car dealership sales process in one guide: the
-              owner’s own ten-step method for building trust, matching the
-              right car, handling objections honestly, and turning first-time
-              buyers into repeat customers and referrals — with word-for-word
-              scripts for every step.
-            </p>
-            <div className="mt-9 flex justify-center sm:justify-start">
-              <BuyButton
-                slug="ten-steps"
-                label="Get The 10 Steps of the Sale — $2.99"
-                ariaLabel="Get The 10 Steps of the Sale — $2.99"
-              />
-            </div>
-            <p className="mt-5 text-sm text-slate-500">
-              Instant download · 14-page PDF · Same-day use
-            </p>
-            <p className="mt-3 text-sm">
-              <a
-                href="/thanks?product=ten-steps"
-                className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
-              >
-                Already purchased? Enter your code to download
-              </a>
-            </p>
-          </div>
-          <div className="mt-6 pb-6 lg:mt-0">
-            <TenStepsProductCard />
-          </div>
-        </div>
-      </section>
-
-      {/* 10 Steps — benefits */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
-        <BgArt side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
-          <div className="max-w-2xl">
-            <Eyebrow>What it does for you</Eyebrow>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              A complete process, not a bag of tricks
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-600">
-              Run every customer through the same ten steps in order — so you
-              never skip a step, never guess what comes next, and always know
-              what to say.
-            </p>
-          </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
-            {[
-              "Run every customer through the full process in order — no skipped steps, no guessing what comes next.",
-              "Know exactly what to say at every moment: greeting lines and ice-breakers, needs-discovery questions, the walk-around talk track, test-drive guidance, and the paperwork walkthrough.",
-              "Handle price, financing, and feature objections with honest, no-pressure responses that keep the trust intact.",
-              "Negotiate to a genuine win-win: set your range before you sit down, trade value for value, and close deals both sides feel good about.",
-              "Turn one sale into many — delivery-day details and follow-up scripts that earn reviews, referrals, and repeat buyers.",
-              "Use it same-day: a checklist for every step, a one-page quick reference for the lot, and a 7-day practice plan.",
-            ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
-                  <CheckIcon className="h-4 w-4" />
-                </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
-                  {benefit}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 10 Steps — what's inside */}
-      <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
-        <BgArt side="left" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
-          <div className="max-w-2xl">
-            <Eyebrow>What’s inside</Eyebrow>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Every step, every script, every checklist
-            </h2>
-          </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {[
-                "All 10 steps in order: Meet & Greet, Understand Needs, Showcase Features, Test Drive, Review Feedback, Address Objections, Negotiations, Paperwork, Delivery, and Follow-up.",
-                "The goal of each step, the process in the owner’s own words, and the one common mistake to avoid.",
-                "Word-for-word what-to-say lines and scripts for every step — from the first “Hi there, welcome in” to the follow-up call and email template.",
-                "A negotiation planning framework: know your range, listen for what the customer actually cares about, and find the win-win.",
-                "A checklist for every step, a 7-day first-week practice plan, and a quick-reference one-pager you can keep in your pocket.",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
-                >
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
-                    <CheckIcon className="h-3.5 w-3.5" />
-                  </span>
-                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
-                    {item}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-              <h3 className="text-lg font-bold tracking-tight text-slate-900">
-                Delivered as a PDF
-              </h3>
-              <p className="mt-3 leading-relaxed text-slate-600">
-                One downloadable 14-page PDF with the owner’s full ten-step
-                sales process, word-for-word scripts, checklists, a 7-day
-                practice plan, and a pocket quick-reference one-pager. Download
-                it right after checkout and keep it forever.
-              </p>
-              <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                Pairs with the Starter Kit: use the 10 Steps to run the sale,
-                and the Starter Kit to sharpen the close.
-              </p>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      {/* 10 Steps — who it's for */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
-        <BgArt side="right" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
-          <Eyebrow>Who it’s for</Eyebrow>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Car dealership sales reps
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            New reps who want a complete process to follow from their very
-            first greeting, and experienced reps who want to plug the gaps in
-            their current approach. The process is built on real dealership
-            sales floor work and applies to new and used cars alike.
-          </p>
-        </div>
-      </section>
-
-      {/* 10 Steps — CTA band */}
-      <section className="bg-slate-900 relative overflow-hidden">
-        <BgArt side="left" dark />
-        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
-          <div className="flex justify-center">
-            <LogoMark className="h-12 w-12" />
-          </div>
-          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Run the whole sale, start to finish
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
-            Get The 10 Steps of the Sale — a 14-page PDF you can put to work
-            today. Download it instantly after purchase.
-          </p>
-          <div className="mt-9 flex justify-center">
-            <BuyButton
-              slug="ten-steps"
-              label="Get The 10 Steps of the Sale — $2.99"
-              ariaLabel="Get The 10 Steps of the Sale — $2.99"
-            />
-          </div>
-          <p className="mt-5 text-sm">
-            <a
-              href="/thanks?product=ten-steps"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
-            >
-              Already purchased? Enter your code to download
-            </a>
-          </p>
-          <p className="mt-6 text-sm text-slate-400">
-            Honest scripts. No-pressure objections. Win-win negotiations.
-          </p>
-        </div>
-      </section>
-
-      {/* 10 Steps — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
-        <BgArt side="right" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
-          <div className="text-center">
-            <Eyebrow>FAQs</Eyebrow>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              The 10 Steps, answered
-            </h2>
-          </div>
-          <div className="mt-12 space-y-3">
-            {[
-              {
-                q: "Is this the same as the Sales Rep Starter Kit?",
-                a: "No. The Starter Kit teaches five closing techniques. This guide is the complete sales process — all ten steps from meeting the customer to following up after delivery. They pair well: use the 10 Steps to run the sale, and the Starter Kit to sharpen the close.",
-              },
-              {
-                q: "Does it work for used cars too?",
-                a: "Yes. The ten steps apply to any car sale, new or used. Adapt the feature talk to the specific car in front of you and the process holds up.",
-              },
-              {
-                q: "What do I receive?",
-                a: "A downloadable PDF guide with word-for-word scripts, checklists, a 7-day practice plan, and a quick-reference one-pager — built for same-day use. Your confirmation code is emailed to you after checkout — enter it on the download page. Already purchased? ",
-                link: true,
-              },
-              {
-                q: "Is this high-pressure sales training?",
-                a: "No. Every script in the guide is honest and pressure-free: real features, real numbers, real availability, and win-win negotiations. It teaches you to build trust and help people decide with confidence — never to manipulate.",
-              },
-            ].map(({ q, a, link }) => (
-              <details
-                key={q}
-                className="faq group rounded-xl border border-slate-200 bg-white transition hover:border-slate-300"
-              >
-                <summary className="flex items-center justify-between gap-4 px-5 py-4 text-left">
-                  <span className="font-semibold text-slate-900">{q}</span>
-                  <span className="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 group-hover:bg-amber-100 group-hover:text-amber-700">
-                    <svg
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    >
-                      <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                    </svg>
-                  </span>
-                </summary>
-                <p className="px-5 pb-5 leading-relaxed text-slate-600">
-                  {a}
-                  {link && (
-                    <>
-                      <a
-                        href="/thanks?product=ten-steps"
-                        className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
-                      >
-                        Enter your code to download
-                      </a>
-                    </>
-                  )}
-                </p>
               </details>
             ))}
           </div>
@@ -1466,8 +1179,9 @@ function Home() {
                 checkout and keep it forever.
               </p>
               <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                Pairs with The 10 Steps of the Sale: use this guide to win the
-                lead online, then run the in-store process when they arrive.
+                Pairs with the Sales Rep Starter Kit: use this guide to win the
+                lead online, then run the in-store 10-step process when they
+                arrive.
               </p>
             </aside>
           </div>
@@ -1539,7 +1253,7 @@ function Home() {
             {[
               {
                 q: "Is this the same as The 10 Steps of the Sale?",
-                a: "No. The 10 Steps of the Sale covers the in-store floor process. This guide covers the internet-lead process before the customer arrives, and includes the complete BLAMO Video Formula.",
+                a: "No. The 10 Steps of the Sale is the in-store floor process — it’s now part of the Sales Rep Starter Kit packet. This guide covers the internet-lead process before the customer arrives, and includes the complete BLAMO Video Formula.",
               },
               {
                 q: "Is this the same as the Starter Kit?",
@@ -2234,8 +1948,8 @@ function Home() {
                 checkout and keep it forever.
               </p>
               <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                Sold separately at $2.99 — pairs with The 10 Steps of the Sale
-                to keep negotiations honest inside the full process.
+                Sold separately at $2.99 — pairs with the Sales Rep Starter Kit
+                to keep negotiations honest inside the full 10-step process.
               </p>
             </aside>
           </div>
@@ -2426,12 +2140,6 @@ function Home() {
             </a>
             <a href="/thanks" className="hover:text-slate-900">
               Download your PDF
-            </a>
-            <a href="#ten-steps" className="hover:text-slate-900">
-              The 10 Steps
-            </a>
-            <a href="/thanks?product=ten-steps" className="hover:text-slate-900">
-              Download the 10 Steps PDF
             </a>
             <a href="#five-closes" className="hover:text-slate-900">
               The Five Closes

@@ -26,13 +26,8 @@ const PRODUCT_META: Record<
   { name: string; fileName: string; label: string }
 > = {
   "starter-kit": {
-    name: "The Sales Rep Starter Kit",
-    fileName: "close-academy-starter-kit.pdf",
-    label: "Download your PDF",
-  },
-  "ten-steps": {
-    name: "The 10 Steps of the Sale",
-    fileName: "the-10-steps-of-the-sale.pdf",
+    name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
+    fileName: "sales-rep-starter-kit-10-steps.pdf",
     label: "Download your PDF",
   },
   "five-closes": {
