@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+.cache
+.output
+.nitro
+.tanstack
+src/routeTree.gen.ts
+
+# Vercel Build Output API bundle (produced by build-vercel.sh at build time)
+/.vercel/
+
+# Runtime
+/.run/
+*.log
+
+# Environment / secrets
+.env*
+.env.local
+
+# OS
+.DS_Store
