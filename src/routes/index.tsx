@@ -614,10 +614,10 @@ function Home() {
               Contact
             </a>
             <a
-              href="#buy"
+              href="#catalog"
               className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
-              Get the Starter Kit
+              Get the Complete Package
             </a>
             </div>
           </div>
@@ -854,7 +854,7 @@ function Home() {
             {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
           </div>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-<InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
+<ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
