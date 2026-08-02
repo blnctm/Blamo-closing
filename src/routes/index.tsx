@@ -307,6 +307,7 @@ function ProductCoverCard({
   ctaAriaLabel,
   chipTitle,
   chipSub,
+  desc,
 }: {
   img: string;
   alt: string;
@@ -318,6 +319,7 @@ function ProductCoverCard({
   ctaAriaLabel: string;
   chipTitle: string;
   chipSub: string;
+  desc?: string;
 }) {
   return (
     <div className="product-card relative mx-auto w-full max-w-xs lg:max-w-sm">
@@ -340,6 +342,9 @@ function ProductCoverCard({
           <h3 className="text-base font-bold leading-snug tracking-tight text-slate-900">
             {title}
           </h3>
+          {desc && (
+            <p className="mt-2 text-sm leading-snug text-slate-600">{desc}</p>
+          )}
           <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-3">
             <span className="text-xl font-extrabold tracking-tight text-slate-900">
               {price}
@@ -410,6 +415,7 @@ function ProductCard() {
       alt="The Sales Rep Starter Kit cover"
       badge={<QuickCardBadge />}
       title="The Sales Rep Starter Kit"
+      desc="The complete 10 Steps of the Sale — 27 pages of word-for-word scripts, checklists, and a 7-day practice plan."
       price="$24.99"
       slug="starter-kit"
       ctaLabel="Buy now — $24.99"
@@ -429,6 +435,7 @@ function VideoProductCard() {
       alt="The Five Closes in Action cover"
       badge={<WatchBadge />}
       title="The Five Closes in Action"
+      desc="Watch five closing techniques play out in realistic buyer–seller dialogue — hear it before you use it."
       price="$6.99"
       slug="five-closes"
       ctaLabel="Buy now — $6.99"
@@ -448,6 +455,7 @@ function InternetSalesProductCard() {
       alt="The 10 Steps to the Internet Sale cover"
       badge={<QuickCardBadge />}
       title="The 10 Steps to the Internet Sale"
+      desc="Win internet leads before they walk in: the 10-step online process, the BLAMO Video Formula, and 7-day follow-up."
       price="$6.99"
       slug="internet-sales"
       ctaLabel="Buy now — $6.99"
@@ -467,6 +475,7 @@ function SpouseProductCard() {
       alt="The Spouse Objection Playbook cover"
       badge={<QuickCardBadge />}
       title="The Spouse Objection Playbook"
+      desc="10 word-for-word closes for 'I need to ask my spouse' — and how to spot a real objection vs. a delay."
       price="$6.99"
       slug="spouse"
       ctaLabel="Buy now — $6.99"
@@ -486,6 +495,7 @@ function PrayAboutItProductCard() {
       alt="The “Pray About It” Objection Playbook cover"
       badge={<QuickCardBadge />}
       title="The “Pray About It” Objection Playbook"
+      desc="8 respectful closes for 'I want to pray about it' — plus a what-to-avoid page."
       price="$6.99"
       slug="pray-about-it"
       ctaLabel="Buy now — $6.99"
@@ -505,6 +515,7 @@ function TradeInProductCard() {
       alt="The “I Want More for My Trade-In” Playbook cover"
       badge={<QuickCardBadge />}
       title="The “I Want More for My Trade-In” Playbook"
+      desc="10 closes for 'I want more for my trade-in' — including the owner's favorite trade close."
       price="$6.99"
       slug="trade-in"
       ctaLabel="Buy now — $6.99"
@@ -524,6 +535,7 @@ function QualifyingQuestionsProductCard() {
       alt="The Qualifying Questions Guide cover"
       badge={<QuickCardBadge />}
       title="The Qualifying Questions Guide"
+      desc="75 questions in nine categories — the Golden 10 and the full Reason-to-Commitment flow."
       price="$6.99"
       slug="qualifying-questions"
       ctaLabel="Buy now — $6.99"
@@ -535,9 +547,9 @@ function QualifyingQuestionsProductCard() {
 }
 
 /* ---------- New product cover cards ---------- */
-function WalkAroundProductCard() { return <ProductCoverCard img="/cover-thumbs/walk-around-guide.png" alt="Vehicle Walk-Around Training Guide cover" badge={<QuickCardBadge />} title="Vehicle Walk-Around Training Guide" price="$6.99" slug="walk-around" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Vehicle Walk-Around Training Guide — $6.99" chipTitle="Present every vehicle with confidence." chipSub="14-page PDF guide" />; }
-function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" price="$24.99" slug="leadership" ctaLabel="Buy now — $24.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $24.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
-function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" price="$6.99" slug="fi-awareness" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get F&I Awareness Training Manual — $6.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
+function WalkAroundProductCard() { return <ProductCoverCard img="/cover-thumbs/walk-around-guide.png" alt="Vehicle Walk-Around Training Guide cover" badge={<QuickCardBadge />} title="Vehicle Walk-Around Training Guide" desc="The 11-step walk-around: engage the customer, build ownership, and flow into the test drive." price="$6.99" slug="walk-around" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Vehicle Walk-Around Training Guide — $6.99" chipTitle="Present every vehicle with confidence." chipSub="14-page PDF guide" />; }
+function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" desc="A 40-page leadership course: coaching formula, daily meetings, scorecards, motivation, and the Blamo Standards." price="$24.99" slug="leadership" ctaLabel="Buy now — $24.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $24.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
+function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" desc="8-chapter manual: prepare the customer for finance, present protection products, and hand off with confidence." price="$6.99" slug="fi-awareness" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get F&I Awareness Training Manual — $6.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
 
 /* ---------- Page ---------- */
 
