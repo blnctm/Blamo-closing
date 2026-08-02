@@ -33,21 +33,21 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
     slug: "ten-steps",
     name: "The 10 Steps of the Sale",
-    priceCents: 999,
+    priceCents: 299,
     fileName: "the-10-steps-of-the-sale.pdf",
     kindLabel: "PDF · 14 pages",
   },
   {
     slug: "five-closes",
     name: "The Five Closes in Action",
-    priceCents: 999,
+    priceCents: 299,
     fileName: "the-five-closes-in-action.mp4",
     kindLabel: "Video · ~10 min · MP4",
   },
   {
     slug: "internet-sales",
     name: "The 10 Steps to the Internet Sale",
-    priceCents: 999,
+    priceCents: 299,
     fileName: "the-10-steps-to-the-internet-sale.pdf",
     kindLabel: "PDF · 15 pages",
   },
@@ -75,7 +75,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
     slug: "qualifying-questions",
     name: "The Qualifying Questions Guide",
-    priceCents: 999,
+    priceCents: 299,
     fileName: "the-qualifying-questions-guide.pdf",
     kindLabel: "PDF · 13 pages",
   },
