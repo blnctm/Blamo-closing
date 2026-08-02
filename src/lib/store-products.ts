@@ -14,8 +14,8 @@
 export interface StoreProduct {
   slug: string;
   name: string;
-  /** Display price in dollars and cents, e.g. "9.99" (no $ sign). */
-  priceCents: 299 | 999;
+  /** Display price in dollars and cents, e.g. "24.99" (no $ sign). */
+  priceCents: 699 | 2499;
   /** File name the browser saves the download as (used for the <a download>). */
   fileName: string;
   /** Short kind label shown next to the name ("PDF · 12 pages", "Video · MP4"). */
@@ -26,49 +26,49 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
     slug: "starter-kit",
     name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
-    priceCents: 999,
+    priceCents: 2499,
     fileName: "sales-rep-starter-kit-10-steps.pdf",
     kindLabel: "PDF · 27 pages",
   },
   {
     slug: "five-closes",
     name: "The Five Closes in Action",
-    priceCents: 299,
+    priceCents: 699,
     fileName: "the-five-closes-in-action.mp4",
     kindLabel: "Video · ~10 min · MP4",
   },
   {
     slug: "internet-sales",
     name: "The 10 Steps to the Internet Sale",
-    priceCents: 299,
+    priceCents: 699,
     fileName: "the-10-steps-to-the-internet-sale.pdf",
     kindLabel: "PDF · 15 pages",
   },
   {
     slug: "spouse",
     name: "The Spouse Objection Playbook",
-    priceCents: 299,
+    priceCents: 699,
     fileName: "the-spouse-objection-playbook.pdf",
     kindLabel: "PDF · 14 pages",
   },
   {
     slug: "pray-about-it",
     name: "The “Pray About It” Objection Playbook",
-    priceCents: 299,
+    priceCents: 699,
     fileName: "the-pray-about-it-objection-playbook.pdf",
     kindLabel: "PDF · 13 pages",
   },
   {
     slug: "trade-in",
     name: "The “I Want More for My Trade-In” Playbook",
-    priceCents: 299,
+    priceCents: 699,
     fileName: "the-trade-in-objection-playbook.pdf",
     kindLabel: "PDF · 15 pages",
   },
   {
     slug: "qualifying-questions",
     name: "The Qualifying Questions Guide",
-    priceCents: 299,
+    priceCents: 699,
     fileName: "the-qualifying-questions-guide.pdf",
     kindLabel: "PDF · 13 pages",
   },

@@ -16,7 +16,7 @@ const HERO_COPY = {
   highlights: [
     "Word-for-word closing scripts",
     "Objection playbooks for tough stalls",
-    "7 training products from $2.99",
+    "7 training products from $6.99",
   ],
   primaryCta: "Browse the training",
   secondaryCta: "See how it works",
@@ -144,8 +144,8 @@ function BgArt({
 function BuyButton({
   size = "lg",
   slug = "starter-kit",
-  label = "Get the Starter Kit — $9.99",
-  ariaLabel = "Get the Starter Kit — $9.99",
+  label = "Get the Starter Kit — $24.99",
+  ariaLabel = "Get the Starter Kit — $24.99",
 }: {
   size?: "lg" | "sm";
   /** Product slug for the Stripe checkout (POST /api/checkout). */
@@ -291,7 +291,7 @@ function AuthNav() {
  * Shared product card: branded 3:4 cover thumbnail on top, then the product
  * title, price, and a Buy button below — all inside one rounded, shadowed,
  * hover-lifting card. Each card keeps its own peeking badge and tagline chip
- * (existing design language). The $2.99 playbooks remain standalone products:
+ * (existing design language). The $6.99 playbooks remain standalone products:
  * every card carries its own price and its own Buy button.
  */
 function ProductCoverCard({
@@ -408,10 +408,10 @@ function ProductCard() {
       alt="The Sales Rep Starter Kit cover"
       badge={<QuickCardBadge />}
       title="The Sales Rep Starter Kit"
-      price="$9.99"
+      price="$24.99"
       slug="starter-kit"
-      ctaLabel="Buy now — $9.99"
-      ctaAriaLabel="Get the Starter Kit — $9.99"
+      ctaLabel="Buy now — $24.99"
+      ctaAriaLabel="Get the Starter Kit — $24.99"
       chipTitle="The complete 10-step process"
       chipSub="27-page packet · Meet & Greet → Follow-up"
     />
@@ -427,10 +427,10 @@ function VideoProductCard() {
       alt="The Five Closes in Action cover"
       badge={<WatchBadge />}
       title="The Five Closes in Action"
-      price="$2.99"
+      price="$6.99"
       slug="five-closes"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The Five Closes in Action — $2.99"
+      ctaLabel="Buy now — $6.99"
+      ctaAriaLabel="Get The Five Closes in Action — $6.99"
       chipTitle="Hear it before you use it."
       chipSub="Five closes, realistic dialogue"
     />
@@ -446,10 +446,10 @@ function InternetSalesProductCard() {
       alt="The 10 Steps to the Internet Sale cover"
       badge={<QuickCardBadge />}
       title="The 10 Steps to the Internet Sale"
-      price="$2.99"
+      price="$6.99"
       slug="internet-sales"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The 10 Steps to the Internet Sale — $2.99"
+      ctaLabel="Buy now — $6.99"
+      ctaAriaLabel="Get The 10 Steps to the Internet Sale — $6.99"
       chipTitle="Win the lead before they walk in."
       chipSub="Built for internet sales & BDC"
     />
@@ -465,10 +465,10 @@ function SpouseProductCard() {
       alt="The Spouse Objection Playbook cover"
       badge={<QuickCardBadge />}
       title="The Spouse Objection Playbook"
-      price="$2.99"
+      price="$6.99"
       slug="spouse"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The Spouse Objection Playbook — $2.99"
+      ctaLabel="Buy now — $6.99"
+      ctaAriaLabel="Get The Spouse Objection Playbook — $6.99"
       chipTitle="Respect the partnership. Save the deal."
       chipSub="Ten closes, zero pressure"
     />
@@ -484,10 +484,10 @@ function PrayAboutItProductCard() {
       alt="The “Pray About It” Objection Playbook cover"
       badge={<QuickCardBadge />}
       title="The “Pray About It” Objection Playbook"
-      price="$2.99"
+      price="$6.99"
       slug="pray-about-it"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The “Pray About It” Objection Playbook — $2.99"
+      ctaLabel="Buy now — $6.99"
+      ctaAriaLabel="Get The “Pray About It” Objection Playbook — $6.99"
       chipTitle="Honor the belief. Never weaponize it."
       chipSub="Eight respectful closes"
     />
@@ -503,10 +503,10 @@ function TradeInProductCard() {
       alt="The “I Want More for My Trade-In” Playbook cover"
       badge={<QuickCardBadge />}
       title="The “I Want More for My Trade-In” Playbook"
-      price="$2.99"
+      price="$6.99"
       slug="trade-in"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
+      ctaLabel="Buy now — $6.99"
+      ctaAriaLabel="Get The “I Want More for My Trade-In” Playbook — $6.99"
       chipTitle="Win the whole deal, not one number."
       chipSub="The owner’s favorite trade close"
     />
@@ -522,10 +522,10 @@ function QualifyingQuestionsProductCard() {
       alt="The Qualifying Questions Guide cover"
       badge={<QuickCardBadge />}
       title="The Qualifying Questions Guide"
-      price="$2.99"
+      price="$6.99"
       slug="qualifying-questions"
-      ctaLabel="Buy now — $2.99"
-      ctaAriaLabel="Get The Qualifying Questions Guide — $2.99"
+      ctaLabel="Buy now — $6.99"
+      ctaAriaLabel="Get The Qualifying Questions Guide — $6.99"
       chipTitle="Ask better questions."
       chipSub="75 questions · Golden 10"
     />
@@ -875,8 +875,8 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="five-closes"
-                label="Get The Five Closes in Action — $2.99"
-                ariaLabel="Get The Five Closes in Action — $2.99"
+                label="Get The Five Closes in Action — $6.99"
+                ariaLabel="Get The Five Closes in Action — $6.99"
               />
             </div>
             <p className="mt-5 text-sm text-slate-500">
@@ -967,8 +967,8 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="five-closes"
-              label="Get The Five Closes in Action — $2.99"
-              ariaLabel="Get The Five Closes in Action — $2.99"
+              label="Get The Five Closes in Action — $6.99"
+              ariaLabel="Get The Five Closes in Action — $6.99"
             />
           </div>
           <p className="mt-5 text-sm">
@@ -1078,8 +1078,8 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="internet-sales"
-                label="Get The 10 Steps to the Internet Sale — $2.99"
-                ariaLabel="Get The 10 Steps to the Internet Sale — $2.99"
+                label="Get The 10 Steps to the Internet Sale — $6.99"
+                ariaLabel="Get The 10 Steps to the Internet Sale — $6.99"
               />
             </div>
             <p className="mt-5 text-sm text-slate-500">
@@ -1221,8 +1221,8 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="internet-sales"
-              label="Get The 10 Steps to the Internet Sale — $2.99"
-              ariaLabel="Get The 10 Steps to the Internet Sale — $2.99"
+              label="Get The 10 Steps to the Internet Sale — $6.99"
+              ariaLabel="Get The 10 Steps to the Internet Sale — $6.99"
             />
           </div>
           <p className="mt-5 text-sm">
@@ -1314,7 +1314,7 @@ function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-       * THE SPOUSE OBJECTION PLAYBOOK — FIFTH PRODUCT ($2.99)
+       * THE SPOUSE OBJECTION PLAYBOOK — FIFTH PRODUCT ($6.99)
        * ═══════════════════════════════════════════════════════════ */}
 
       {/* Spouse — product hero */}
@@ -1345,12 +1345,12 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="spouse"
-                label="Get The Spouse Objection Playbook — $2.99"
-                ariaLabel="Get The Spouse Objection Playbook — $2.99"
+                label="Get The Spouse Objection Playbook — $6.99"
+                ariaLabel="Get The Spouse Objection Playbook — $6.99"
               />
             </div>
             <p className="mt-5 text-sm text-slate-500">
-              Instant download · 14-page PDF · $2.99 · Same-day use
+              Instant download · 14-page PDF · $6.99 · Same-day use
             </p>
             <p className="mt-3 text-sm">
               <a
@@ -1447,7 +1447,7 @@ function Home() {
                 and keep it forever.
               </p>
               <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                Sold separately at $2.99 — pairs with the Starter Kit to
+                Sold separately at $6.99 — pairs with the Starter Kit to
                 sharpen your objection handling.
               </p>
             </aside>
@@ -1489,8 +1489,8 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="spouse"
-              label="Get The Spouse Objection Playbook — $2.99"
-              ariaLabel="Get The Spouse Objection Playbook — $2.99"
+              label="Get The Spouse Objection Playbook — $6.99"
+              ariaLabel="Get The Spouse Objection Playbook — $6.99"
             />
           </div>
           <p className="mt-5 text-sm">
@@ -1566,7 +1566,7 @@ function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-       * THE "PRAY ABOUT IT" OBJECTION PLAYBOOK — SIXTH PRODUCT ($2.99)
+       * THE "PRAY ABOUT IT" OBJECTION PLAYBOOK — SIXTH PRODUCT ($6.99)
        * ═══════════════════════════════════════════════════════════ */}
 
       {/* Pray About It — product hero */}
@@ -1597,12 +1597,12 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="pray-about-it"
-                label="Get The “Pray About It” Objection Playbook — $2.99"
-                ariaLabel="Get The “Pray About It” Objection Playbook — $2.99"
+                label="Get The “Pray About It” Objection Playbook — $6.99"
+                ariaLabel="Get The “Pray About It” Objection Playbook — $6.99"
               />
             </div>
             <p className="mt-5 text-sm text-slate-500">
-              Instant download · 13-page PDF · $2.99 · Same-day use
+              Instant download · 13-page PDF · $6.99 · Same-day use
             </p>
             <p className="mt-3 text-sm">
               <a
@@ -1698,7 +1698,7 @@ function Home() {
                 right after checkout and keep it forever.
               </p>
               <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                Sold separately at $2.99 — pairs with the Starter Kit to keep
+                Sold separately at $6.99 — pairs with the Starter Kit to keep
                 the door open without pressure.
               </p>
             </aside>
@@ -1740,8 +1740,8 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="pray-about-it"
-              label="Get The “Pray About It” Objection Playbook — $2.99"
-              ariaLabel="Get The “Pray About It” Objection Playbook — $2.99"
+              label="Get The “Pray About It” Objection Playbook — $6.99"
+              ariaLabel="Get The “Pray About It” Objection Playbook — $6.99"
             />
           </div>
           <p className="mt-5 text-sm">
@@ -1816,7 +1816,7 @@ function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-       * THE "I WANT MORE FOR MY TRADE-IN" PLAYBOOK — SEVENTH PRODUCT ($2.99)
+       * THE "I WANT MORE FOR MY TRADE-IN" PLAYBOOK — SEVENTH PRODUCT ($6.99)
        * ═══════════════════════════════════════════════════════════ */}
 
       {/* Trade-In — product hero */}
@@ -1846,12 +1846,12 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="trade-in"
-                label="Get The “I Want More for My Trade-In” Playbook — $2.99"
-                ariaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
+                label="Get The “I Want More for My Trade-In” Playbook — $6.99"
+                ariaLabel="Get The “I Want More for My Trade-In” Playbook — $6.99"
               />
             </div>
             <p className="mt-5 text-sm text-slate-500">
-              Instant download · 15-page PDF · $2.99 · Same-day use
+              Instant download · 15-page PDF · $6.99 · Same-day use
             </p>
             <p className="mt-3 text-sm">
               <a
@@ -1948,7 +1948,7 @@ function Home() {
                 checkout and keep it forever.
               </p>
               <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
-                Sold separately at $2.99 — pairs with the Sales Rep Starter Kit
+                Sold separately at $6.99 — pairs with the Sales Rep Starter Kit
                 to keep negotiations honest inside the full 10-step process.
               </p>
             </aside>
@@ -1990,8 +1990,8 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="trade-in"
-              label="Get The “I Want More for My Trade-In” Playbook — $2.99"
-              ariaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
+              label="Get The “I Want More for My Trade-In” Playbook — $6.99"
+              ariaLabel="Get The “I Want More for My Trade-In” Playbook — $6.99"
             />
           </div>
           <p className="mt-5 text-sm">
@@ -2075,7 +2075,7 @@ function Home() {
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop guessing what the customer wants — ask the questions that uncover why they’re really buying.</h2>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">Seventy-five qualification questions across nine categories, the Golden 10, and a six-step sales flow: build rapport, find the real motivation, and present with confidence — without giving away the price.</p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $2.99" ariaLabel="Get The Qualifying Questions Guide — $2.99" />
+                <BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $6.99" ariaLabel="Get The Qualifying Questions Guide — $6.99" />
                 <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
               </div>
             </div>
@@ -2103,7 +2103,7 @@ function Home() {
           <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6"><Eyebrow>Who it’s for</Eyebrow><p className="mt-3 leading-relaxed text-slate-700">New and veteran dealership sales reps, internet sales teams, and product specialists who want to qualify customers faster, present with more confidence, and close more deals without discounting the price.</p></div>
         </div>
       </section>
-      <section className="relative overflow-hidden bg-slate-900"><BgArt side="right" dark /><div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $2.99" ariaLabel="Get The Qualifying Questions Guide — $2.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
+      <section className="relative overflow-hidden bg-slate-900"><BgArt side="right" dark /><div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $6.99" ariaLabel="Get The Qualifying Questions Guide — $6.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
       <section className="relative overflow-hidden border-t border-slate-100 bg-white scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
         ["Do I need experience to use this?", "No. The questions are numbered 1–75 and organized by category, so you can work one category per shift and build from there. The Golden 10 gives you a complete system you can use on your very next customer."],
         ["Won’t this make my conversations feel scripted?", "The questions are conversation starters, not a script to recite. Say them out loud until they sound like you, adapt the wording to your market, and ask with genuine curiosity — the structure works because it sounds natural."],

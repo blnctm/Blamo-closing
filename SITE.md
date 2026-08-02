@@ -53,7 +53,7 @@ All paid product files are locked behind per-product confirmation codes.
 - **Download page:** `src/routes/thanks.tsx` — code-entry form; the display
   metadata (`PRODUCT_META`) is kept in sync with the server config by hand.
 
-**To add a product** (e.g. a $2.99 playbook): (1) add an entry in
+**To add a product** (e.g. a $6.99 playbook): (1) add an entry in
 `src/lib/product-downloads.ts`, (2) drop the file into `private/`, (3) add a
 matching display entry in `src/routes/thanks.tsx` (`PRODUCT_META`), (4) point
 its buy button at `/thanks?product=<slug>`. Nothing else changes.
