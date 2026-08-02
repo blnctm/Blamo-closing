@@ -1,10 +1,14 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
+
+import { downloadWithCode, me } from "~/lib/client-api";
+import type { ClientPurchase, ClientUser } from "~/lib/client-api";
 
 export const Route = createFileRoute("/thanks")({
   validateSearch: (search: Record<string, unknown>) => ({
     product: typeof search.product === "string" ? search.product : undefined,
+    session_id: typeof search.session_id === "string" ? search.session_id : undefined,
   }),
   head: () => ({
     meta: [{ name: "robots", content: "noindex, nofollow" }],
@@ -86,11 +90,61 @@ function Thanks() {
   // No param (or an unknown one) → Starter Kit, exactly as before.
   const meta = PRODUCT_META[product ?? "starter-kit"] ?? PRODUCT_META["starter-kit"];
   const effectiveSlug = PRODUCT_META[product ?? ""] ? product! : "starter-kit";
+  const nextPath = `/thanks?product=${effectiveSlug}`;
 
+  // Account-aware unlock: when the buyer is logged in, /api/me returns their
+  // purchases (with the unlocked code) once the Stripe webhook has landed.
+  const [meChecked, setMeChecked] = useState(false);
+  const [user, setUser] = useState<ClientUser | null>(null);
+  const [purchase, setPurchase] = useState<ClientPurchase | null>(null);
+  const [recheckTick, setRecheckTick] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let attempts = 0;
+
+    async function check() {
+      let data;
+      try {
+        data = await me();
+      } catch {
+        data = null;
+      }
+      if (cancelled) return;
+      setMeChecked(true);
+      if (!data) {
+        // Not logged in → legacy code entry only.
+        setUser(null);
+        setPurchase(null);
+        return;
+      }
+      setUser(data.user);
+      const found =
+        data.purchases.find((p) => p.productSlug === effectiveSlug) ?? null;
+      setPurchase(found);
+      if (found?.status === "unlocked" && found.confirmationCode) {
+        return; // Code is ready — stop polling.
+      }
+      // The Stripe webhook can be a moment behind the redirect back to the
+      // site. Poll for up to ~45s, then stop (the buyer can hit "Check again").
+      attempts += 1;
+      if (attempts < 15) timer = setTimeout(check, 3000);
+    }
+
+    check();
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+    };
+  }, [effectiveSlug, recheckTick]);
+
+  // Legacy confirmation-code path (PayPal buyers + fallback).
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -128,6 +182,24 @@ function Thanks() {
       setErrorMsg("Something went wrong. Please try again in a moment.");
     }
   }
+
+  async function handleDownloadWithCode() {
+    const unlocked = purchase?.confirmationCode;
+    if (!unlocked || downloading) return;
+    setDownloading(true);
+    setErrorMsg(null);
+    try {
+      await downloadWithCode(effectiveSlug, unlocked, meta.fileName);
+    } catch {
+      setErrorMsg("Download failed — please try again in a moment.");
+    } finally {
+      setDownloading(false);
+    }
+  }
+
+  const unlocked = purchase?.status === "unlocked" && purchase.confirmationCode
+    ? purchase.confirmationCode
+    : null;
 
   return (
     <div className="flex min-h-dvh flex-col bg-white">
@@ -168,17 +240,27 @@ function Thanks() {
         <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900">
           Thank you for your purchase!
         </h1>
-        <p className="mt-4 text-lg leading-relaxed text-slate-600">
-          Your copy of <strong>{meta.name}</strong> is ready. Enter your
-          confirmation code below to unlock your download.
-        </p>
 
-        {status === "ready" && downloadUrl ? (
-          <div className="mt-9 w-full">
-            <a
-              href={downloadUrl}
-              download={meta.fileName}
-              className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400"
+        {unlocked ? (
+          /* ── Logged in + code unlocked (Stripe path) ─────────────── */
+          <>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              Your copy of <strong>{meta.name}</strong> is ready. Here’s your
+              unlock code — it’s saved to your account too.
+            </p>
+            <div className="mt-8 w-full rounded-2xl border border-amber-200 bg-amber-50 p-6">
+              <p className="text-sm font-semibold text-slate-700">
+                Your confirmation code
+              </p>
+              <code className="mt-2 block font-mono text-2xl font-bold tracking-widest text-slate-900">
+                {unlocked}
+              </code>
+            </div>
+            <button
+              type="button"
+              onClick={handleDownloadWithCode}
+              disabled={downloading}
+              className="mt-8 inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 disabled:opacity-60"
             >
               <svg
                 viewBox="0 0 20 20"
@@ -189,64 +271,186 @@ function Thanks() {
                 <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
                 <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
               </svg>
-              {meta.label}
-            </a>
-            <p className="mt-6 text-sm text-slate-500">
-              It’s yours to keep. This page will keep the download available
-              while it’s open — if you close it, just come back and enter your
-              code again.
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="mt-9 w-full max-w-md rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left"
-          >
-            <label
-              htmlFor="confirmation-code"
-              className="block text-sm font-semibold text-slate-800"
-            >
-              Your confirmation code
-            </label>
-            <input
-              id="confirmation-code"
-              type="text"
-              value={code}
-              onChange={(event) => setCode(event.target.value)}
-              placeholder="BLAMO-00-0000"
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="characters"
-              spellCheck={false}
-              disabled={status === "checking"}
-              className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-center font-mono text-lg tracking-widest text-slate-900 placeholder-slate-300 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 disabled:opacity-60"
-            />
-            {status === "error" && errorMsg && (
-              <p
-                role="alert"
-                className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
-              >
+              {downloading ? "Starting download…" : meta.label}
+            </button>
+            {errorMsg && (
+              <p role="alert" className="mt-4 text-sm text-red-600">
                 {errorMsg}
               </p>
             )}
-            <button
-              type="submit"
-              disabled={status === "checking"}
-              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-slate-700 disabled:opacity-60"
+            <p className="mt-6 text-sm text-slate-500">
+              Need it later? Your code and download link live in{" "}
+              <a
+                href="/account"
+                className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900"
+              >
+                My account
+              </a>
+              .
+            </p>
+          </>
+        ) : user && meChecked ? (
+          /* ── Logged in, but the webhook hasn't unlocked it yet ────── */
+          <>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              Your copy of <strong>{meta.name}</strong> is almost ready — we’re
+              confirming your payment.
+            </p>
+            <div className="mt-6 w-full max-w-md rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left">
+              <p className="text-sm leading-relaxed text-slate-600">
+                {purchase && purchase.status === "paid"
+                  ? "Payment confirmed — your code is being unlocked. This usually takes just a few seconds."
+                  : purchase
+                    ? "Waiting for payment confirmation from our payment provider…"
+                    : "We don’t see a purchase for this product yet. If you just paid, your code will appear here in a moment."}
+              </p>
+              <button
+                type="button"
+                onClick={() => setRecheckTick((tick) => tick + 1)}
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+              >
+                Check again
+              </button>
+              <p className="mt-4 border-t border-slate-200 pt-4 text-sm text-slate-500">
+                Bought with PayPal instead? Enter the confirmation code from
+                your email below.
+              </p>
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              className="mt-4 w-full max-w-md rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left"
             >
-              {status === "checking" ? "Checking…" : "Unlock my download"}
-            </button>
-            <p className="mt-4 text-sm leading-relaxed text-slate-500">
-              Your confirmation code was sent to you by email right after you
-              bought {meta.name} — the seller sends it by hand, so it can take a
-              few minutes to arrive. Check your inbox (and spam folder) for the
-              email from your purchase.
+              <label
+                htmlFor="confirmation-code"
+                className="block text-sm font-semibold text-slate-800"
+              >
+                Your confirmation code
+              </label>
+              <input
+                id="confirmation-code"
+                type="text"
+                value={code}
+                onChange={(event) => setCode(event.target.value)}
+                placeholder="BLAMO-00-0000"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+                disabled={status === "checking"}
+                className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-center font-mono text-lg tracking-widest text-slate-900 placeholder-slate-300 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 disabled:opacity-60"
+              />
+              {status === "error" && errorMsg && (
+                <p
+                  role="alert"
+                  className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+                >
+                  {errorMsg}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={status === "checking"}
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-slate-700 disabled:opacity-60"
+              >
+                {status === "checking" ? "Checking…" : "Unlock my download"}
+              </button>
+            </form>
+          </>
+        ) : (
+          /* ── Not logged in → legacy code entry ────────────────────── */
+          <>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              Your copy of <strong>{meta.name}</strong> is ready. Enter your
+              confirmation code below to unlock your download.
             </p>
-            <p className="mt-2 text-sm text-slate-500">
-              Didn’t receive a code? Just reply to your PayPal receipt — the
-              seller responds directly.
-            </p>
-          </form>
+            {meChecked && (
+              <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                <a
+                  href={`/login?next=${encodeURIComponent(nextPath)}`}
+                  className="font-semibold underline underline-offset-2 hover:text-amber-700"
+                >
+                  Log in
+                </a>{" "}
+                to see your code automatically — it unlocks in your account the
+                moment your payment confirms.
+              </p>
+            )}
+            {status === "ready" && downloadUrl ? (
+              <div className="mt-9 w-full">
+                <a
+                  href={downloadUrl}
+                  download={meta.fileName}
+                  className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400"
+                >
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                  >
+                    <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
+                    <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+                  </svg>
+                  {meta.label}
+                </a>
+                <p className="mt-6 text-sm text-slate-500">
+                  It’s yours to keep. This page will keep the download available
+                  while it’s open — if you close it, just come back and enter
+                  your code again.
+                </p>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="mt-9 w-full max-w-md rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left"
+              >
+                <label
+                  htmlFor="confirmation-code"
+                  className="block text-sm font-semibold text-slate-800"
+                >
+                  Your confirmation code
+                </label>
+                <input
+                  id="confirmation-code"
+                  type="text"
+                  value={code}
+                  onChange={(event) => setCode(event.target.value)}
+                  placeholder="BLAMO-00-0000"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                  disabled={status === "checking"}
+                  className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-center font-mono text-lg tracking-widest text-slate-900 placeholder-slate-300 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 disabled:opacity-60"
+                />
+                {status === "error" && errorMsg && (
+                  <p
+                    role="alert"
+                    className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+                  >
+                    {errorMsg}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={status === "checking"}
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-slate-700 disabled:opacity-60"
+                >
+                  {status === "checking" ? "Checking…" : "Unlock my download"}
+                </button>
+                <p className="mt-4 text-sm leading-relaxed text-slate-500">
+                  Your confirmation code was sent to you by email right after you
+                  bought {meta.name} — the seller sends it by hand, so it can
+                  take a few minutes to arrive. Check your inbox (and spam
+                  folder) for the email from your purchase.
+                </p>
+                <p className="mt-2 text-sm text-slate-500">
+                  Didn’t receive a code? Just reply to your PayPal receipt — the
+                  seller responds directly.
+                </p>
+              </form>
+            )}
+          </>
         )}
       </main>
 

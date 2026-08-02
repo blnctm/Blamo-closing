@@ -15,6 +15,12 @@ import {
 } from "./server-assets/download-handler";
 import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
+import {
+  handleLogin,
+  handleLogout,
+  handleMe,
+  handleRegister,
+} from "./src/routes/api/-auth";
 
 // Pinned, NOT read from the environment. The published preview URL
 // (<label>.<PUBLIC_SITE_DOMAIN>) is reverse-proxied to 0.0.0.0:3000 inside the
@@ -50,6 +56,10 @@ for (let attempt = 1; ; attempt++) {
         // API endpoints are handled before static/SSR.
         if (pathname === "/api/checkout") return handleCheckout(req);
         if (pathname === "/api/stripe-webhook") return handleStripeWebhook(req);
+        if (pathname === "/api/register") return handleRegister(req);
+        if (pathname === "/api/login") return handleLogin(req);
+        if (pathname === "/api/logout") return handleLogout(req);
+        if (pathname === "/api/me") return handleMe(req);
         // Code-gated download endpoint (POST only) — handled before static
         // so paid files can never be fetched by their old public URLs.
         if (pathname === DOWNLOAD_PATH) return handleDownloadRequest(req);

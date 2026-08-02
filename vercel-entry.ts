@@ -17,6 +17,12 @@ import {
 } from "./server-assets/download-handler";
 import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
+import {
+  handleLogin,
+  handleLogout,
+  handleMe,
+  handleRegister,
+} from "./src/routes/api/-auth";
 
 const fetchHandler = handler as {
   fetch: (request: Request) => Response | Promise<Response>;
@@ -55,9 +61,17 @@ export default async function vercelHandler(
       ? await handleCheckout(webRequest)
       : pathname === "/api/stripe-webhook"
         ? await handleStripeWebhook(webRequest)
-        : pathname === DOWNLOAD_PATH
-          ? await handleDownloadRequest(webRequest)
-          : await fetchHandler.fetch(webRequest);
+        : pathname === "/api/register"
+          ? await handleRegister(webRequest)
+          : pathname === "/api/login"
+            ? await handleLogin(webRequest)
+            : pathname === "/api/logout"
+              ? await handleLogout(webRequest)
+              : pathname === "/api/me"
+                ? await handleMe(webRequest)
+                : pathname === DOWNLOAD_PATH
+                  ? await handleDownloadRequest(webRequest)
+                  : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     if (webRes.body) {
