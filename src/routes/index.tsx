@@ -18,7 +18,7 @@ const HERO_COPY = {
   highlights: [
     "Word-for-word closing scripts",
     "Objection playbooks for tough stalls",
-    "9 training products from $6.99",
+    "10 training products from $6.99",
   ],
   primaryCta: "Browse the training",
   secondaryCta: "See how it works",
@@ -508,6 +508,8 @@ function WalkAroundProductCard() { return <ProductCoverCard img="/cover-thumbs/w
 function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" desc="A 40-page leadership course: coaching formula, daily meetings, scorecards, motivation, and the Blamo Standards." price="$24.99" slug="leadership" ctaLabel="Buy now — $24.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $24.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
 function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" desc="8-chapter manual: prepare the customer for finance, present protection products, and hand off with confidence." price="$6.99" slug="fi-awareness" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get F&I Awareness Training Manual — $6.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
 
+function ProspectingProductCard() { return <ProductCoverCard img="/cover-thumbs/prospecting.png" alt="Prospecting Like a Professional cover" badge={<QuickCardBadge />} title="Prospecting Like a Professional" desc="Build your brand and fill your pipeline: the 100-person list, daily prospecting plan, scripts, and the 30-day challenge." price="$6.99" slug="prospecting" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Prospecting Like a Professional — $6.99" chipTitle="Stop waiting for traffic. Start bringing customers to you." chipSub="14-page PDF guide" />; }
+
 /* ---------- Page ---------- */
 
 function Home() {
@@ -631,8 +633,8 @@ function Home() {
 
       {/* Complete 10-product catalog */}
       <section id="catalog" className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Nine standalone training products, built for real dealership conversations.</p></div>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /></div>
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Ten standalone training products, built for real dealership conversations.</p></div>
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /></div>
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-slate-50 scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
@@ -1847,6 +1849,8 @@ function Home() {
         </div>
       </section>
 
+      {/* Prospecting Like a Professional — product section */}
+      <section id="prospecting" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28"><div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><Eyebrow>New · Prospecting Like a Professional</Eyebrow><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop waiting for traffic. Start bringing customers to you.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">A 14-page playbook to build your personal brand, work your first 100 contacts, and fill your pipeline with people who know, like, and trust you — without a single pressure play.</p><div className="mt-8 flex flex-wrap gap-4"><BuyButton slug="prospecting" label="Get Prospecting Like a Professional — $6.99" ariaLabel="Get Prospecting Like a Professional — $6.99" /><a href="/thanks?product=prospecting" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700">Already purchased? Enter your code</a></div></div><div className="pb-8 lg:pb-0"><ProspectingProductCard /></div></div><div className="mt-16 grid gap-12 lg:grid-cols-2"><div><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-5 space-y-3">{["Build a personal brand and introduce yourself as an Automotive Product Specialist.","Create your first 100-contact list with ready-to-use announcement, text, social, and phone scripts.","Use a daily social media strategy, community moves, and the Referral Formula.","Follow a daily prospecting scorecard and a 30-Day Challenge to build the habit."].map((item)=><li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div><div><Eyebrow>FAQs</Eyebrow><div className="mt-5 space-y-3">{[["Is this too advanced for a brand-new rep?","No. It starts with your first 100 contacts and walks you through the daily habits one step at a time."],["Does it promise a certain number of sales?","No. It gives you a pressure-free system; results depend on your market and consistency."],["Is this about cold-calling strangers?","No. It starts with people you already know, then grows through community visibility and referrals."],["Does it work with the other playbooks?","Yes. Prospecting fills your pipeline while the other guides help you close what walks in."]].map(([q,a])=><details key={q} className="faq rounded-xl border border-slate-200 bg-white"><summary className="px-5 py-4 font-semibold text-slate-900">{q}</summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></div></div></section>
       {/* Qualifying Questions Guide — product section */}
       <section id="qualifying-questions" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal">
         <BgArt side="right" />

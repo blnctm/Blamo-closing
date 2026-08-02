@@ -55,6 +55,7 @@ const PRODUCT_META: Record<
     fileName: "the-qualifying-questions-guide.pdf",
     label: "Download your PDF",
   },
+  "prospecting": { name: "Prospecting Like a Professional", fileName: "prospecting-like-a-professional.pdf", label: "Download your PDF" },
 };
 
 function LogoMark({ className = "" }: { className?: string }) {
