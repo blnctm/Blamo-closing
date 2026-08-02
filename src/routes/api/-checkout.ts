@@ -29,6 +29,7 @@ export async function handleCheckout(request: Request): Promise<Response> {
   const PRODUCT_TAX_CODE = "txcd_10000000";
   const params = new URLSearchParams();
   params.set("mode", "payment");
+  params.set("allow_promotion_codes", "true");
   params.set("line_items[0][price_data][currency]", "usd");
   params.set("line_items[0][price_data][product_data][name]", product.name);
   params.set("line_items[0][price_data][product_data][tax_code]", PRODUCT_TAX_CODE);
