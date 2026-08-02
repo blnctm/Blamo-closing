@@ -25,6 +25,11 @@ const PRODUCT_META: Record<
   string,
   { name: string; fileName: string; label: string }
 > = {
+  "complete-package": {
+    name: "The Complete Package",
+    fileName: "",
+    label: "Open your downloads",
+  },
   "starter-kit": {
     name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
     fileName: "sales-rep-starter-kit-10-steps.pdf",
@@ -83,6 +88,7 @@ function Thanks() {
   // No param (or an unknown one) → Starter Kit, exactly as before.
   const meta = PRODUCT_META[product ?? "starter-kit"] ?? PRODUCT_META["starter-kit"];
   const effectiveSlug = PRODUCT_META[product ?? ""] ? product! : "starter-kit";
+  const isBundle = effectiveSlug === "complete-package";
   const nextPath = `/thanks?product=${effectiveSlug}`;
 
   // Account-aware unlock: when the buyer is logged in, /api/me returns their
@@ -234,7 +240,42 @@ function Thanks() {
           Thank you for your purchase!
         </h1>
 
-        {unlocked ? (
+        {unlocked && isBundle ? (
+          /* ── Complete Package unlocked: whole library, no single code ── */
+          <>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              Your Complete Package is unlocked —{" "}
+              <strong>every current title, and every future release</strong>,
+              is yours with this one purchase.
+            </p>
+            <div className="mt-8 w-full rounded-2xl border border-amber-200 bg-amber-50 p-6">
+              <p className="text-sm font-semibold text-slate-700">
+                The whole library is in your account
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                Each title has its own unlock code and download button, all
+                ready now. New titles are added automatically as they launch —
+                no extra charge, ever.
+              </p>
+            </div>
+            <a
+              href="/account"
+              className="mt-8 inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400"
+            >
+              Open your downloads
+            </a>
+            <p className="mt-6 text-sm text-slate-500">
+              Your purchase is saved under{" "}
+              <a
+                href="/account"
+                className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900"
+              >
+                My account
+              </a>{" "}
+              — you can download any title any time you log back in.
+            </p>
+          </>
+        ) : unlocked ? (
           /* ── Logged in + code unlocked (Stripe path) ─────────────── */
           <>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">
@@ -352,8 +393,10 @@ function Thanks() {
           /* ── Not logged in → legacy code entry ────────────────────── */
           <>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">
-              Your copy of <strong>{meta.name}</strong> is ready. Enter your
-              confirmation code below to unlock your download.
+              {isBundle
+                ? "Your Complete Package is ready. Log in to see every unlocked title and download."
+                : <>Your copy of <strong>{meta.name}</strong> is ready. Enter your
+                  confirmation code below to unlock your download.</>}
             </p>
             {meChecked && (
               <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
@@ -367,7 +410,26 @@ function Thanks() {
                 moment your payment confirms.
               </p>
             )}
-            {status === "ready" && downloadUrl ? (
+            {isBundle ? (
+              <div className="mt-9 w-full rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center">
+                <a
+                  href={`/login?next=${encodeURIComponent(nextPath)}`}
+                  className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-slate-900 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-slate-700"
+                >
+                  Log in to unlock your downloads
+                </a>
+                <p className="mt-4 text-sm text-slate-500">
+                  Bought this as a guest?{" "}
+                  <a
+                    href={`/login?next=${encodeURIComponent(nextPath)}`}
+                    className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900"
+                  >
+                    Log in with your purchase email
+                  </a>{" "}
+                  and the library appears instantly.
+                </p>
+              </div>
+            ) : status === "ready" && downloadUrl ? (
               <div className="mt-9 w-full">
                 <a
                   href={downloadUrl}

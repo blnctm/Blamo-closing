@@ -56,7 +56,7 @@ function DownloadButton({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   async function handleDownload() {
-    if (!product || !purchase.confirmationCode || busy) return;
+    if (!product || !product.fileName || !purchase.confirmationCode || busy) return;
     setBusy(true);
     setErrorMsg(null);
     try {
@@ -72,7 +72,7 @@ function DownloadButton({
     }
   }
 
-  if (!product || !purchase.confirmationCode) return null;
+  if (!product || !product.fileName || !purchase.confirmationCode) return null;
   return (
     <div>
       <button
@@ -143,6 +143,7 @@ function BuyNowButton({ slug }: { slug: string }) {
 
 function PurchaseCard({ purchase }: { purchase: ClientPurchase }) {
   const product = findStoreProduct(purchase.productSlug);
+  const isBundle = product?.isBundle === true;
   return (
     <li className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0">
@@ -155,21 +156,33 @@ function PurchaseCard({ purchase }: { purchase: ClientPurchase }) {
             {STATUS_LABEL[purchase.status] ?? purchase.status}
           </span>
         </p>
-        {purchase.status === "unlocked" && purchase.confirmationCode && (
+        {isBundle ? (
           <p className="mt-2 text-sm text-slate-600">
-            Your unlock code:{" "}
-            <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-sm font-semibold tracking-wider text-slate-900">
-              {purchase.confirmationCode}
-            </code>
+            One purchase unlocks every title —{" "}
+            <span className="font-medium text-slate-800">
+              all current and future releases
+            </span>
+            . Download each title from the list below.
           </p>
-        )}
-        {purchase.status !== "unlocked" && (
-          <p className="mt-2 text-sm text-slate-500">
-            Your unlock code appears here the moment payment confirms.
-          </p>
+        ) : (
+          <>
+            {purchase.status === "unlocked" && purchase.confirmationCode && (
+              <p className="mt-2 text-sm text-slate-600">
+                Your unlock code:{" "}
+                <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-sm font-semibold tracking-wider text-slate-900">
+                  {purchase.confirmationCode}
+                </code>
+              </p>
+            )}
+            {purchase.status !== "unlocked" && (
+              <p className="mt-2 text-sm text-slate-500">
+                Your unlock code appears here the moment payment confirms.
+              </p>
+            )}
+          </>
         )}
       </div>
-      {purchase.status === "unlocked" && (
+      {purchase.status === "unlocked" && !isBundle && (
         <DownloadButton purchase={purchase} />
       )}
     </li>

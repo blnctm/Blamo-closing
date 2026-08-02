@@ -22,9 +22,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { currentUser, getPurchase } from "../src/lib/accounts";
+import { BUNDLE_SLUG } from "../src/lib/store-products";
 import {
   codeMatches,
   findProduct,
+  PRODUCT_DOWNLOADS,
 } from "../src/lib/product-downloads";
 
 export const DOWNLOAD_PATH = "/api/download";
@@ -84,12 +87,35 @@ export async function handleDownloadRequest(
     return jsonResponse(400, "Both 'product' and 'code' are required.");
   }
 
+  // The bundle has no single PDF — its files are the individual titles. Guard
+  // BEFORE findProduct(), which silently falls back to the Starter Kit for
+  // unknown slugs.
+  if (product === BUNDLE_SLUG) {
+    return jsonResponse(
+      404,
+      "The Complete Package has no single file — download each title from My Account.",
+    );
+  }
+
   const entry = findProduct(product);
   if (!entry) {
     return jsonResponse(404, "Unknown product.");
   }
 
-  if (!codeMatches(entry, code)) {
+  // The Complete Package unlocks EVERY title with ANY valid product code
+  // (present and future). Logged-in bundle owners may therefore download any
+  // file by entering any code that matches something in the catalog; everyone
+  // else keeps the exact per-product code gate.
+  const user = await currentUser(request);
+  const bundlePurchase = user
+    ? await getPurchase(user.id, BUNDLE_SLUG)
+    : null;
+  const isBundleOwner = bundlePurchase?.status === "unlocked";
+
+  const matchesRequested = codeMatches(entry, code);
+  const matchesAnyProduct = PRODUCT_DOWNLOADS.some((p) => codeMatches(p, code));
+
+  if (!matchesRequested && !(isBundleOwner && matchesAnyProduct)) {
     return jsonResponse(
       401,
       "That code didn’t match for this product. Check the confirmation email you received after purchase.",

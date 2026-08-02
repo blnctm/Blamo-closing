@@ -25,6 +25,8 @@ import {
   getPurchasesForUser,
   makeSessionCookie,
 } from "../../lib/accounts";
+import { BUNDLE_SLUG } from "../../lib/store-products";
+import { PRODUCT_DOWNLOADS } from "../../lib/product-downloads";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -126,5 +128,30 @@ export async function handleMe(request: Request): Promise<Response> {
   const user = await currentUser(request);
   if (!user) return json({ error: "unauthorized" }, 401);
   const purchases = await getPurchasesForUser(user.id);
+
+  // Complete Package entitlement: an unlocked bundle purchase means EVERY
+  // title (present AND future) is unlocked. The webhook already inserts rows
+  // for all titles that existed at purchase time; this synthesis adds rows for
+  // any title added AFTER the purchase, so /thanks and /account keep showing a
+  // working code + download for the whole library without re-billing.
+  const bundlePurchase = purchases.find(
+    (p) => p.productSlug === BUNDLE_SLUG && p.status === "unlocked",
+  );
+  if (bundlePurchase) {
+    const present = new Set(purchases.map((p) => p.productSlug));
+    for (const downloadable of PRODUCT_DOWNLOADS) {
+      if (present.has(downloadable.slug)) continue;
+      purchases.push({
+        id: `bundle:${downloadable.slug}`,
+        userId: user.id,
+        productSlug: downloadable.slug,
+        stripeSessionId: bundlePurchase.stripeSessionId,
+        status: "unlocked",
+        confirmationCode: downloadable.code,
+        createdAt: bundlePurchase.createdAt,
+      });
+    }
+  }
+
   return json({ user, purchases });
 }

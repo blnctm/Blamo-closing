@@ -9,6 +9,11 @@ import { STORE_PRODUCTS } from "~/lib/store-products";
 const SIX_NINETY_NINE_COUNT = STORE_PRODUCTS.filter(
   (p) => p.priceCents === 699
 ).length;
+/* The Complete Package bundle is not an individual training product — count
+   copy ("N standalone training products") must exclude it. */
+const INDIVIDUAL_PRODUCT_COUNT = STORE_PRODUCTS.filter(
+  (p) => !p.isBundle
+).length;
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -645,8 +650,85 @@ function Home() {
 
       {/* Complete 11-product catalog */}
       <section id="catalog" className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{`${STORE_PRODUCTS.length} standalone training products, built for real dealership conversations.`}</p></div>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{`${INDIVIDUAL_PRODUCT_COUNT} standalone training products, built for real dealership conversations.`}</p></div>
+                    {/* ═══════ The Complete Package — featured bundle card (FIRST) ═══════ */}
+          <div className="mt-14">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 shadow-2xl shadow-slate-900/40 ring-2 ring-amber-400/60">
+              {/* BEST VALUE ribbon */}
+              <div className="absolute -right-11 top-7 z-10 rotate-45 bg-amber-400 px-12 py-1.5 shadow-lg shadow-black/30">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-950">Best Value</p>
+              </div>
+              {/* glow accents */}
+              <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-amber-400/20 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-32 -right-16 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
+              <div className="relative grid gap-8 p-8 sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12 lg:p-12">
+                {/* Cover */}
+                <div className="mx-auto w-full max-w-[16rem] lg:max-w-[15rem]">
+                  <img
+                    src="/cover-thumbs/complete-package.png"
+                    alt="The Complete Package cover — gold and navy with a BEST VALUE ribbon"
+                    width={600}
+                    height={800}
+                    loading="lazy"
+                    className="aspect-[3/4] w-full rounded-xl object-cover shadow-2xl shadow-black/50 ring-1 ring-amber-300/40"
+                  />
+                </div>
+                {/* Copy */}
+                <div className="text-center lg:text-left">
+                  <p className="inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    The Complete Package
+                  </p>
+                  <h3 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl">
+                    Everything you need to be successful in sales in the automotive industry
+                  </h3>
+                  <p className="mt-4 text-lg leading-relaxed text-slate-300">
+                    Every current + future title —{" "}
+                    <span className="font-semibold text-amber-300">one unlock, the whole library.</span>
+                  </p>
+                  {/* Price */}
+                  <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
+                    <span className="text-2xl font-extrabold tracking-tight text-white">$79.99</span>
+                    <s className="text-lg font-semibold text-slate-400">$119.88</s>
+                    <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
+                      Save 33%
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold text-amber-300">
+                    Use code BLAMO10 at checkout → $71.99
+                  </p>
+                  {/* What you get */}
+                  <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
+                    <li className="flex gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      All 12 current titles — playbooks, guides, and the 27-page Starter Kit (a $119.88 value)
+                    </li>
+                    <li className="flex gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      Every future release, added to your account automatically
+                    </li>
+                    <li className="flex gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      One purchase, one unlock — download any title, any time
+                    </li>
+                  </ul>
+                  <div className="mt-8 flex justify-center lg:justify-start">
+                    <BuyButton
+                      slug="complete-package"
+                      label="Get The Complete Package — $79.99"
+                      ariaLabel="Get The Complete Package — everything you need to be successful in sales — $79.99"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p className="mt-8 text-center text-sm text-slate-500">
+              Want just one guide? Every title below is available separately —{" "}
+              <span className="font-medium text-slate-700">buy what you need.</span>
+            </p>
+          </div>
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+<InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-slate-50 scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
@@ -802,6 +884,14 @@ function Home() {
           </div>
           <div className="mt-12 space-y-3">
             {[
+              {
+                q: "What is The Complete Package?",
+                a: "It’s the whole Blamo Closing library in one purchase: all 12 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide ($119.88 if bought separately) — for $79.99, about 33% off. One checkout, one unlock, and every future title is included at no extra cost.",
+              },
+              {
+                q: "How does the bundle unlock work?",
+                a: "After you pay, the confirmation codes for every current title unlock in your account instantly — they show up on the thank-you page and under My account (Your purchases), each with its own download button. When new titles launch, they’re added to your account automatically; there’s nothing to re-buy and no code to wait for.",
+              },
               {
                 q: "Is this a script to memorize?",
                 a: "No. The scripts are starting points. Learn the intent and structure, then use language that sounds like you and accurately reflects your offer.",

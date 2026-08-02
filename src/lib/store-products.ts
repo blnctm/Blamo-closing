@@ -1,6 +1,3 @@
-// ============================================================================
-// CLIENT-SAFE STORE CATALOG — display info for every product.
-//
 // ⚠️  NO confirmation codes here. Codes live ONLY in src/lib/product-downloads.ts
 // (server-only). This file is imported by client routes (thanks, account, home),
 // so it must contain nothing secret: slugs, display names, prices, and the
@@ -10,19 +7,38 @@
 // src/lib/catalog.ts (unitAmountCents → priceCents). A mismatch only affects
 // display, never the actual gate/download.
 // ============================================================================
-
 export interface StoreProduct {
   slug: string;
   name: string;
   /** Display price in dollars and cents, e.g. "24.99" (no $ sign). */
-  priceCents: 699 | 2499;
-  /** File name the browser saves the download as (used for the <a download>). */
-  fileName: string;
+  priceCents: 699 | 2499 | 7999;
+  /**
+   * File name the browser saves the download as (used for the <a download>).
+   * Absent on the Complete Package bundle — it has no single PDF; buying it
+   * unlocks every title's file instead.
+   */
+  fileName?: string;
   /** Short kind label shown next to the name ("PDF · 12 pages", "Video · MP4"). */
   kindLabel: string;
+  /**
+   * True for the Complete Package bundle ("complete-package"). The bundle is a
+   * library unlock, not a single product: it has no fileName, its price is
+   * 7999, and count copy ("N standalone training products") must exclude it.
+   */
+  isBundle?: boolean;
 }
 
+/** Slug of the Complete Package bundle product. */
+export const BUNDLE_SLUG = "complete-package";
+
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
+  {
+    slug: BUNDLE_SLUG,
+    name: "The Complete Package: Everything You Need to Be Successful in Sales in the Automotive Industry",
+    priceCents: 7999,
+    kindLabel: "The whole library · every current + future title",
+    isBundle: true,
+  },
   {
     slug: "starter-kit",
     name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
@@ -72,13 +88,11 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   { slug: "meet-and-greet", name: "Meet & Greet Mastery", priceCents: 699, fileName: "meet-and-greet-mastery.pdf", kindLabel: "PDF · 13 pages" },
   { slug: "follow-up", name: "Follow-Up That Creates Customers for Life", priceCents: 699, fileName: "follow-up-that-creates-customers-for-life.pdf", kindLabel: "PDF · 14 pages" },
 ];
-
 export function findStoreProduct(
   slug: string | null | undefined,
 ): StoreProduct | undefined {
   return STORE_PRODUCTS.find((product) => product.slug === slug);
 }
-
 export function formatPrice(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;
 }
