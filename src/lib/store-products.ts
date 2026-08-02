@@ -25,17 +25,10 @@ export interface StoreProduct {
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
     slug: "starter-kit",
-    name: "The Sales Rep Starter Kit",
+    name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
     priceCents: 999,
-    fileName: "close-academy-starter-kit.pdf",
-    kindLabel: "PDF · 12 pages",
-  },
-  {
-    slug: "ten-steps",
-    name: "The 10 Steps of the Sale",
-    priceCents: 299,
-    fileName: "the-10-steps-of-the-sale.pdf",
-    kindLabel: "PDF · 14 pages",
+    fileName: "sales-rep-starter-kit-10-steps.pdf",
+    kindLabel: "PDF · 27 pages",
   },
   {
     slug: "five-closes",

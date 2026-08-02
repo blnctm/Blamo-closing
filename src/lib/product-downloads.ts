@@ -39,16 +39,8 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
   {
     slug: "starter-kit",
     code: "BLAMO-01-8179",
-    file: "close-academy-starter-kit.pdf",
-    name: "The Sales Rep Starter Kit",
-    kind: "pdf",
-    mime: "application/pdf",
-  },
-  {
-    slug: "ten-steps",
-    code: "BLAMO-02-0177",
-    file: "the-10-steps-of-the-sale.pdf",
-    name: "The 10 Steps of the Sale",
+    file: "sales-rep-starter-kit-10-steps.pdf",
+    name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
     kind: "pdf",
     mime: "application/pdf",
   },
