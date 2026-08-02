@@ -76,6 +76,54 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* ---------- Decorative background mascot art ---------- */
+
+/**
+ * Decorative background art (salesman mascot or cartoon car) placed at the
+ * bottom corner of a section. Visible on every viewport size (smaller +
+ * edge-anchored on mobile/tablet, larger on desktop), always pointer-events-none
+ * and aria-hidden so it never interferes with reading or clicking.
+ * The `.mascot-float` class adds the gentle bob animation; `prefers-reduced-motion`
+ * disables the animation while keeping the art visible.
+ */
+function BgArt({
+  kind = "car",
+  side = "left",
+  dark = false,
+  className = "",
+}: {
+  kind?: "mascot" | "car";
+  side?: "left" | "right";
+  /** Renders slightly more opaque so it reads on dark (slate-900) sections. */
+  dark?: boolean;
+  className?: string;
+}) {
+  const src = kind === "mascot" ? "/blamo-mascot.svg" : "/blamo-car.svg";
+  const size =
+    kind === "mascot"
+      ? "w-24 sm:w-32 lg:w-44"
+      : "w-24 sm:w-36 lg:w-52";
+  const horiz =
+    side === "left"
+      ? "-left-4 sm:-left-8 lg:-left-12"
+      : "-right-4 sm:-right-8 lg:-right-12";
+  const vert = kind === "mascot" ? "bottom-2" : "bottom-0";
+  const opacity = dark
+    ? "opacity-[0.26]"
+    : kind === "mascot"
+      ? "opacity-[0.22]"
+      : "opacity-[0.2]";
+  return (
+    <img
+      src={src}
+      alt=""
+      aria-hidden="true"
+      draggable={false}
+      className={`mascot-float pointer-events-none absolute select-none ${size} ${horiz} ${vert} ${opacity} ${className}`}
+    />
+  );
+}
+
 /* ---------- Buy button ---------- */
 
 function BuyButton({
@@ -734,7 +782,7 @@ function Home() {
         className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <img src="/blamo-mascot.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -right-8 bottom-5 hidden w-40 opacity-[0.16] lg:block" />
+        <BgArt kind="mascot" side="right" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 pt-16 pb-24 sm:pt-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:pt-28 lg:pb-32">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -775,8 +823,9 @@ function Home() {
       </section>
 
       {/* Benefits */}
-      <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -809,8 +858,9 @@ function Home() {
       </section>
 
       {/* What's inside */}
-      <section id="inside" className="bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section id="inside" className="bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -859,8 +909,9 @@ function Home() {
       </section>
 
       {/* Who it's for */}
-      <section id="audience" className="bg-white">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section id="audience" className="bg-white relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             New reps and mid-level reps alike
@@ -876,8 +927,9 @@ function Home() {
       </section>
 
       {/* CTA band */}
-      <section id="buy" className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section id="buy" className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="right" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -907,8 +959,9 @@ function Home() {
       </section>
 
       {/* FAQs */}
-      <section id="faq" className="bg-white">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section id="faq" className="bg-white relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -968,7 +1021,7 @@ function Home() {
         className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
+        <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -1014,8 +1067,9 @@ function Home() {
       </section>
 
       {/* 10 Steps — benefits */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1050,8 +1104,9 @@ function Home() {
       </section>
 
       {/* 10 Steps — what's inside */}
-      <section className="bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1100,8 +1155,9 @@ function Home() {
       </section>
 
       {/* 10 Steps — who it's for */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Car dealership sales reps
@@ -1116,8 +1172,9 @@ function Home() {
       </section>
 
       {/* 10 Steps — CTA band */}
-      <section className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="left" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -1150,8 +1207,9 @@ function Home() {
       </section>
 
       {/* 10 Steps — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1223,6 +1281,7 @@ function Home() {
         id="five-closes"
         className="relative overflow-hidden border-t border-slate-100 bg-slate-50"
       >
+        <BgArt side="left" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
@@ -1268,8 +1327,9 @@ function Home() {
       </section>
 
       {/* Five Closes — what's inside / benefits */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1303,8 +1363,9 @@ function Home() {
       </section>
 
       {/* Five Closes — who it's for */}
-      <section className="border-t border-slate-100 bg-slate-50">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section className="border-t border-slate-100 bg-slate-50 relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Dealership sales reps, new and experienced
@@ -1318,8 +1379,9 @@ function Home() {
       </section>
 
       {/* Five Closes — CTA band */}
-      <section className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="right" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -1353,8 +1415,9 @@ function Home() {
       </section>
 
       {/* Five Closes — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1423,7 +1486,7 @@ function Home() {
         className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
+        <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -1467,8 +1530,9 @@ function Home() {
       </section>
 
       {/* Internet Sale — what you'll learn */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1502,8 +1566,9 @@ function Home() {
       </section>
 
       {/* Internet Sale — what's inside */}
-      <section className="bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1552,8 +1617,9 @@ function Home() {
       </section>
 
       {/* Internet Sale — who it's for */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Internet sales reps, BDC reps & desk managers
@@ -1567,8 +1633,9 @@ function Home() {
       </section>
 
       {/* Internet Sale — CTA band */}
-      <section className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="left" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -1601,8 +1668,9 @@ function Home() {
       </section>
 
       {/* Internet Sale — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1683,7 +1751,7 @@ function Home() {
         className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
+        <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -1728,8 +1796,9 @@ function Home() {
       </section>
 
       {/* Spouse — what you'll learn */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1763,8 +1832,9 @@ function Home() {
       </section>
 
       {/* Spouse — what's inside */}
-      <section className="bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1814,8 +1884,9 @@ function Home() {
       </section>
 
       {/* Spouse — who it's for */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Dealership reps, internet teams & specialists
@@ -1829,8 +1900,9 @@ function Home() {
       </section>
 
       {/* Spouse — CTA band */}
-      <section className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="right" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -1865,8 +1937,9 @@ function Home() {
       </section>
 
       {/* Spouse — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1930,7 +2003,7 @@ function Home() {
         className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
+        <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -1975,8 +2048,9 @@ function Home() {
       </section>
 
       {/* Pray About It — what you'll learn */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2010,8 +2084,9 @@ function Home() {
       </section>
 
       {/* Pray About It — what's inside */}
-      <section className="bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2060,8 +2135,9 @@ function Home() {
       </section>
 
       {/* Pray About It — who it's for */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Sales reps & internet teams
@@ -2075,8 +2151,9 @@ function Home() {
       </section>
 
       {/* Pray About It — CTA band */}
-      <section className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="left" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -2110,8 +2187,9 @@ function Home() {
       </section>
 
       {/* Pray About It — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2175,7 +2253,7 @@ function Home() {
         className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
+        <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -2219,8 +2297,9 @@ function Home() {
       </section>
 
       {/* Trade-In — what you'll learn */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2254,8 +2333,9 @@ function Home() {
       </section>
 
       {/* Trade-In — what's inside */}
-      <section className="bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2305,8 +2385,9 @@ function Home() {
       </section>
 
       {/* Trade-In — who it's for */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Floor reps, internet teams & desk managers
@@ -2320,8 +2401,9 @@ function Home() {
       </section>
 
       {/* Trade-In — CTA band */}
-      <section className="bg-slate-900">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+      <section className="bg-slate-900 relative overflow-hidden">
+        <BgArt side="right" dark />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
           </div>
@@ -2355,8 +2437,9 @@ function Home() {
       </section>
 
       {/* Trade-In — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
+        <BgArt side="left" />
+        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2412,7 +2495,8 @@ function Home() {
 
       {/* Qualifying Questions Guide — product section */}
       <section id="qualifying-questions" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        <BgArt side="right" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <Eyebrow>New · The Qualifying Questions Guide</Eyebrow>
@@ -2450,8 +2534,8 @@ function Home() {
           <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6"><Eyebrow>Who it’s for</Eyebrow><p className="mt-3 leading-relaxed text-slate-700">New and veteran dealership sales reps, internet sales teams, and product specialists who want to qualify customers faster, present with more confidence, and close more deals without discounting the price.</p></div>
         </div>
       </section>
-      <section className="bg-slate-900"><div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
-      <section className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
+      <section className="relative overflow-hidden bg-slate-900"><BgArt side="right" dark /><div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
+      <section className="relative overflow-hidden border-t border-slate-100 bg-white scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
         ["Do I need experience to use this?", "No. The questions are numbered 1–75 and organized by category, so you can work one category per shift and build from there. The Golden 10 gives you a complete system you can use on your very next customer."],
         ["Won’t this make my conversations feel scripted?", "The questions are conversation starters, not a script to recite. Say them out loud until they sound like you, adapt the wording to your market, and ask with genuine curiosity — the structure works because it sounds natural."],
         ["Is this about manipulating the customer?", "No. The goal is to understand the customer well enough to show them the right vehicle, present the right numbers, and earn the right to close. You never invent a need or put words in a customer’s mouth."],
@@ -2459,8 +2543,15 @@ function Home() {
         ["Is it a PDF I can use on my phone?", "Yes. It’s a PDF that works on any device, and it’s written for reading at the desk between customers — or in the showroom before your next appointment."],
       ].map(([q,a]) => <details key={q} className="faq group rounded-xl border border-slate-200 bg-white transition hover:border-slate-300"><summary className="flex items-center justify-between gap-4 px-5 py-4 text-left"><span className="font-semibold text-slate-900">{q}</span><span className="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600">+</span></summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></section>
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
+      <footer className="relative overflow-hidden border-t border-slate-200 bg-white">
+        <img
+          src="/blamo-car.svg"
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="mascot-float pointer-events-none absolute bottom-1 -left-3 w-14 select-none opacity-[0.14] sm:w-16"
+        />
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
           <div className="flex items-center gap-2.5">
             <LogoMark className="h-6 w-6" />
             <span className="text-sm font-semibold text-slate-700">
