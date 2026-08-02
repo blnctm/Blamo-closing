@@ -45,14 +45,6 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     mime: "application/pdf",
   },
   {
-    slug: "five-closes",
-    code: "BLAMO-03-4508",
-    file: "the-five-closes-in-action.mp4",
-    name: "The Five Closes in Action",
-    kind: "video",
-    mime: "video/mp4",
-  },
-  {
     slug: "internet-sales",
     code: "BLAMO-04-4185",
     file: "the-10-steps-to-the-internet-sale.pdf",

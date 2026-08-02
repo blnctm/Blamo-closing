@@ -30,11 +30,6 @@ const PRODUCT_META: Record<
     fileName: "sales-rep-starter-kit-10-steps.pdf",
     label: "Download your PDF",
   },
-  "five-closes": {
-    name: "The Five Closes in Action",
-    fileName: "the-five-closes-in-action.mp4",
-    label: "Download your video",
-  },
   "internet-sales": {
     name: "The 10 Steps to the Internet Sale",
     fileName: "the-10-steps-to-the-internet-sale.pdf",

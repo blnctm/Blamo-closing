@@ -31,13 +31,6 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     kindLabel: "PDF · 27 pages",
   },
   {
-    slug: "five-closes",
-    name: "The Five Closes in Action",
-    priceCents: 699,
-    fileName: "the-five-closes-in-action.mp4",
-    kindLabel: "Video · ~10 min · MP4",
-  },
-  {
     slug: "internet-sales",
     name: "The 10 Steps to the Internet Sale",
     priceCents: 699,

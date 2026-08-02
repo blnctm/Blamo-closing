@@ -14,11 +14,11 @@ const HERO_COPY = {
     "Over 20 years of hands-on dealership experience — a proven process that works.",
   headline: "Close More Clearly, Starting Today",
   subheadline:
-    "Blamo Closing gives dealership salespeople practical training they can use on the floor today: word-for-word closing scripts, objection playbooks, PDF guides, and video training built around real sales conversations.",
+    "Blamo Closing gives dealership salespeople practical training they can use on the floor today: word-for-word closing scripts, objection playbooks, and PDF guides built around real sales conversations.",
   highlights: [
     "Word-for-word closing scripts",
     "Objection playbooks for tough stalls",
-    "10 training products from $6.99",
+    "9 training products from $6.99",
   ],
   primaryCta: "Browse the training",
   secondaryCta: "See how it works",
@@ -383,29 +383,6 @@ function QuickCardBadge() {
   );
 }
 
-function WatchBadge() {
-  return (
-    <>
-      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-        Watch it
-      </p>
-      <div className="mt-2 flex items-center gap-1.5">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500">
-          <svg
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="h-3 w-3 text-slate-950"
-            aria-hidden="true"
-          >
-            <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.89a1.5 1.5 0 0 0 0-2.54L6.3 2.84Z" />
-          </svg>
-        </span>
-        <span className="text-[11px] font-semibold text-slate-900">~10 min</span>
-      </div>
-    </>
-  );
-}
-
 /* ---------- Starter Kit cover card ---------- */
 
 function ProductCard() {
@@ -422,26 +399,6 @@ function ProductCard() {
       ctaAriaLabel="Get the Starter Kit — $24.99"
       chipTitle="The complete 10-step process"
       chipSub="27-page packet · Meet & Greet → Follow-up"
-    />
-  );
-}
-
-/* ---------- Five Closes video cover card ---------- */
-
-function VideoProductCard() {
-  return (
-    <ProductCoverCard
-      img="/cover-thumbs/five-closes.png"
-      alt="The Five Closes in Action cover"
-      badge={<WatchBadge />}
-      title="The Five Closes in Action"
-      desc="Watch five closing techniques play out in realistic buyer–seller dialogue — hear it before you use it."
-      price="$6.99"
-      slug="five-closes"
-      ctaLabel="Buy now — $6.99"
-      ctaAriaLabel="Get The Five Closes in Action — $6.99"
-      chipTitle="Hear it before you use it."
-      chipSub="Five closes, realistic dialogue"
     />
   );
 }
@@ -585,12 +542,6 @@ function Home() {
             <AuthNav />
             <div className="hidden items-center gap-5 lg:flex">
             <a
-              href="#five-closes"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
-            >
-              The Five Closes
-            </a>
-            <a
               href="#internet-sales"
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
@@ -680,8 +631,8 @@ function Home() {
 
       {/* Complete 10-product catalog */}
       <section id="catalog" className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Ten standalone training products, built for real dealership conversations.</p></div>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><VideoProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /></div>
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Nine standalone training products, built for real dealership conversations.</p></div>
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /></div>
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-slate-50 scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
@@ -740,7 +691,7 @@ function Home() {
                 "All 10 steps in order: Meet & Greet, Understand Needs, Showcase Features, Test Drive, Review Feedback, Address Objections, Negotiations, Paperwork, Delivery, and Follow-up.",
                 "The goal of each step, the process in the owner’s own words, and the one common mistake to avoid.",
                 "Word-for-word what-to-say lines and scripts for every step — from the first “Hi there, welcome in” to the follow-up call and email template.",
-                "A negotiation planning framework: know your range, listen for what the customer actually cares about, and find the win-win.",
+                "A negotiation planning framework: know your range, identify what the customer actually cares about, and find the win-win.",
                 "A checklist for every step, a 7-day first-week practice plan, and a quick-reference one-pager you can keep in your pocket.",
               ].map((item) => (
                 <li
@@ -872,210 +823,6 @@ function Home() {
                   </span>
                 </summary>
                 <p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════
-       * THE FIVE CLOSES IN ACTION — THIRD PRODUCT (TRAINING VIDEO)
-       * ═══════════════════════════════════════════════════════════ */}
-
-      {/* Five Closes — product hero */}
-      <section
-        id="five-closes"
-        className="relative overflow-hidden border-t border-slate-100 bg-slate-50"
-      >
-        <BgArt side="left" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
-        <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
-          <div className="text-center sm:text-left">
-            <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-              New · The Five Closes in Action
-            </p>
-            <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
-              Watch the five closes—{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
-                in action.
-              </span>
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:mx-0">
-              A ~10-minute training video with realistic buyer/seller dialogue
-              that shows exactly how each of the five core closes sounds in a
-              real conversation — word-for-word. Built for car dealership sales
-              reps who want to hear it before they use it.
-            </p>
-            <div className="mt-9 flex justify-center sm:justify-start">
-              <BuyButton
-                slug="five-closes"
-                label="Get The Five Closes in Action — $6.99"
-                ariaLabel="Get The Five Closes in Action — $6.99"
-              />
-            </div>
-            <p className="mt-5 text-sm text-slate-500">
-              Instant download · MP4 video · ~10 minutes · Same-day use
-            </p>
-            <p className="mt-3 text-sm">
-              <a
-                href="/thanks?product=five-closes"
-                className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
-              >
-                Already purchased? Enter your code to download
-              </a>
-            </p>
-          </div>
-          <div className="mt-6 pb-6 lg:mt-0">
-            <VideoProductCard />
-          </div>
-        </div>
-      </section>
-
-      {/* Five Closes — what's inside / benefits */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
-        <BgArt side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
-          <div className="max-w-2xl">
-            <Eyebrow>What’s inside</Eyebrow>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Hear every close, word-for-word
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-600">
-              Realistic dialogue, real situations, and a clear look at how each
-              close is supposed to sound — so you can recognize it and use it
-              yourself.
-            </p>
-          </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
-            {[
-              "All five closes demonstrated with realistic dialogue: Assumptive, Alternative-Choice, Summary, Trial, and Honest Urgency.",
-              "The three common closing mistakes — and how to avoid them.",
-              "A recap and practice prompt so you can rehearse the same day.",
-              "~10 minutes long — watch it in one sitting, keep it on your phone.",
-              "Produced by Blamo Closing, fully branded, no filler.",
-            ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
-                  <CheckIcon className="h-4 w-4" />
-                </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
-                  {benefit}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Five Closes — who it's for */}
-      <section className="border-t border-slate-100 bg-slate-50 relative overflow-hidden">
-        <BgArt side="left" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
-          <Eyebrow>Who it’s for</Eyebrow>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Dealership sales reps, new and experienced
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-            This video is for dealership sales reps (new and experienced) who
-            want to hear how the closes actually sound in a real conversation
-            before they try them on the lot.
-          </p>
-        </div>
-      </section>
-
-      {/* Five Closes — CTA band */}
-      <section className="bg-slate-900 relative overflow-hidden">
-        <BgArt side="right" dark />
-        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
-          <div className="flex justify-center">
-            <LogoMark className="h-12 w-12" />
-          </div>
-          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Hear the closes before you use them
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
-            Get The Five Closes in Action — a ~10-minute MP4 you can watch in
-            one sitting and keep on your phone. Download it instantly after
-            purchase.
-          </p>
-          <div className="mt-9 flex justify-center">
-            <BuyButton
-              slug="five-closes"
-              label="Get The Five Closes in Action — $6.99"
-              ariaLabel="Get The Five Closes in Action — $6.99"
-            />
-          </div>
-          <p className="mt-5 text-sm">
-            <a
-              href="/thanks?product=five-closes"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
-            >
-              Already purchased? Enter your code to download
-            </a>
-          </p>
-          <p className="mt-6 text-sm text-slate-400">
-            Honest closes. Realistic dialogue. No manipulation.
-          </p>
-        </div>
-      </section>
-
-      {/* Five Closes — FAQs */}
-      <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
-        <BgArt side="left" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
-          <div className="text-center">
-            <Eyebrow>FAQs</Eyebrow>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              The video, answered
-            </h2>
-          </div>
-          <div className="mt-12 space-y-3">
-            {[
-              {
-                q: "Is this the same as the Sales Rep Starter Kit?",
-                a: "No. The Sales Rep Starter Kit is the 27-page 10 Steps of the Sale packet — the full sales process from Meet & Greet to Follow-up. This video is the only place the five closes appear: watch them in action with realistic dialogue.",
-              },
-              {
-                q: "How do I receive it?",
-                a: "After you pay through Stripe’s secure checkout, your download unlocks automatically in your account — the confirmation code and download button appear right on the thank-you page, and they’re always waiting under your account (Your purchases) whenever you log back in. Stripe emails you the payment receipt. Your video is an MP4 (~15 MB) you can watch on any device.",
-                link: true,
-              },
-              {
-                q: "Is this high-pressure sales training?",
-                a: "No. Every close in the video is honest and pressure-free — realistic dialogue, real situations, no manipulation.",
-              },
-            ].map(({ q, a, link }) => (
-              <details
-                key={q}
-                className="faq group rounded-xl border border-slate-200 bg-white transition hover:border-slate-300"
-              >
-                <summary className="flex items-center justify-between gap-4 px-5 py-4 text-left">
-                  <span className="font-semibold text-slate-900">{q}</span>
-                  <span className="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 group-hover:bg-amber-100 group-hover:text-amber-700">
-                    <svg
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    >
-                      <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                    </svg>
-                  </span>
-                </summary>
-                <p className="px-5 pb-5 leading-relaxed text-slate-600">
-                  {a}
-                  {link && (
-                    <>
-                      <a
-                        href="/thanks?product=five-closes"
-                        className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
-                      >
-                        Enter your code to download
-                      </a>
-                    </>
-                  )}
-                </p>
               </details>
             ))}
           </div>
@@ -1452,7 +1199,7 @@ function Home() {
             <ul className="grid gap-4 sm:grid-cols-2">
               {[
                 "A 14-page playbook (PDF) with every close on its own page: goal, when to use it, the word-for-word script, why it works, and a checklist.",
-                "The owner’s real-objection-versus-delay diagnosis guidance, with the four signals to listen for.",
+                "The owner’s real-objection-versus-delay diagnosis guidance, with the four signals to look for.",
                 "A 7-day practice plan and a one-page quick reference of all ten closes.",
                 "The honesty rule: no fake deadlines, no pressure — closes that respect the customer and the spouse.",
                 "A PDF that works on any device, written for reading at the desk between customers.",
@@ -1500,7 +1247,7 @@ function Home() {
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
             New and veteran dealership sales reps, internet sales teams, and
-            product specialists who hear “I need to ask my spouse” and want to
+            product specialists who encounter “I need to ask my spouse” and want to
             respond with confidence instead of pressure.
           </p>
         </div>
@@ -2175,12 +1922,6 @@ function Home() {
             </a>
             <a href="/thanks" className="hover:text-slate-900">
               Download your PDF
-            </a>
-            <a href="#five-closes" className="hover:text-slate-900">
-              The Five Closes
-            </a>
-            <a href="/thanks?product=five-closes" className="hover:text-slate-900">
-              Download your video
             </a>
             <a href="#internet-sales" className="hover:text-slate-900">
               The Internet Sale
