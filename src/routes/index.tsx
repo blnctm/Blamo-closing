@@ -35,6 +35,17 @@ const TEN_STEPS_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
 const VIDEO_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
 /* ════════════════════════════════════════════════════════════════════ */
 
+/* ════════════════════════════════════════════════════════════════════
+ * CONFIG — The 10 Steps to the Internet Sale buy button destination
+ * ---------------------------------------------------------------------
+ * The owner will provide a dedicated payment link for this product;
+ * when it arrives, swap INTERNET_SALES_PAYMENT_LINK below (ONE-LINE
+ * CHANGE). Until then it intentionally points at the same PayPal link
+ * as the other products.
+ * ════════════════════════════════════════════════════════════════════ */
+const INTERNET_SALES_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
+/* ════════════════════════════════════════════════════════════════════ */
+
 export const Route = createFileRoute("/")({
   component: Home,
 });
@@ -338,6 +349,66 @@ function VideoProductCard() {
   );
 }
 
+/* ---------- 10 Steps to the Internet Sale product mockup (pure CSS — no image assets) ---------- */
+
+function InternetSalesProductCard() {
+  return (
+    <div
+      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
+      aria-hidden="true"
+    >
+      {/* Quick-reference card peeking from behind */}
+      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
+        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
+          Quick card
+        </p>
+        <div className="mt-2 space-y-1.5">
+          <div className="h-1.5 rounded-full bg-slate-200" />
+          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
+          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
+        </div>
+      </div>
+
+      {/* The guide itself */}
+      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
+        <div className="flex items-center justify-between gap-3">
+          <LogoMark className="h-8 w-8" />
+          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
+            PDF · 15 pages
+          </span>
+        </div>
+        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+          The 10 Steps to
+        </p>
+        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
+          the Internet Sale
+        </h3>
+        <div className="mt-10 border-t border-white/10 pt-4">
+          <p className="text-[11px] leading-relaxed text-slate-400">
+            Respond in 5 min → close before they walk in
+            <br />
+            Scripts · BLAMO Video Formula
+          </p>
+          <p className="mt-4 text-2xl font-bold text-amber-300">$9.99</p>
+          <p className="text-[10px] uppercase tracking-widest text-slate-400">
+            one-time · downloadable PDF · intro price
+          </p>
+        </div>
+      </div>
+
+      {/* Tagline chip */}
+      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
+        <p className="text-xs font-semibold text-slate-900">
+          Win the lead before they walk in.
+        </p>
+        <p className="mt-0.5 text-[11px] text-slate-500">
+          Built for internet sales & BDC
+        </p>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- Page ---------- */
 
 function Home() {
@@ -380,6 +451,12 @@ function Home() {
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               The Five Closes
+            </a>
+            <a
+              href="#internet-sales"
+              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+            >
+              The Internet Sale
             </a>
             <a
               href="#buy"
@@ -1118,6 +1195,287 @@ function Home() {
         </div>
       </section>
 
+      {/* ═══════════════════════════════════════════════════════════
+       * THE 10 STEPS TO THE INTERNET SALE — FOURTH PRODUCT
+       * ═══════════════════════════════════════════════════════════ */}
+
+      {/* Internet Sale — product hero */}
+      <section
+        id="internet-sales"
+        className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
+        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
+        <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
+          <div className="text-center sm:text-left">
+            <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              New · The 10 Steps to the Internet Sale
+            </p>
+            <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
+              Win the internet lead—{" "}
+              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
+                before they walk into another dealership.
+              </span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:mx-0">
+              A practical BLAMO Internet Sales field guide for responding
+              fast, building trust, using personalized video, booking the
+              appointment, and making the customer feel ready to meet you.
+            </p>
+            <div className="mt-9 flex justify-center sm:justify-start">
+              <BuyButton
+                href={INTERNET_SALES_PAYMENT_LINK}
+                label="Get The 10 Steps to the Internet Sale — $9.99"
+                ariaLabel="Get The 10 Steps to the Internet Sale — $9.99"
+              />
+            </div>
+            <p className="mt-5 text-sm text-slate-500">
+              Instant download · 15-page PDF · Same-day use
+            </p>
+            <p className="mt-3 text-sm">
+              <a
+                href="/thanks?product=internet-sales"
+                className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
+              >
+                Already purchased? Download your PDF
+              </a>{" "}
+              <span className="text-slate-400">·</span>{" "}
+              <a
+                href="/the-10-steps-to-the-internet-sale.pdf"
+                className="text-slate-500 underline underline-offset-2 hover:text-slate-900"
+              >
+                direct PDF
+              </a>
+            </p>
+          </div>
+          <div className="mt-6 pb-6 lg:mt-0">
+            <InternetSalesProductCard />
+          </div>
+        </div>
+      </section>
+
+      {/* Internet Sale — what you'll learn */}
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="max-w-2xl">
+            <Eyebrow>What you’ll learn</Eyebrow>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              A repeatable process for online leads
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              Go from slow, generic responses to fast, human, video-first
+              follow-up that gets the customer to the showroom — ready to buy.
+            </p>
+          </div>
+          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+            {[
+              "The owner’s exact 10-step internet sales process, from Respond in Under 5 Minutes to Close Before They Walk In.",
+              "Word-for-word first-response, rapport, appointment, confirmation, follow-up, and objection-handling templates.",
+              "The complete BLAMO Video Formula, including the six steps and the 45-second structure.",
+              "The nine best moments to send a personalized video, plus the BLAMO Rule of three videos per lead.",
+              "The signature 3-3-3 Rule: name and introduction, vehicle and benefits, then a clear appointment ask.",
+              "A seven-day internet lead follow-up plan and a quick-reference page for daily practice.",
+            ].map((benefit) => (
+              <li key={benefit} className="flex items-start gap-4">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+                  <CheckIcon className="h-4 w-4" />
+                </span>
+                <p className="text-[1.05rem] leading-relaxed text-slate-700">
+                  {benefit}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Internet Sale — what's inside */}
+      <section className="bg-slate-50 scroll-reveal">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="max-w-2xl">
+            <Eyebrow>What’s inside</Eyebrow>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              From first response to a booked appointment
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {[
+                "Opening guidance on why internet sales are different, how to use the guide, and the honesty rule.",
+                "All 10 steps in the owner’s exact order, each with a goal, process, scripts, common mistake, checklist, drill, and bridge to the next step.",
+                "The BLAMO Video Formula: Personalize, Introduce, Show the vehicle, Give one valuable reason to buy, Invite them in, Finish with confidence.",
+                "The 45-second formula, video rules, nine send-moments, BLAMO Rule, and 3-3-3 Rule.",
+                "The 7-Day Internet Lead Follow-Up bonus and a one-page reference.",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
+                    <CheckIcon className="h-3.5 w-3.5" />
+                  </span>
+                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
+                    {item}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+              <h3 className="text-lg font-bold tracking-tight text-slate-900">
+                Delivered as a PDF
+              </h3>
+              <p className="mt-3 leading-relaxed text-slate-600">
+                One downloadable 15-page PDF with the owner’s full internet
+                sales process, word-for-word templates, the BLAMO Video
+                Formula, and a 7-day follow-up plan. Download it right after
+                checkout and keep it forever.
+              </p>
+              <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-relaxed text-slate-500">
+                Pairs with The 10 Steps of the Sale: use this guide to win the
+                lead online, then run the in-store process when they arrive.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* Internet Sale — who it's for */}
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
+        <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+          <Eyebrow>Who it’s for</Eyebrow>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Internet sales reps, BDC reps & desk managers
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+            Internet sales reps, BDC representatives, product specialists, and
+            desk managers at automotive dealerships who want a consistent,
+            human process for working online leads.
+          </p>
+        </div>
+      </section>
+
+      {/* Internet Sale — CTA band */}
+      <section className="bg-slate-900">
+        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
+          <div className="flex justify-center">
+            <LogoMark className="h-12 w-12" />
+          </div>
+          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            Win the lead before they walk in
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
+            Get The 10 Steps to the Internet Sale — a 15-page PDF you can put
+            to work today. Download it instantly after purchase.
+          </p>
+          <div className="mt-9 flex justify-center">
+            <BuyButton
+              href={INTERNET_SALES_PAYMENT_LINK}
+              label="Get The 10 Steps to the Internet Sale — $9.99"
+              ariaLabel="Get The 10 Steps to the Internet Sale — $9.99"
+            />
+          </div>
+          <p className="mt-5 text-sm">
+            <a
+              href="/thanks?product=internet-sales"
+              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
+            >
+              Already purchased? Download your PDF
+            </a>{" "}
+            <span className="text-slate-500">·</span>{" "}
+            <a
+              href="/the-10-steps-to-the-internet-sale.pdf"
+              className="text-slate-400 underline underline-offset-2 hover:text-white"
+            >
+              direct PDF
+            </a>
+          </p>
+          <p className="mt-6 text-sm text-slate-400">
+            Respond fast. Build trust. Book the appointment.
+          </p>
+        </div>
+      </section>
+
+      {/* Internet Sale — FAQs */}
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
+        <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
+          <div className="text-center">
+            <Eyebrow>FAQs</Eyebrow>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              The Internet Sale, answered
+            </h2>
+          </div>
+          <div className="mt-12 space-y-3">
+            {[
+              {
+                q: "Is this the same as The 10 Steps of the Sale?",
+                a: "No. The 10 Steps of the Sale covers the in-store floor process. This guide covers the internet-lead process before the customer arrives, and includes the complete BLAMO Video Formula.",
+              },
+              {
+                q: "Is this the same as the Starter Kit?",
+                a: "No. The Sales Rep Starter Kit focuses on five core closing techniques, scripts, objections, and practice. This guide focuses on speed-to-lead, rapport, video, value, appointments, and follow-up.",
+              },
+              {
+                q: "Do I need video equipment?",
+                a: "No. A phone camera is enough. The guide gives you the exact 45-second structure, what to show, the nine send-moments, and the rules for making the video feel natural.",
+              },
+              {
+                q: "Does the guide promise a certain number of sales?",
+                a: "No. It provides a practical process and honest templates. Results depend on the customer, inventory, dealership policies, and how consistently you practice and follow through.",
+              },
+              {
+                q: "Can a new internet sales rep use it right away?",
+                a: "Yes. Start with the under-five-minute response, practice the scripts out loud, and use the checklists and seven-day plan to build the habit one lead at a time.",
+              },
+              {
+                q: "What do I receive?",
+                a: "A downloadable PDF guide with the owner’s 10-step internet sales process, word-for-word templates, the BLAMO Video Formula, and a 7-day follow-up plan — built for same-day use. You’ll get the download link on the thank-you page after checkout. Already purchased? ",
+                link: true,
+              },
+            ].map(({ q, a, link }) => (
+              <details
+                key={q}
+                className="faq group rounded-xl border border-slate-200 bg-white transition hover:border-slate-300"
+              >
+                <summary className="flex items-center justify-between gap-4 px-5 py-4 text-left">
+                  <span className="font-semibold text-slate-900">{q}</span>
+                  <span className="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 group-hover:bg-amber-100 group-hover:text-amber-700">
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    >
+                      <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                    </svg>
+                  </span>
+                </summary>
+                <p className="px-5 pb-5 leading-relaxed text-slate-600">
+                  {a}
+                  {link && (
+                    <>
+                      <a
+                        href="/thanks?product=internet-sales"
+                        className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
+                      >
+                        Download your PDF
+                      </a>{" "}
+                      <span className="text-slate-400">·</span>{" "}
+                      <a
+                        href="/the-10-steps-to-the-internet-sale.pdf"
+                        className="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900"
+                      >
+                        direct PDF link
+                      </a>
+                    </>
+                  )}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
@@ -1152,6 +1510,12 @@ function Home() {
             </a>
             <a href="/thanks?product=five-closes" className="hover:text-slate-900">
               Download your video
+            </a>
+            <a href="#internet-sales" className="hover:text-slate-900">
+              The Internet Sale
+            </a>
+            <a href="/thanks?product=internet-sales" className="hover:text-slate-900">
+              Download the Internet Sale PDF
             </a>
             <a href="#buy" className="font-medium text-slate-900">
               Get the Starter Kit
