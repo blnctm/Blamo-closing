@@ -10,6 +10,7 @@ export interface CatalogProduct {
 }
 
 const STARTER_KIT_SLUG = "starter-kit";
+const STARTER_KIT_ES_SLUG = "starter-kit-es";
 
 /** Code recorded on the Complete Package ownership row (not a download code). */
 export const BUNDLE_CONFIRMATION_CODE = "BUNDLE-ALL";
@@ -18,7 +19,7 @@ export const PRODUCT_CATALOG: readonly CatalogProduct[] = [
   ...PRODUCT_DOWNLOADS.map((product): CatalogProduct => ({
     slug: product.slug,
     name: product.name,
-    unitAmountCents: product.slug === STARTER_KIT_SLUG || product.slug === "leadership" ? 2499 : 699,
+    unitAmountCents: product.slug === STARTER_KIT_SLUG || product.slug === STARTER_KIT_ES_SLUG || product.slug === "leadership" ? 2499 : 699,
     confirmationCode: product.code,
   })),
   // The Complete Package: a library unlock, not a downloadable file. Checkout
