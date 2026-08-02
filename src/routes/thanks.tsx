@@ -56,6 +56,11 @@ const PRODUCT_META: Record<
     fileName: "the-trade-in-objection-playbook.pdf",
     label: "Download your PDF",
   },
+  "qualifying-questions": {
+    name: "The Qualifying Questions Guide",
+    fileName: "the-qualifying-questions-guide.pdf",
+    label: "Download your PDF",
+  },
 };
 
 function LogoMark({ className = "" }: { className?: string }) {
