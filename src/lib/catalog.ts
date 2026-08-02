@@ -8,12 +8,12 @@ export interface CatalogProduct {
   confirmationCode: string;
 }
 
-const PLAYBOOK_SLUGS = new Set(["spouse", "pray-about-it", "trade-in"]);
+const STARTER_KIT_SLUG = "starter-kit";
 
 export const PRODUCT_CATALOG: readonly CatalogProduct[] = PRODUCT_DOWNLOADS.map((product) => ({
   slug: product.slug,
   name: product.name,
-  unitAmountCents: PLAYBOOK_SLUGS.has(product.slug) ? 299 : 999,
+  unitAmountCents: product.slug === STARTER_KIT_SLUG ? 999 : 299,
   confirmationCode: product.code,
 }));
 
