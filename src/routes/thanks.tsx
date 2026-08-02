@@ -4,6 +4,9 @@ export const Route = createFileRoute("/thanks")({
   validateSearch: (search: Record<string, unknown>) => ({
     product: typeof search.product === "string" ? search.product : undefined,
   }),
+  head: () => ({
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   component: Thanks,
 });
 

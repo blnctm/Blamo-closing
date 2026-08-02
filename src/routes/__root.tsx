@@ -30,8 +30,10 @@ export const Route = createRootRoute({
           "Close with clarity—not pressure. A practical, script-first guide to leading qualified buyers to a clear next step.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://blamoclosing.com/" },
     ],
     links: [
+      { rel: "canonical", href: "https://blamoclosing.com/" },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/svg+xml", href: FAVICON },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
