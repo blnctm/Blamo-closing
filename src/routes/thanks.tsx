@@ -41,6 +41,21 @@ const PRODUCT_META: Record<
     fileName: "the-10-steps-to-the-internet-sale.pdf",
     label: "Download your PDF",
   },
+  "spouse": {
+    name: "The Spouse Objection Playbook",
+    fileName: "the-spouse-objection-playbook.pdf",
+    label: "Download your PDF",
+  },
+  "pray-about-it": {
+    name: "The “Pray About It” Objection Playbook",
+    fileName: "the-pray-about-it-objection-playbook.pdf",
+    label: "Download your PDF",
+  },
+  "trade-in": {
+    name: "The “I Want More for My Trade-In” Playbook",
+    fileName: "the-trade-in-objection-playbook.pdf",
+    label: "Download your PDF",
+  },
 };
 
 function LogoMark({ className = "" }: { className?: string }) {

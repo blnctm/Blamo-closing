@@ -69,6 +69,30 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     kind: "pdf",
     mime: "application/pdf",
   },
+  {
+    slug: "spouse",
+    code: "BLAMO-05-8485",
+    file: "the-spouse-objection-playbook.pdf",
+    name: "The Spouse Objection Playbook",
+    kind: "pdf",
+    mime: "application/pdf",
+  },
+  {
+    slug: "pray-about-it",
+    code: "BLAMO-06-0191",
+    file: "the-pray-about-it-objection-playbook.pdf",
+    name: "The “Pray About It” Objection Playbook",
+    kind: "pdf",
+    mime: "application/pdf",
+  },
+  {
+    slug: "trade-in",
+    code: "BLAMO-07-2327",
+    file: "the-trade-in-objection-playbook.pdf",
+    name: "The “I Want More for My Trade-In” Playbook",
+    kind: "pdf",
+    mime: "application/pdf",
+  },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */
