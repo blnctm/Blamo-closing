@@ -2,6 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { logoutAccount, me, startCheckout } from "~/lib/client-api";
+import { STORE_PRODUCTS } from "~/lib/store-products";
+
+/* Product counts derive from the catalog itself (single source of truth), so
+   the hero and catalog copy stay correct automatically as products are added. */
+const SIX_NINETY_NINE_COUNT = STORE_PRODUCTS.filter(
+  (p) => p.priceCents === 699
+).length;
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -20,11 +27,11 @@ const HERO_COPY = {
   highlights: [
     "Word-for-word closing scripts",
     "Objection playbooks for tough stalls",
-    "12 training products from $6.99",
+    `${SIX_NINETY_NINE_COUNT} training products for only $6.99`,
   ],
   primaryCta: "Browse the training",
   secondaryCta: "See how it works",
-} as const;
+};
 
 /* ---------- Brand ---------- */
 
@@ -638,7 +645,7 @@ function Home() {
 
       {/* Complete 11-product catalog */}
       <section id="catalog" className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Twelve standalone training products, built for real dealership conversations.</p></div>
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{`${STORE_PRODUCTS.length} standalone training products, built for real dealership conversations.`}</p></div>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
         </div>
       </section>
