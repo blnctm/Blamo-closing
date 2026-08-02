@@ -609,6 +609,12 @@ function Home() {
               Qualifying Questions
             </a>
             <a
+              href="/contact"
+              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+            >
+              Contact
+            </a>
+            <a
               href="#buy"
               className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >

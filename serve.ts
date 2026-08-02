@@ -13,6 +13,7 @@ import {
   DOWNLOAD_PATH,
   handleDownloadRequest,
 } from "./server-assets/download-handler";
+import { handleContact } from "./src/routes/api/-contact";
 import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
@@ -54,6 +55,7 @@ for (let attempt = 1; ; attempt++) {
       async fetch(req) {
         const { pathname } = new URL(req.url);
         // API endpoints are handled before static/SSR.
+        if (pathname === "/api/contact") return handleContact(req);
         if (pathname === "/api/checkout") return handleCheckout(req);
         if (pathname === "/api/stripe-webhook") return handleStripeWebhook(req);
         if (pathname === "/api/register") return handleRegister(req);
