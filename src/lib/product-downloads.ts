@@ -92,6 +92,9 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     kind: "pdf",
     mime: "application/pdf",
   },
+  { slug: "walk-around", code: "BLAMO-09-7284", file: "vehicle-walk-around-training-guide.pdf", name: "Vehicle Walk-Around Training Guide", kind: "pdf", mime: "application/pdf" },
+  { slug: "leadership", code: "BLAMO-10-5738", file: "leadership-academy-manual.pdf", name: "Blamo Closing Leadership Academy", kind: "pdf", mime: "application/pdf" },
+  { slug: "fi-awareness", code: "BLAMO-11-5837", file: "fi-awareness-training-manual.pdf", name: "F&I Awareness Training Manual", kind: "pdf", mime: "application/pdf" },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */
