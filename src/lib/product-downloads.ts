@@ -93,6 +93,14 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     kind: "pdf",
     mime: "application/pdf",
   },
+  {
+    slug: "qualifying-questions",
+    code: "BLAMO-08-4836",
+    file: "the-qualifying-questions-guide.pdf",
+    name: "The Qualifying Questions Guide",
+    kind: "pdf",
+    mime: "application/pdf",
+  },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */

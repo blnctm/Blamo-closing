@@ -71,6 +71,8 @@ const PRAY_ABOUT_IT_PAYMENT_LINK = "https://py.pl/bzHDNbxFYtCgfznaIlxIRg";
  * PayPal link (ratified 2026-08-02) — used for ALL $2.99 playbook sales.
  * ════════════════════════════════════════════════════════════════════ */
 const TRADE_IN_PAYMENT_LINK = "https://py.pl/bzHDNbxFYtCgfznaIlxIRg";
+/* $9.99 product; dedicated link pending, so reuse the current shared placeholder. */
+const QUALIFYING_QUESTIONS_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
 /* ════════════════════════════════════════════════════════════════════ */
 
 export const Route = createFileRoute("/")({
@@ -682,6 +684,12 @@ function Home() {
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               Trade-In
+            </a>
+            <a
+              href="#qualifying-questions"
+              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+            >
+              Qualifying Questions
             </a>
             <a
               href="#buy"
@@ -2375,6 +2383,54 @@ function Home() {
         </div>
       </section>
 
+      {/* Qualifying Questions Guide — product section */}
+      <section id="qualifying-questions" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <Eyebrow>New · The Qualifying Questions Guide</Eyebrow>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop guessing what the customer wants — ask the questions that uncover why they’re really buying.</h2>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">Seventy-five qualification questions across nine categories, the Golden 10, and a six-step sales flow: build rapport, find the real motivation, and present with confidence — without giving away the price.</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <BuyButton href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" />
+                <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
+              </div>
+            </div>
+            <div className="rounded-2xl bg-slate-900 p-8 text-white shadow-xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">13-page PDF guide</p>
+              <h3 className="mt-4 text-3xl font-bold">The Qualifying Questions Guide</h3>
+              <p className="mt-5 leading-relaxed text-slate-300">75 questions · Golden 10 · six-step sales flow</p>
+              <p className="mt-8 text-3xl font-bold text-amber-300">$9.99</p>
+            </div>
+          </div>
+          <div className="mt-20 grid gap-12 lg:grid-cols-2">
+            <div><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-5 space-y-3">{[
+              "The owner’s 75 qualifying questions, organized into nine categories — from Building Rapport to Commitment.",
+              "Why the best salespeople don’t have the best presentation — they ask the best questions — and how qualification uncovers the “why” behind the purchase.",
+              "The Golden 10 — the ten questions every top salesperson should ask, in the order that matters.",
+              "The Reason → Driver → Needs → Budget → Decision → Commitment sales flow that guides the whole conversation.",
+              "How to find out who has to say yes before you present a single number — and what it will take to earn their business.",
+              "How better questions lead to bigger commissions, faster closes, and less discounting.",
+            ].map((item) => <li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div>
+            <div><Eyebrow>What’s inside</Eyebrow><ul className="mt-5 space-y-3">{[
+              "A 13-page guide (PDF) with all 75 questions organized by category, each with a why-it-matters note.",
+              "The Golden 10 — the distilled list you can use on your very next customer.",
+              "A six-step sales flow explained stage by stage, with the exact question to ask at every step.",
+              "A 7-day practice plan and a quick-reference one-pager to keep at the desk.",
+              "Practical, honest training in plain dealer language — no fluff, no hype.",
+            ].map((item) => <li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div>
+          </div>
+          <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6"><Eyebrow>Who it’s for</Eyebrow><p className="mt-3 leading-relaxed text-slate-700">New and veteran dealership sales reps, internet sales teams, and product specialists who want to qualify customers faster, present with more confidence, and close more deals without discounting the price.</p></div>
+        </div>
+      </section>
+      <section className="bg-slate-900"><div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
+      <section className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
+        ["Do I need experience to use this?", "No. The questions are numbered 1–75 and organized by category, so you can work one category per shift and build from there. The Golden 10 gives you a complete system you can use on your very next customer."],
+        ["Won’t this make my conversations feel scripted?", "The questions are conversation starters, not a script to recite. Say them out loud until they sound like you, adapt the wording to your market, and ask with genuine curiosity — the structure works because it sounds natural."],
+        ["Is this about manipulating the customer?", "No. The goal is to understand the customer well enough to show them the right vehicle, present the right numbers, and earn the right to close. You never invent a need or put words in a customer’s mouth."],
+        ["Does it promise a certain number of sales?", "No. It gives you a complete, honest qualification system and the owner’s exact question set. Results depend on the customer, the inventory, the dealership, and how consistently you practice."],
+        ["Is it a PDF I can use on my phone?", "Yes. It’s a PDF that works on any device, and it’s written for reading at the desk between customers — or in the showroom before your next appointment."],
+      ].map(([q,a]) => <details key={q} className="faq group rounded-xl border border-slate-200 bg-white transition hover:border-slate-300"><summary className="flex items-center justify-between gap-4 px-5 py-4 text-left"><span className="font-semibold text-slate-900">{q}</span><span className="faq-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600">+</span></summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></section>
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
@@ -2433,6 +2489,12 @@ function Home() {
             </a>
             <a href="/thanks?product=trade-in" className="hover:text-slate-900">
               Download the Trade-In Playbook PDF
+            </a>
+            <a href="#qualifying-questions" className="hover:text-slate-900">
+              Qualifying Questions
+            </a>
+            <a href="/thanks?product=qualifying-questions" className="hover:text-slate-900">
+              Download the Qualifying Questions PDF
             </a>
             <a href="#buy" className="font-medium text-slate-900">
               Get the Starter Kit
