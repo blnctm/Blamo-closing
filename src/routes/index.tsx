@@ -7,6 +7,21 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+/* ---------- Hero copy (easy to swap when messaging evolves) ---------- */
+const HERO_COPY = {
+  tagline: "Real dealership training. Clearer closes.",
+  headline: "Close More Clearly, Starting Today",
+  subheadline:
+    "Blamo Closing gives dealership salespeople practical training they can use on the floor today: word-for-word closing scripts, objection playbooks, PDF guides, and video training built around real sales conversations.",
+  highlights: [
+    "Word-for-word closing scripts",
+    "Objection playbooks for tough stalls",
+    "8 training products from $2.99",
+  ],
+  primaryCta: "Browse the training",
+  secondaryCta: "See how it works",
+} as const;
+
 /* ---------- Brand ---------- */
 
 function LogoMark({ className = "" }: { className?: string }) {
@@ -776,48 +791,42 @@ function Home() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section
-        id="top"
-        className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white scroll-reveal"
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
+      {/* Hero: the brand moment */}
+      <section id="top" className="hero-brand relative overflow-hidden bg-slate-50">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_34rem_at_88%_10%,rgba(251,191,36,0.2),transparent)]" />
+        <div className="pointer-events-none absolute -right-32 top-20 h-80 w-80 rounded-full bg-amber-200/30 blur-3xl" />
+        {/* Keep the shared background art present in this section. */}
+        <BgArt kind="car" side="left" />
         <BgArt kind="mascot" side="right" />
-        <div className="relative mx-auto grid max-w-6xl gap-16 px-6 pt-16 pb-24 sm:pt-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:pt-28 lg:pb-32">
-          <div className="text-center sm:text-left">
-            <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-              New · The Sales Rep Starter Kit
-            </p>
-            <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
-              Close with clarity—{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
-                not pressure.
-              </span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:mx-0">
-              A practical, script-first guide to leading qualified buyers to a
-              clear next step, with five adaptable closes,
-              business-understanding prompts, and a repeatable follow-through
-              checklist.
-            </p>
-            <div className="mt-9 flex justify-center sm:justify-start">
-              <BuyButton slug="starter-kit" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-14 sm:pb-28 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-32 lg:pt-24">
+          <div className="hero-copy max-w-2xl text-center sm:text-left">
+            <div className="mb-7 flex items-center justify-center gap-3 sm:justify-start">
+              <LogoMark className="h-11 w-11 shadow-lg shadow-slate-900/20" />
+              <div className="text-left">
+                <p className="text-xl font-extrabold tracking-tight text-slate-950">Blamo<span className="text-amber-500"> Closing</span></p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-slate-500">Dealership sales training</p>
+              </div>
             </div>
-            <p className="mt-5 text-sm text-slate-500">
-              Instant download · 12-page PDF · Same-day use
-            </p>
-            <p className="mt-3 text-sm">
-              <a
-                href="/thanks"
-                className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
-              >
-                Already purchased? Enter your code to download
-              </a>
-            </p>
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">{HERO_COPY.tagline}</p>
+            <h1 className="mt-4 max-w-xl text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{HERO_COPY.subheadline}</p>
+            <ul className="mt-7 grid gap-3 text-left sm:grid-cols-3 sm:gap-4">
+              {HERO_COPY.highlights.map((highlight) => (
+                <li key={highlight} className="flex items-start gap-2 text-sm font-semibold leading-snug text-slate-700">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-400 text-slate-950"><CheckIcon className="h-3.5 w-3.5" /></span>
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-5 sm:justify-start">
+              <a href="#buy" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
+              <a href="#faq" className="inline-flex items-center gap-2 text-sm font-bold text-slate-700 underline decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
+            </div>
           </div>
-          <div className="mt-6 pb-6 lg:mt-0">
-            <ProductCard />
+          <div className="hero-mascot relative mx-auto flex min-h-[300px] w-full max-w-md items-end justify-center sm:min-h-[390px] lg:min-h-[470px]">
+            <div className="absolute bottom-5 h-40 w-64 rounded-full bg-amber-300/25 blur-2xl sm:h-52 sm:w-80" />
+            <img src="/blamo-mascot.svg" alt="Blamo Closing car-salesman mascot" className="mascot-float relative z-10 w-64 drop-shadow-2xl sm:w-80 lg:w-[25rem]" />
+            <div className="absolute bottom-1 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/80 bg-white/90 px-4 py-2 text-center text-xs font-bold text-slate-700 shadow-lg shadow-slate-900/10">Practical words for real conversations.</div>
           </div>
         </div>
       </section>
