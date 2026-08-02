@@ -88,6 +88,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
   { slug: "leadership", code: "BLAMO-10-5738", file: "leadership-academy-manual.pdf", name: "Blamo Closing Leadership Academy", kind: "pdf", mime: "application/pdf" },
   { slug: "fi-awareness", code: "BLAMO-11-5837", file: "fi-awareness-training-manual.pdf", name: "F&I Awareness Training Manual", kind: "pdf", mime: "application/pdf" },
   { slug: "prospecting", code: "BLAMO-12-3952", file: "prospecting-like-a-professional.pdf", name: "Prospecting Like a Professional", kind: "pdf", mime: "application/pdf" },
+  { slug: "meet-and-greet", code: "BLAMO-13-4816", file: "meet-and-greet-mastery.pdf", name: "Meet & Greet Mastery", kind: "pdf", mime: "application/pdf" },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */

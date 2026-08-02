@@ -56,6 +56,7 @@ const PRODUCT_META: Record<
     label: "Download your PDF",
   },
   "prospecting": { name: "Prospecting Like a Professional", fileName: "prospecting-like-a-professional.pdf", label: "Download your PDF" },
+  "meet-and-greet": { name: "Meet & Greet Mastery", fileName: "meet-and-greet-mastery.pdf", label: "Download your PDF" },
 };
 
 function LogoMark({ className = "" }: { className?: string }) {
