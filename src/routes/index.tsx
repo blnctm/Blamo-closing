@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /* ════════════════════════════════════════════════════════════════════
  * CONFIG — buy button destination
@@ -341,6 +341,24 @@ function VideoProductCard() {
 /* ---------- Page ---------- */
 
 function Home() {
+  useEffect(() => {
+    const items = document.querySelectorAll<HTMLElement>(".scroll-reveal");
+    if (!("IntersectionObserver" in window)) {
+      items.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-dvh bg-white">
       {/* Header */}
@@ -376,9 +394,10 @@ function Home() {
       {/* Hero */}
       <section
         id="top"
-        className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white"
+        className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
+        <img src="/blamo-mascot.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -right-8 bottom-5 hidden w-40 opacity-[0.16] lg:block" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 pt-16 pb-24 sm:pt-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:pt-28 lg:pb-32">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -419,7 +438,7 @@ function Home() {
       </section>
 
       {/* Benefits */}
-      <section id="benefits" className="border-t border-slate-100 bg-white">
+      <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
@@ -453,7 +472,7 @@ function Home() {
       </section>
 
       {/* What's inside */}
-      <section id="inside" className="bg-slate-50">
+      <section id="inside" className="bg-slate-50 scroll-reveal">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
@@ -473,7 +492,7 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
@@ -609,9 +628,10 @@ function Home() {
       {/* 10 Steps — product hero */}
       <section
         id="ten-steps"
-        className="relative overflow-hidden border-t border-slate-100 bg-slate-50"
+        className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
+        <img src="/blamo-car.svg" alt="" aria-hidden="true" className="mascot-float pointer-events-none absolute -bottom-3 -left-16 hidden w-56 opacity-[0.12] lg:block" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
           <div className="text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
@@ -664,7 +684,7 @@ function Home() {
       </section>
 
       {/* 10 Steps — benefits */}
-      <section className="border-t border-slate-100 bg-white">
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
@@ -700,7 +720,7 @@ function Home() {
       </section>
 
       {/* 10 Steps — what's inside */}
-      <section className="bg-slate-50">
+      <section className="bg-slate-50 scroll-reveal">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
@@ -719,7 +739,7 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
@@ -750,7 +770,7 @@ function Home() {
       </section>
 
       {/* 10 Steps — who it's for */}
-      <section className="border-t border-slate-100 bg-white">
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
         <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -807,7 +827,7 @@ function Home() {
       </section>
 
       {/* 10 Steps — FAQs */}
-      <section className="border-t border-slate-100 bg-white">
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
         <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
@@ -939,7 +959,7 @@ function Home() {
       </section>
 
       {/* Five Closes — what's inside / benefits */}
-      <section className="border-t border-slate-100 bg-white">
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
@@ -1031,7 +1051,7 @@ function Home() {
       </section>
 
       {/* Five Closes — FAQs */}
-      <section className="border-t border-slate-100 bg-white">
+      <section className="border-t border-slate-100 bg-white scroll-reveal">
         <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
