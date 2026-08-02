@@ -13,6 +13,8 @@ const HERO_COPY = {
   credibility:
     "Over 20 years of hands-on dealership experience — a proven process that works.",
   headline: "Close More Clearly, Starting Today",
+  opener:
+    "Tired of being thrown to the wolves? No real on-the-job training? Let us help.",
   subheadline:
     "Blamo Closing gives dealership salespeople practical training they can use on the floor today: word-for-word closing scripts, objection playbooks, and PDF guides built around real sales conversations.",
   highlights: [
@@ -611,7 +613,8 @@ function Home() {
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">{HERO_COPY.tagline}</p>
             <p className="mt-3 flex items-center justify-center gap-2 text-base font-extrabold tracking-tight text-slate-900 sm:justify-start sm:text-lg"><span className="text-amber-500" aria-hidden="true">★</span>{HERO_COPY.credibility}</p>
             <h1 className="mt-4 max-w-xl text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{HERO_COPY.subheadline}</p>
+            <p className="mt-6 max-w-xl text-lg font-extrabold leading-snug tracking-tight text-slate-900 sm:text-xl">{HERO_COPY.opener}</p>
+            <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{HERO_COPY.subheadline}</p>
             <ul className="mt-7 grid gap-3 text-left sm:grid-cols-3 sm:gap-4">
               {HERO_COPY.highlights.map((highlight) => (
                 <li key={highlight} className="flex items-start gap-2 text-sm font-semibold leading-snug text-slate-700">
