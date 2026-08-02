@@ -633,6 +633,13 @@ function Home() {
         </div>
       </header>
 
+      {/* Spanish coming-soon banner */}
+      <div className="border-b border-amber-300/40 bg-amber-400/10 px-4 py-2 text-center text-xs font-semibold text-slate-800 sm:text-sm">
+        <span aria-hidden="true">🇪🇸&nbsp;</span>
+        Spanish versions of every training guide — available right here once completed. ·&nbsp;
+        <span lang="es">Versiones en español de todas las guías: próximamente.</span>
+      </div>
+
       {/* Hero: the brand moment */}
       <section id="top" className="hero-brand relative overflow-hidden bg-slate-50">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_34rem_at_88%_10%,rgba(251,191,36,0.2),transparent)]" />
