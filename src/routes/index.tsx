@@ -623,6 +623,12 @@ function Home() {
               Qualifying Questions
             </a>
             <a
+              href="/es"
+              className="text-sm font-medium text-amber-700 transition hover:text-amber-500"
+            >
+              Español
+            </a>
+            <a
               href="/contact"
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
@@ -642,7 +648,7 @@ function Home() {
       {/* Spanish coming-soon banner */}
       <div className="border-b border-amber-300/40 bg-amber-400/10 px-4 py-2 text-center text-xs font-semibold text-slate-800 sm:text-sm">
         <span aria-hidden="true">🇪🇸&nbsp;</span>
-        Spanish versions of every training guide — available right here once completed. ·&nbsp;
+        Spanish versions of every training guide — <a href="/es" className="underline decoration-amber-500 underline-offset-2 hover:text-amber-700">available right here once completed</a>. ·&nbsp;
         <span lang="es">Versiones en español de todas las guías: próximamente.</span>
       </div>
 
