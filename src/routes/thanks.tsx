@@ -31,24 +31,32 @@ function Thanks() {
   // No param (or product=starter-kit) → Starter Kit, exactly as before.
   // product=ten-steps → The 10 Steps of the Sale.
   // product=five-closes → The Five Closes in Action (video).
+  // product=internet-sales → The 10 Steps to the Internet Sale.
   const isTenSteps = product === "ten-steps";
   const isFiveCloses = product === "five-closes";
+  const isInternetSales = product === "internet-sales";
 
   const fileUrl = isFiveCloses
     ? "/the-five-closes-in-action.mp4"
     : isTenSteps
       ? "/the-10-steps-of-the-sale.pdf"
-      : "/close-academy-starter-kit.pdf";
+      : isInternetSales
+        ? "/the-10-steps-to-the-internet-sale.pdf"
+        : "/close-academy-starter-kit.pdf";
   const fileName = isFiveCloses
     ? "the-five-closes-in-action.mp4"
     : isTenSteps
       ? "the-10-steps-of-the-sale.pdf"
-      : "close-academy-starter-kit.pdf";
+      : isInternetSales
+        ? "the-10-steps-to-the-internet-sale.pdf"
+        : "close-academy-starter-kit.pdf";
   const productName = isFiveCloses
     ? "The Five Closes in Action"
     : isTenSteps
       ? "The 10 Steps of the Sale"
-      : "The Sales Rep Starter Kit";
+      : isInternetSales
+        ? "The 10 Steps to the Internet Sale"
+        : "The Sales Rep Starter Kit";
   const downloadLabel = isFiveCloses
     ? "Download your video"
     : "Download your PDF";
