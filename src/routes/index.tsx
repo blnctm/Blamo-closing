@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+import { logoutAccount, me, startCheckout } from "~/lib/client-api";
+
 /* ════════════════════════════════════════════════════════════════════
  * CONFIG — buy button destination
  * ---------------------------------------------------------------------
@@ -152,51 +154,165 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 function BuyButton({
   size = "lg",
+  slug = "starter-kit",
   href = PAYMENT_LINK,
   label = "Get the Starter Kit — $9.99",
   ariaLabel = "Get the Starter Kit — $9.99",
 }: {
   size?: "lg" | "sm";
+  /** Product slug for the Stripe checkout (POST /api/checkout). */
+  slug?: string;
+  /** PayPal fallback link (kept for buyers who prefer PayPal). */
   href?: string;
   label?: string;
   ariaLabel?: string;
 }) {
-  const [showNotice, setShowNotice] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const placeholder = href === "PAYMENT_LINK_PLACEHOLDER";
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  async function handleCheckout() {
+    if (busy) return;
+    setBusy(true);
+    setErrorMsg(null);
+    try {
+      const url = await startCheckout(slug);
+      window.location.href = url;
+    } catch (error) {
+      if (error instanceof Error && error.message === "login_required") {
+        // Logged out → log in first, then come back to this product section.
+        const anchor = slug === "starter-kit" ? "buy" : slug;
+        window.location.href = `/login?next=${encodeURIComponent(`/#${anchor}`)}`;
+        return;
+      }
+      setErrorMsg(
+        "Checkout is temporarily unavailable — try the PayPal button below, or come back in a moment.",
+      );
+      setBusy(false);
+    }
+  }
+
+  const handlePayPalClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (placeholder) {
       e.preventDefault();
-      setShowNotice(true);
+      setErrorMsg("Store opening soon — checkout will be available shortly.");
     }
   };
 
+  const primaryClass =
+    size === "lg"
+      ? "group inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-60"
+      : "group inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-sm transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-60";
+
   return (
     <div className="flex flex-col items-center gap-3 sm:items-start">
-      <a
-        href={href}
-        onClick={handleClick}
-        aria-label={ariaLabel}
-        className={
-          size === "lg"
-            ? "group inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
-            : "inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-sm transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
-        }
-      >
-        {label}
-        <ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-      </a>
-      {showNotice && (
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+        <button
+          type="button"
+          onClick={handleCheckout}
+          disabled={busy}
+          aria-label={ariaLabel}
+          className={primaryClass}
+        >
+          {busy ? "Starting checkout…" : label}
+          <ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+        </button>
+        <a
+          href={href}
+          onClick={handlePayPalClick}
+          className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
+        >
+          or pay with PayPal
+        </a>
+      </div>
+      {errorMsg && (
         <p
           role="status"
-          className="rounded-lg border border-amber-200/40 bg-amber-400/10 px-3.5 py-2 text-sm font-medium text-amber-200"
+          className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-sm font-medium text-red-700"
         >
-          Store opening soon — checkout will be available shortly.
+          {errorMsg}
         </p>
       )}
     </div>
   );
 }
+
+/* ---------- Header auth (Login/Register vs Account/Logout) ---------- */
+
+function AuthNav() {
+  const [user, setUser] = useState<{ name?: string } | null>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    me()
+      .then((data) => {
+        if (cancelled || !data) return;
+        setUser(data.user);
+      })
+      .catch(() => {
+        // Network hiccup — leave the nav logged-out.
+      })
+      .finally(() => {
+        if (!cancelled) setReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function handleLogout() {
+    try {
+      await logoutAccount();
+    } catch {
+      // Even if the request fails, reload; the cookie expires on its own.
+    }
+    window.location.reload();
+  }
+
+  if (!ready) {
+    // Reserve space so the header doesn't jump when auth loads.
+    return <span className="h-9 w-20" aria-hidden="true" />;
+  }
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-3">
+        <a
+          href="/account"
+          className="rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
+        >
+          My account
+        </a>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+        >
+          Log out
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-4">
+      <a
+        href="/login"
+        className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+      >
+        Log in
+      </a>
+      <a
+        href="/register"
+        className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+      >
+        Sign up
+      </a>
+    </div>
+  );
+}
+
 
 /* ---------- Hero product mockup (pure CSS — no image assets) ---------- */
 
@@ -648,7 +764,9 @@ function Home() {
             <LogoMark className="h-8 w-8" />
             <Wordmark />
           </a>
-          <div className="hidden items-center gap-5 sm:flex">
+          <div className="flex items-center gap-5">
+            <AuthNav />
+            <div className="hidden items-center gap-5 lg:flex">
             <a
               href="#ten-steps"
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
@@ -697,6 +815,7 @@ function Home() {
             >
               Get the Starter Kit
             </a>
+            </div>
           </div>
         </div>
       </header>
@@ -727,7 +846,7 @@ function Home() {
               checklist.
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
-              <BuyButton />
+              <BuyButton slug="starter-kit" />
             </div>
             <p className="mt-5 text-sm text-slate-500">
               Instant download · 12-page PDF · Same-day use
@@ -862,7 +981,7 @@ function Home() {
             Download it instantly after purchase.
           </p>
           <div className="mt-9 flex justify-center">
-            <BuyButton />
+            <BuyButton slug="starter-kit" />
           </div>
           <p className="mt-5 text-sm">
             <a
@@ -963,6 +1082,7 @@ function Home() {
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
+                slug="ten-steps"
                 href={TEN_STEPS_PAYMENT_LINK}
                 label="Get The 10 Steps of the Sale — $9.99"
                 ariaLabel="Get The 10 Steps of the Sale — $9.99"
@@ -1103,6 +1223,7 @@ function Home() {
           </p>
           <div className="mt-9 flex justify-center">
             <BuyButton
+              slug="ten-steps"
               href={TEN_STEPS_PAYMENT_LINK}
               label="Get The 10 Steps of the Sale — $9.99"
               ariaLabel="Get The 10 Steps of the Sale — $9.99"
@@ -1217,6 +1338,7 @@ function Home() {
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
+                slug="five-closes"
                 href={VIDEO_PAYMENT_LINK}
                 label="Get The Five Closes in Action — $9.99"
                 ariaLabel="Get The Five Closes in Action — $9.99"
@@ -1306,6 +1428,7 @@ function Home() {
           </p>
           <div className="mt-9 flex justify-center">
             <BuyButton
+              slug="five-closes"
               href={VIDEO_PAYMENT_LINK}
               label="Get The Five Closes in Action — $9.99"
               ariaLabel="Get The Five Closes in Action — $9.99"
@@ -1416,6 +1539,7 @@ function Home() {
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
+                slug="internet-sales"
                 href={INTERNET_SALES_PAYMENT_LINK}
                 label="Get The 10 Steps to the Internet Sale — $9.99"
                 ariaLabel="Get The 10 Steps to the Internet Sale — $9.99"
@@ -1554,6 +1678,7 @@ function Home() {
           </p>
           <div className="mt-9 flex justify-center">
             <BuyButton
+              slug="internet-sales"
               href={INTERNET_SALES_PAYMENT_LINK}
               label="Get The 10 Steps to the Internet Sale — $9.99"
               ariaLabel="Get The 10 Steps to the Internet Sale — $9.99"
@@ -1677,6 +1802,7 @@ function Home() {
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
+                slug="spouse"
                 href={SPOUSE_PAYMENT_LINK}
                 label="Get The Spouse Objection Playbook — $2.99"
                 ariaLabel="Get The Spouse Objection Playbook — $2.99"
@@ -1817,6 +1943,7 @@ function Home() {
           </p>
           <div className="mt-9 flex justify-center">
             <BuyButton
+              slug="spouse"
               href={SPOUSE_PAYMENT_LINK}
               label="Get The Spouse Objection Playbook — $2.99"
               ariaLabel="Get The Spouse Objection Playbook — $2.99"
@@ -1924,6 +2051,7 @@ function Home() {
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
+                slug="pray-about-it"
                 href={PRAY_ABOUT_IT_PAYMENT_LINK}
                 label="Get The “Pray About It” Objection Playbook — $2.99"
                 ariaLabel="Get The “Pray About It” Objection Playbook — $2.99"
@@ -2063,6 +2191,7 @@ function Home() {
           </p>
           <div className="mt-9 flex justify-center">
             <BuyButton
+              slug="pray-about-it"
               href={PRAY_ABOUT_IT_PAYMENT_LINK}
               label="Get The “Pray About It” Objection Playbook — $2.99"
               ariaLabel="Get The “Pray About It” Objection Playbook — $2.99"
@@ -2168,6 +2297,7 @@ function Home() {
             </p>
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
+                slug="trade-in"
                 href={TRADE_IN_PAYMENT_LINK}
                 label="Get The “I Want More for My Trade-In” Playbook — $2.99"
                 ariaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
@@ -2308,6 +2438,7 @@ function Home() {
           </p>
           <div className="mt-9 flex justify-center">
             <BuyButton
+              slug="trade-in"
               href={TRADE_IN_PAYMENT_LINK}
               label="Get The “I Want More for My Trade-In” Playbook — $2.99"
               ariaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
@@ -2392,7 +2523,7 @@ function Home() {
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop guessing what the customer wants — ask the questions that uncover why they’re really buying.</h2>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">Seventy-five qualification questions across nine categories, the Golden 10, and a six-step sales flow: build rapport, find the real motivation, and present with confidence — without giving away the price.</p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <BuyButton href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" />
+                <BuyButton slug="qualifying-questions" href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" />
                 <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
               </div>
             </div>
@@ -2423,7 +2554,7 @@ function Home() {
           <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6"><Eyebrow>Who it’s for</Eyebrow><p className="mt-3 leading-relaxed text-slate-700">New and veteran dealership sales reps, internet sales teams, and product specialists who want to qualify customers faster, present with more confidence, and close more deals without discounting the price.</p></div>
         </div>
       </section>
-      <section className="bg-slate-900"><div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
+      <section className="bg-slate-900"><div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
       <section className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
         ["Do I need experience to use this?", "No. The questions are numbered 1–75 and organized by category, so you can work one category per shift and build from there. The Golden 10 gives you a complete system you can use on your very next customer."],
         ["Won’t this make my conversations feel scripted?", "The questions are conversation starters, not a script to recite. Say them out loud until they sound like you, adapt the wording to your market, and ask with genuine curiosity — the structure works because it sounds natural."],
@@ -2495,6 +2626,15 @@ function Home() {
             </a>
             <a href="/thanks?product=qualifying-questions" className="hover:text-slate-900">
               Download the Qualifying Questions PDF
+            </a>
+            <a href="/login" className="hover:text-slate-900">
+              Log in
+            </a>
+            <a href="/register" className="hover:text-slate-900">
+              Create account
+            </a>
+            <a href="/account" className="hover:text-slate-900">
+              My account
             </a>
             <a href="#buy" className="font-medium text-slate-900">
               Get the Starter Kit

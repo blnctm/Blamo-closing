@@ -1,0 +1,356 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+
+import {
+  downloadWithCode,
+  logoutAccount,
+  me,
+  startCheckout,
+} from "~/lib/client-api";
+import type {
+  ClientPurchase,
+  ClientUser,
+} from "~/lib/client-api";
+import {
+  STORE_PRODUCTS,
+  findStoreProduct,
+  formatPrice,
+} from "~/lib/store-products";
+
+export const Route = createFileRoute("/account")({
+  head: () => ({
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
+  component: Account,
+});
+
+function LogoMark({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
+      <rect width="40" height="40" rx="10" fill="#0F172A" />
+      <path
+        d="M12 21l5.5 5.5L28 14"
+        stroke="#F59E0B"
+        strokeWidth="3.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+const STATUS_LABEL: Record<ClientPurchase["status"], string> = {
+  pending: "Payment pending",
+  paid: "Confirming payment",
+  unlocked: "Unlocked",
+};
+
+function DownloadButton({
+  purchase,
+}: {
+  purchase: ClientPurchase;
+}) {
+  const product = findStoreProduct(purchase.productSlug);
+  const [busy, setBusy] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function handleDownload() {
+    if (!product || !purchase.confirmationCode || busy) return;
+    setBusy(true);
+    setErrorMsg(null);
+    try {
+      await downloadWithCode(
+        purchase.productSlug,
+        purchase.confirmationCode,
+        product.fileName,
+      );
+    } catch {
+      setErrorMsg("Download failed — please try again in a moment.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (!product || !purchase.confirmationCode) return null;
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={handleDownload}
+        disabled={busy}
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm transition hover:bg-amber-400 disabled:opacity-60"
+      >
+        <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+          <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
+          <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+        </svg>
+        Download
+      </button>
+      {errorMsg && (
+        <p role="alert" className="mt-2 text-sm text-red-600">
+          {errorMsg}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function BuyNowButton({ slug }: { slug: string }) {
+  const product = findStoreProduct(slug);
+  const [busy, setBusy] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function handleBuy() {
+    if (busy) return;
+    setBusy(true);
+    setErrorMsg(null);
+    try {
+      const url = await startCheckout(slug);
+      window.location.href = url;
+    } catch (error) {
+      // Shouldn't happen on /account (the buyer is logged in), but if a
+      // session expired mid-page, send them through login and back here.
+      if (error instanceof Error && error.message === "login_required") {
+        window.location.href = `/login?next=${encodeURIComponent("/account")}`;
+        return;
+      }
+      setErrorMsg(
+        "Checkout is temporarily unavailable — please try again in a moment.",
+      );
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={handleBuy}
+        disabled={busy}
+        className="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:opacity-60"
+      >
+        {busy ? "Starting checkout…" : `Buy now — ${formatPrice(product?.priceCents ?? 999)}`}
+      </button>
+      {errorMsg && (
+        <p role="alert" className="mt-2 text-sm text-red-600">
+          {errorMsg}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function PurchaseCard({ purchase }: { purchase: ClientPurchase }) {
+  const product = findStoreProduct(purchase.productSlug);
+  return (
+    <li className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
+        <p className="font-semibold text-slate-900">
+          {product?.name ?? purchase.productSlug}
+        </p>
+        <p className="mt-0.5 text-sm text-slate-500">
+          Status:{" "}
+          <span className="font-medium text-slate-700">
+            {STATUS_LABEL[purchase.status] ?? purchase.status}
+          </span>
+        </p>
+        {purchase.status === "unlocked" && purchase.confirmationCode && (
+          <p className="mt-2 text-sm text-slate-600">
+            Your unlock code:{" "}
+            <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-sm font-semibold tracking-wider text-slate-900">
+              {purchase.confirmationCode}
+            </code>
+          </p>
+        )}
+        {purchase.status !== "unlocked" && (
+          <p className="mt-2 text-sm text-slate-500">
+            Your unlock code appears here the moment payment confirms.
+          </p>
+        )}
+      </div>
+      {purchase.status === "unlocked" && (
+        <DownloadButton purchase={purchase} />
+      )}
+    </li>
+  );
+}
+
+function Account() {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<ClientUser | null>(null);
+  const [purchases, setPurchases] = useState<ClientPurchase[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    me()
+      .then((data) => {
+        if (cancelled) return;
+        if (data) {
+          setUser(data.user);
+          setPurchases(data.purchases);
+        }
+      })
+      .catch(() => {
+        // Network hiccup — treat as logged out so the page stays usable.
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function handleLogout() {
+    try {
+      await logoutAccount();
+    } catch {
+      // Even if the request fails, bounce to home; the cookie expires on its own.
+    }
+    window.location.href = "/";
+  }
+
+  const purchasedSlugs = new Set(purchases.map((purchase) => purchase.productSlug));
+  const available = STORE_PRODUCTS.filter(
+    (product) => !purchasedSlugs.has(product.slug),
+  );
+
+  return (
+    <div className="flex min-h-dvh flex-col bg-slate-50">
+      {/* Header */}
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <a href="/" className="flex items-center gap-2.5">
+            <LogoMark className="h-8 w-8" />
+            <span className="text-lg font-bold tracking-tight text-slate-900">
+              Blamo<span className="text-slate-400"> Closing</span>
+            </span>
+          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="/"
+              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+            >
+              Store
+            </a>
+            {user && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+              >
+                Log out
+              </button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-14">
+        {loading ? (
+          <p className="text-center text-slate-500">Loading your account…</p>
+        ) : !user ? (
+          /* Logged out */
+          <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+            <LogoMark className="mx-auto h-12 w-12" />
+            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-slate-900">
+              You’re not logged in
+            </h1>
+            <p className="mx-auto mt-3 max-w-md text-slate-600">
+              Log in to see your purchases, unlock codes, and downloads.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="/login?next=/account"
+                className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-6 py-3 text-base font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400"
+              >
+                Log in
+              </a>
+              <a
+                href="/register?next=/account"
+                className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3 text-base font-semibold text-white transition hover:bg-slate-700"
+              >
+                Create an account
+              </a>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Profile */}
+            <section className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+                Hi, {user.name.split(" ")[0] || "there"} 👋
+              </h1>
+              <p className="mt-2 text-slate-600">
+                <span className="font-medium text-slate-800">{user.name}</span>{" "}
+                · {user.email}
+              </p>
+            </section>
+
+            {/* Purchases */}
+            <section className="mt-8">
+              <h2 className="text-xl font-bold tracking-tight text-slate-900">
+                Your purchases
+              </h2>
+              {purchases.length === 0 ? (
+                <p className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white p-6 text-slate-500">
+                  You haven’t bought anything yet — grab a guide below and your
+                  download shows up here instantly.
+                </p>
+              ) : (
+                <ul className="mt-4 space-y-3">
+                  {purchases.map((purchase) => (
+                    <PurchaseCard key={purchase.id} purchase={purchase} />
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            {/* Available products */}
+            {available.length > 0 && (
+              <section className="mt-10">
+                <h2 className="text-xl font-bold tracking-tight text-slate-900">
+                  More training to buy
+                </h2>
+                <ul className="mt-4 space-y-3">
+                  {available.map((product) => (
+                    <li
+                      key={product.slug}
+                      className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <p className="font-semibold text-slate-900">
+                          {product.name}
+                        </p>
+                        <p className="mt-0.5 text-sm text-slate-500">
+                          {product.kindLabel} · {formatPrice(product.priceCents)}
+                        </p>
+                      </div>
+                      <BuyNowButton slug={product.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </>
+        )}
+      </main>
+
+      <footer className="border-t border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
+          <div className="flex items-center gap-2.5">
+            <LogoMark className="h-6 w-6" />
+            <span className="text-sm font-semibold text-slate-700">
+              Blamo Closing
+            </span>
+          </div>
+          <p className="text-sm text-slate-500">
+            © {new Date().getFullYear()} Blamo Closing · Original training
+            material
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
