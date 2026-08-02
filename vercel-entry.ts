@@ -15,6 +15,8 @@ import {
   DOWNLOAD_PATH,
   handleDownloadRequest,
 } from "./server-assets/download-handler";
+import { handleCheckout } from "./src/routes/api/-checkout";
+import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 
 const fetchHandler = handler as {
   fetch: (request: Request) => Response | Promise<Response>;
@@ -47,12 +49,15 @@ export default async function vercelHandler(
 ): Promise<void> {
   try {
     const webRequest = toWebRequest(req);
-    // Code-gated download endpoint (POST only) — handled before the SSR
-    // handler so paid files can never be fetched by their old public URLs.
-    const webRes =
-      new URL(webRequest.url).pathname === DOWNLOAD_PATH
-        ? await handleDownloadRequest(webRequest)
-        : await fetchHandler.fetch(webRequest);
+    // API endpoints are handled before the SSR handler.
+    const pathname = new URL(webRequest.url).pathname;
+    const webRes = pathname === "/api/checkout"
+      ? await handleCheckout(webRequest)
+      : pathname === "/api/stripe-webhook"
+        ? await handleStripeWebhook(webRequest)
+        : pathname === DOWNLOAD_PATH
+          ? await handleDownloadRequest(webRequest)
+          : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     if (webRes.body) {
