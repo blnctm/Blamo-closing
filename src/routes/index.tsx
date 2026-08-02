@@ -285,423 +285,269 @@ function AuthNav() {
 }
 
 
-/* ---------- Hero product mockup (pure CSS — no image assets) ---------- */
+/* ---------- Product cover cards (branded 600x800 thumbnails) ---------- */
+
+/**
+ * Shared product card: branded 3:4 cover thumbnail on top, then the product
+ * title, price, and a Buy button below — all inside one rounded, shadowed,
+ * hover-lifting card. Each card keeps its own peeking badge and tagline chip
+ * (existing design language). The $2.99 playbooks remain standalone products:
+ * every card carries its own price and its own Buy button.
+ */
+function ProductCoverCard({
+  img,
+  alt,
+  badge,
+  title,
+  price,
+  slug,
+  ctaLabel,
+  ctaAriaLabel,
+  chipTitle,
+  chipSub,
+}: {
+  img: string;
+  alt: string;
+  badge: React.ReactNode;
+  title: string;
+  price: string;
+  slug: string;
+  ctaLabel: string;
+  ctaAriaLabel: string;
+  chipTitle: string;
+  chipSub: string;
+}) {
+  return (
+    <div className="product-card relative mx-auto w-full max-w-xs lg:max-w-sm">
+      {/* Peeking badge from behind */}
+      <div className="absolute -top-4 -right-3 z-20 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
+        {badge}
+      </div>
+
+      {/* The card: cover on top, title/price/buy below */}
+      <div className="relative -rotate-1 overflow-hidden rounded-2xl bg-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
+        <img
+          src={img}
+          alt={alt}
+          width={600}
+          height={800}
+          loading="lazy"
+          className="aspect-[3/4] w-full object-cover"
+        />
+        <div className="px-5 pb-5 pt-4">
+          <h3 className="text-base font-bold leading-snug tracking-tight text-slate-900">
+            {title}
+          </h3>
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-3">
+            <span className="text-xl font-extrabold tracking-tight text-slate-900">
+              {price}
+            </span>
+            <BuyButton
+              size="sm"
+              slug={slug}
+              label={ctaLabel}
+              ariaLabel={ctaAriaLabel}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Tagline chip */}
+      <div className="absolute -bottom-6 -left-4 z-20 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
+        <p className="text-xs font-semibold text-slate-900">{chipTitle}</p>
+        <p className="mt-0.5 text-[11px] text-slate-500">{chipSub}</p>
+      </div>
+    </div>
+  );
+}
+
+function QuickCardBadge() {
+  return (
+    <>
+      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
+        Quick card
+      </p>
+      <div className="mt-2 space-y-1.5">
+        <div className="h-1.5 rounded-full bg-slate-200" />
+        <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
+        <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
+      </div>
+    </>
+  );
+}
+
+function WatchBadge() {
+  return (
+    <>
+      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
+        Watch it
+      </p>
+      <div className="mt-2 flex items-center gap-1.5">
+        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500">
+          <svg
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-3 w-3 text-slate-950"
+            aria-hidden="true"
+          >
+            <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.89a1.5 1.5 0 0 0 0-2.54L6.3 2.84Z" />
+          </svg>
+        </span>
+        <span className="text-[11px] font-semibold text-slate-900">~10 min</span>
+      </div>
+    </>
+  );
+}
+
+/* ---------- Starter Kit cover card ---------- */
 
 function ProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Quick-reference card peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Quick card
-        </p>
-        <div className="mt-2 space-y-1.5">
-          <div className="h-1.5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
-        </div>
-      </div>
-
-      {/* The guide itself */}
-      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <div className="flex items-center justify-between gap-3">
-          <LogoMark className="h-8 w-8" />
-          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
-            PDF · 12 pages
-          </span>
-        </div>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-          The Sales Rep
-        </p>
-        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
-          Starter Kit
-        </h3>
-        <div className="mt-10 border-t border-white/10 pt-4">
-          <p className="text-[11px] leading-relaxed text-slate-400">
-            Five closes · word-for-word scripts
-            <br />
-            Readiness checks · follow-through plan
-          </p>
-          <p className="mt-4 text-2xl font-bold text-amber-300">$9.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            one-time · downloadable PDF · intro price
-          </p>
-        </div>
-      </div>
-
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Close with clarity—not pressure.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          Built for same-day use
-        </p>
-      </div>
-    </div>
+    <ProductCoverCard
+      img="/cover-thumbs/starter-kit.png"
+      alt="The Sales Rep Starter Kit cover"
+      badge={<QuickCardBadge />}
+      title="The Sales Rep Starter Kit"
+      price="$9.99"
+      slug="starter-kit"
+      ctaLabel="Buy now — $9.99"
+      ctaAriaLabel="Get the Starter Kit — $9.99"
+      chipTitle="Close with clarity—not pressure."
+      chipSub="Built for same-day use"
+    />
   );
 }
 
-/* ---------- 10 Steps product mockup (pure CSS — no image assets) ---------- */
+/* ---------- 10 Steps of the Sale cover card ---------- */
 
 function TenStepsProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Quick-reference card peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Quick card
-        </p>
-        <div className="mt-2 space-y-1.5">
-          <div className="h-1.5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
-        </div>
-      </div>
-
-      {/* The guide itself */}
-      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <div className="flex items-center justify-between gap-3">
-          <LogoMark className="h-8 w-8" />
-          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
-            PDF · 14 pages
-          </span>
-        </div>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-          The 10 Steps
-        </p>
-        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
-          of the Sale
-        </h3>
-        <div className="mt-10 border-t border-white/10 pt-4">
-          <p className="text-[11px] leading-relaxed text-slate-400">
-            Meet & Greet → Follow-up
-            <br />
-            Word-for-word scripts · checklists
-          </p>
-          <p className="mt-4 text-2xl font-bold text-amber-300">$9.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            one-time · downloadable PDF · intro price
-          </p>
-        </div>
-      </div>
-
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Run the whole sale, start to finish.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          Built for the dealership floor
-        </p>
-      </div>
-    </div>
+    <ProductCoverCard
+      img="/cover-thumbs/10-steps-sale.png"
+      alt="The 10 Steps of the Sale cover"
+      badge={<QuickCardBadge />}
+      title="The 10 Steps of the Sale"
+      price="$9.99"
+      slug="ten-steps"
+      ctaLabel="Buy now — $9.99"
+      ctaAriaLabel="Get The 10 Steps of the Sale — $9.99"
+      chipTitle="Run the whole sale, start to finish."
+      chipSub="Built for the dealership floor"
+    />
   );
 }
 
-/* ---------- Five Closes video product card (poster art) ---------- */
+/* ---------- Five Closes video cover card ---------- */
 
 function VideoProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Play badge peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Watch it
-        </p>
-        <div className="mt-2 flex items-center gap-1.5">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500">
-            <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3 text-slate-950" aria-hidden="true">
-              <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.89a1.5 1.5 0 0 0 0-2.54L6.3 2.84Z" />
-            </svg>
-          </span>
-          <span className="text-[11px] font-semibold text-slate-900">
-            ~10 min
-          </span>
-        </div>
-      </div>
-
-      {/* The poster itself */}
-      <div className="relative -rotate-1 overflow-hidden rounded-2xl shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <img
-          src="/video-poster.png"
-          alt="The Five Closes in Action — video poster"
-          className="w-full"
-          loading="lazy"
-        />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent px-5 pb-4 pt-12">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-300">
-            Video · ~10 min · MP4
-          </p>
-          <p className="mt-1 text-lg font-bold tracking-tight text-white">
-            The Five Closes in Action
-          </p>
-          <p className="mt-2 text-lg font-bold text-amber-300">$9.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-300">
-            one-time · downloadable MP4 · intro price
-          </p>
-        </div>
-      </div>
-
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Hear it before you use it.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          Five closes, realistic dialogue
-        </p>
-      </div>
-    </div>
+    <ProductCoverCard
+      img="/cover-thumbs/five-closes.png"
+      alt="The Five Closes in Action cover"
+      badge={<WatchBadge />}
+      title="The Five Closes in Action"
+      price="$9.99"
+      slug="five-closes"
+      ctaLabel="Buy now — $9.99"
+      ctaAriaLabel="Get The Five Closes in Action — $9.99"
+      chipTitle="Hear it before you use it."
+      chipSub="Five closes, realistic dialogue"
+    />
   );
 }
 
-/* ---------- 10 Steps to the Internet Sale product mockup (pure CSS — no image assets) ---------- */
+/* ---------- 10 Steps to the Internet Sale cover card ---------- */
 
 function InternetSalesProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Quick-reference card peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Quick card
-        </p>
-        <div className="mt-2 space-y-1.5">
-          <div className="h-1.5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
-        </div>
-      </div>
-
-      {/* The guide itself */}
-      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <div className="flex items-center justify-between gap-3">
-          <LogoMark className="h-8 w-8" />
-          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
-            PDF · 15 pages
-          </span>
-        </div>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-          The 10 Steps to
-        </p>
-        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
-          the Internet Sale
-        </h3>
-        <div className="mt-10 border-t border-white/10 pt-4">
-          <p className="text-[11px] leading-relaxed text-slate-400">
-            Respond in 5 min → close before they walk in
-            <br />
-            Scripts · BLAMO Video Formula
-          </p>
-          <p className="mt-4 text-2xl font-bold text-amber-300">$9.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            one-time · downloadable PDF · intro price
-          </p>
-        </div>
-      </div>
-
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Win the lead before they walk in.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          Built for internet sales & BDC
-        </p>
-      </div>
-    </div>
+    <ProductCoverCard
+      img="/cover-thumbs/internet-sale.png"
+      alt="The 10 Steps to the Internet Sale cover"
+      badge={<QuickCardBadge />}
+      title="The 10 Steps to the Internet Sale"
+      price="$9.99"
+      slug="internet-sales"
+      ctaLabel="Buy now — $9.99"
+      ctaAriaLabel="Get The 10 Steps to the Internet Sale — $9.99"
+      chipTitle="Win the lead before they walk in."
+      chipSub="Built for internet sales & BDC"
+    />
   );
 }
 
-/* ---------- Spouse Objection Playbook product mockup (pure CSS — no image assets) ---------- */
+/* ---------- Spouse Objection Playbook cover card ---------- */
 
 function SpouseProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Quick-reference card peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Quick card
-        </p>
-        <div className="mt-2 space-y-1.5">
-          <div className="h-1.5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
-        </div>
-      </div>
-
-      {/* The guide itself */}
-      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <div className="flex items-center justify-between gap-3">
-          <LogoMark className="h-8 w-8" />
-          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
-            PDF · 14 pages
-          </span>
-        </div>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-          The Spouse Objection
-        </p>
-        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
-          Playbook
-        </h3>
-        <div className="mt-10 border-t border-white/10 pt-4">
-          <p className="text-[11px] leading-relaxed text-slate-400">
-            Ten closes · word-for-word scripts
-            <br />
-            Partnership → Gentle · diagnosis guide
-          </p>
-          <p className="mt-4 text-2xl font-bold text-amber-300">$2.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            one-time · downloadable PDF · entry tier
-          </p>
-        </div>
-      </div>
-
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Respect the partnership. Save the deal.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          Ten closes, zero pressure
-        </p>
-      </div>
-    </div>
+    <ProductCoverCard
+      img="/cover-thumbs/spouse-playbook.png"
+      alt="The Spouse Objection Playbook cover"
+      badge={<QuickCardBadge />}
+      title="The Spouse Objection Playbook"
+      price="$2.99"
+      slug="spouse"
+      ctaLabel="Buy now — $2.99"
+      ctaAriaLabel="Get The Spouse Objection Playbook — $2.99"
+      chipTitle="Respect the partnership. Save the deal."
+      chipSub="Ten closes, zero pressure"
+    />
   );
 }
 
-/* ---------- Pray About It Objection Playbook product mockup (pure CSS — no image assets) ---------- */
+/* ---------- Pray About It Objection Playbook cover card ---------- */
 
 function PrayAboutItProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Quick-reference card peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Quick card
-        </p>
-        <div className="mt-2 space-y-1.5">
-          <div className="h-1.5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
-        </div>
-      </div>
-
-      {/* The guide itself */}
-      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <div className="flex items-center justify-between gap-3">
-          <LogoMark className="h-8 w-8" />
-          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
-            PDF · 13 pages
-          </span>
-        </div>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-          The “Pray About It”
-        </p>
-        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
-          Objection Playbook
-        </h3>
-        <div className="mt-10 border-t border-white/10 pt-4">
-          <p className="text-[11px] leading-relaxed text-slate-400">
-            Eight closes · word-for-word scripts
-            <br />
-            Clarifying → Respect · what to avoid
-          </p>
-          <p className="mt-4 text-2xl font-bold text-amber-300">$2.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            one-time · downloadable PDF · entry tier
-          </p>
-        </div>
-      </div>
-
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Honor the belief. Never weaponize it.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          Eight respectful closes
-        </p>
-      </div>
-    </div>
+    <ProductCoverCard
+      img="/cover-thumbs/pray-playbook.png"
+      alt="The “Pray About It” Objection Playbook cover"
+      badge={<QuickCardBadge />}
+      title="The “Pray About It” Objection Playbook"
+      price="$2.99"
+      slug="pray-about-it"
+      ctaLabel="Buy now — $2.99"
+      ctaAriaLabel="Get The “Pray About It” Objection Playbook — $2.99"
+      chipTitle="Honor the belief. Never weaponize it."
+      chipSub="Eight respectful closes"
+    />
   );
 }
 
-/* ---------- Trade-In Objection Playbook product mockup (pure CSS — no image assets) ---------- */
+/* ---------- Trade-In Objection Playbook cover card ---------- */
 
 function TradeInProductCard() {
   return (
-    <div
-      className="relative mx-auto w-full max-w-xs lg:max-w-sm"
-      aria-hidden="true"
-    >
-      {/* Quick-reference card peeking from behind */}
-      <div className="absolute -top-4 -right-3 w-28 rotate-6 rounded-xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/10">
-        <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400">
-          Quick card
-        </p>
-        <div className="mt-2 space-y-1.5">
-          <div className="h-1.5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded-full bg-slate-200" />
-          <div className="h-1.5 w-3/5 rounded-full bg-amber-300/80" />
-        </div>
-      </div>
+    <ProductCoverCard
+      img="/cover-thumbs/tradein-playbook.png"
+      alt="The “I Want More for My Trade-In” Playbook cover"
+      badge={<QuickCardBadge />}
+      title="The “I Want More for My Trade-In” Playbook"
+      price="$2.99"
+      slug="trade-in"
+      ctaLabel="Buy now — $2.99"
+      ctaAriaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
+      chipTitle="Win the whole deal, not one number."
+      chipSub="The owner’s favorite trade close"
+    />
+  );
+}
 
-      {/* The guide itself */}
-      <div className="relative -rotate-1 rounded-2xl bg-slate-900 p-7 text-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <div className="flex items-center justify-between gap-3">
-          <LogoMark className="h-8 w-8" />
-          <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-amber-300">
-            PDF · 15 pages
-          </span>
-        </div>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-          The “I Want More
-        </p>
-        <h3 className="mt-1.5 text-3xl font-bold leading-tight tracking-tight text-white">
-          for My Trade-In”
-        </h3>
-        <div className="mt-10 border-t border-white/10 pt-4">
-          <p className="text-[11px] leading-relaxed text-slate-400">
-            Ten closes · word-for-word scripts
-            <br />
-            Isolation → Commitment · favorite close
-          </p>
-          <p className="mt-4 text-2xl font-bold text-amber-300">$2.99</p>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400">
-            one-time · downloadable PDF · entry tier
-          </p>
-        </div>
-      </div>
+/* ---------- Qualifying Questions Guide cover card ---------- */
 
-      {/* Tagline chip */}
-      <div className="absolute -bottom-6 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg shadow-slate-900/10">
-        <p className="text-xs font-semibold text-slate-900">
-          Win the whole deal, not one number.
-        </p>
-        <p className="mt-0.5 text-[11px] text-slate-500">
-          The owner’s favorite trade close
-        </p>
-      </div>
-    </div>
+function QualifyingQuestionsProductCard() {
+  return (
+    <ProductCoverCard
+      img="/cover-thumbs/qualifying-questions.png"
+      alt="The Qualifying Questions Guide cover"
+      badge={<QuickCardBadge />}
+      title="The Qualifying Questions Guide"
+      price="$9.99"
+      slug="qualifying-questions"
+      ctaLabel="Buy now — $9.99"
+      ctaAriaLabel="Get The Qualifying Questions Guide — $9.99"
+      chipTitle="Ask better questions."
+      chipSub="75 questions · Golden 10"
+    />
   );
 }
 
@@ -949,7 +795,10 @@ function Home() {
             Get the Starter Kit — a 12-page PDF you can put to work today.
             Download it instantly after purchase.
           </p>
-          <div className="mt-9 flex justify-center">
+          <div className="mt-12 flex justify-center">
+            <ProductCard />
+          </div>
+          <div className="mt-16 flex justify-center">
             <BuyButton slug="starter-kit" />
           </div>
           <p className="mt-5 text-sm">
@@ -2516,11 +2365,8 @@ function Home() {
                 <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
               </div>
             </div>
-            <div className="rounded-2xl bg-slate-900 p-8 text-white shadow-xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">13-page PDF guide</p>
-              <h3 className="mt-4 text-3xl font-bold">The Qualifying Questions Guide</h3>
-              <p className="mt-5 leading-relaxed text-slate-300">75 questions · Golden 10 · six-step sales flow</p>
-              <p className="mt-8 text-3xl font-bold text-amber-300">$9.99</p>
+            <div className="pb-8 lg:pb-0">
+              <QualifyingQuestionsProductCard />
             </div>
           </div>
           <div className="mt-20 grid gap-12 lg:grid-cols-2">
