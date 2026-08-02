@@ -22,10 +22,16 @@ export async function handleCheckout(request: Request): Promise<Response> {
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!secret) return json({ error: "stripe_not_configured" }, 503);
 
+  // Product tax code is required for Managed Payments (enabled by default on the owner's
+  // account). txcd_10000000 = "General - Electronically Supplied Services" (digital goods),
+  // verified against GET /v1/tax_codes on the live account. Without it Stripe rejects the
+  // session with HTTP 400.
+  const PRODUCT_TAX_CODE = "txcd_10000000";
   const params = new URLSearchParams();
   params.set("mode", "payment");
   params.set("line_items[0][price_data][currency]", "usd");
   params.set("line_items[0][price_data][product_data][name]", product.name);
+  params.set("line_items[0][price_data][product_data][tax_code]", PRODUCT_TAX_CODE);
   params.set("line_items[0][price_data][unit_amount]", String(product.unitAmountCents));
   params.set("line_items[0][quantity]", "1");
   params.set("success_url", `${originFor(request)}/thanks?product=${encodeURIComponent(slug)}&session_id={CHECKOUT_SESSION_ID}`);
