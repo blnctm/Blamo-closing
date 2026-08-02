@@ -15,7 +15,6 @@ import {
   DOWNLOAD_PATH,
   handleDownloadRequest,
 } from "./server-assets/download-handler";
-import { handleContact } from "./src/routes/api/-contact";
 import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
@@ -58,9 +57,7 @@ export default async function vercelHandler(
     const webRequest = toWebRequest(req);
     // API endpoints are handled before the SSR handler.
     const pathname = new URL(webRequest.url).pathname;
-    const webRes = pathname === "/api/contact"
-      ? await handleContact(webRequest)
-      : pathname === "/api/checkout"
+    const webRes = pathname === "/api/checkout"
       ? await handleCheckout(webRequest)
       : pathname === "/api/stripe-webhook"
         ? await handleStripeWebhook(webRequest)
