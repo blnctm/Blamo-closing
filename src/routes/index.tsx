@@ -162,12 +162,14 @@ function BuyButton({
   slug = "starter-kit",
   label = "Get the Starter Kit — $24.99",
   ariaLabel = "Get the Starter Kit — $24.99",
+  promoCode,
 }: {
   size?: "lg" | "sm";
   /** Product slug for the Stripe checkout (POST /api/checkout). */
   slug?: string;
   label?: string;
   ariaLabel?: string;
+  promoCode?: string;
 }) {
   const [busy, setBusy] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -177,7 +179,7 @@ function BuyButton({
     setBusy(true);
     setErrorMsg(null);
     try {
-      const url = await startCheckout(slug);
+      const url = await startCheckout(slug, promoCode || localStorage.getItem("blamo-promo") || undefined);
       window.location.href = url;
     } catch (error) {
       if (error instanceof Error && error.message === "login_required") {
@@ -529,6 +531,22 @@ function MeetAndGreetProductCard() { return <ProductCoverCard img="/cover-thumbs
 /* ---------- Page ---------- */
 
 function Home() {
+  const [promo, setPromo] = useState("");
+  const [promoApplied, setPromoApplied] = useState(false);
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("promo")?.trim().toUpperCase();
+    const saved = localStorage.getItem("blamo-promo") || "";
+    const value = fromUrl || saved;
+    if (value) { setPromo(value); setPromoApplied(value === "BLAMO10"); localStorage.setItem("blamo-promo", value); }
+  }, []);
+
+  function applyPromo() {
+    const value = promo.trim().toUpperCase();
+    setPromo(value);
+    setPromoApplied(value === "BLAMO10");
+    if (value === "BLAMO10") localStorage.setItem("blamo-promo", value);
+    else localStorage.removeItem("blamo-promo");
+  }
   useEffect(() => {
     const items = document.querySelectorAll<HTMLElement>(".scroll-reveal");
     if (!("IntersectionObserver" in window)) {
@@ -715,6 +733,7 @@ function Home() {
                   <div className="mt-8 flex justify-center lg:justify-start">
                     <BuyButton
                       slug="complete-package"
+                      promoCode={promoApplied ? "BLAMO10" : undefined}
                       label="Get The Complete Package — $79.99"
                       ariaLabel="Get The Complete Package — everything you need to be successful in sales — $79.99"
                     />
@@ -726,6 +745,11 @@ function Home() {
               Want just one guide? Every title below is available separately —{" "}
               <span className="font-medium text-slate-700">buy what you need.</span>
             </p>
+          </div>
+          <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $6.99 becomes $6.29 · $24.99 becomes $22.49 · $79.99 becomes $71.99.</p></div>
+            <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white">Apply</button></div>
+            {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
           </div>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
 <InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>

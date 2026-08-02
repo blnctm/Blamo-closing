@@ -107,11 +107,9 @@ export async function me(): Promise<MeResponse | null> {
  * Throws ApiError("login_required", 401) when the buyer isn't logged in —
  * callers redirect to /login?next=… in that case.
  */
-export async function startCheckout(productSlug: string): Promise<string> {
-  const data = (await apiPost("/api/checkout", { productSlug })) as { url?: string };
-  if (typeof data.url !== "string" || !data.url) {
-    throw new ApiError("checkout_unavailable", 502);
-  }
+export async function startCheckout(productSlug: string, promoCode?: string): Promise<string> {
+  const data = (await apiPost("/api/checkout", { productSlug, promoCode })) as { url?: string };
+  if (typeof data.url !== "string" || !data.url) throw new ApiError("checkout_unavailable", 502);
   return data.url;
 }
 

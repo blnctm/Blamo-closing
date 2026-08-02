@@ -12,9 +12,14 @@ function originFor(request: Request): string {
 
 export async function handleCheckout(request: Request): Promise<Response> {
   if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
-  let body: { productSlug?: unknown };
+  let body: { productSlug?: unknown; promoCode?: unknown };
   try { body = await request.json() as { productSlug?: unknown }; } catch { return json({ error: "invalid_json" }, 400); }
   const slug = typeof body.productSlug === "string" ? body.productSlug : "";
+  // Stripe's customer-facing promo box is intentionally disabled; only apply
+  // the owner-approved code server-side. Unknown values are ignored.
+  const rawPromo = typeof body.promoCode === "string" ? body.promoCode.trim() : "";
+  const promoCode = rawPromo.toUpperCase() === "BLAMO10" || rawPromo === "promo_1U03mLRILIKo5b3o9tMxpC5d"
+    ? "promo_1U03mLRILIKo5b3o9tMxpC5d" : null;
   const product = findCatalogProduct(slug);
   if (!product) return json({ error: "unknown_product" }, 400);
   const user = await currentUser(request);
@@ -34,6 +39,7 @@ export async function handleCheckout(request: Request): Promise<Response> {
   params.set("line_items[0][price_data][product_data][tax_code]", PRODUCT_TAX_CODE);
   params.set("line_items[0][price_data][unit_amount]", String(product.unitAmountCents));
   params.set("line_items[0][quantity]", "1");
+  if (promoCode) params.set("discounts[0][promotion_code]", promoCode);
   params.set("success_url", `${originFor(request)}/thanks?product=${encodeURIComponent(slug)}&session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${originFor(request)}/`);
   params.set("metadata[userId]", user.id);
