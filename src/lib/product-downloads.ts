@@ -90,6 +90,13 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
   { slug: "prospecting", code: "BLAMO-12-3952", file: "prospecting-like-a-professional.pdf", name: "Prospecting Like a Professional", kind: "pdf", mime: "application/pdf" },
   { slug: "meet-and-greet", code: "BLAMO-13-4816", file: "meet-and-greet-mastery.pdf", name: "Meet & Greet Mastery", kind: "pdf", mime: "application/pdf" },
   { slug: "follow-up", code: "BLAMO-14-9062", file: "follow-up-that-creates-customers-for-life.pdf", name: "Follow-Up That Creates Customers for Life", kind: "pdf", mime: "application/pdf" },
+  // ── Español (Phase 1) — Spanish versions, same prices, bundle-included.
+  // The Complete Package webhook iterates PRODUCT_DOWNLOADS, so these are
+  // automatically part of the "every current + future title" unlock.
+  { slug: "starter-kit-es", code: "BLAMO-15-3753", file: "starter-kit-10-pasos-es.pdf", name: "El Kit de Inicio del Vendedor — Los 10 Pasos de la Venta", kind: "pdf", mime: "application/pdf" },
+  { slug: "spouse-es", code: "BLAMO-16-1988", file: "spouse-objection-es.pdf", name: "El Manual de la Objeción del Cónyuge", kind: "pdf", mime: "application/pdf" },
+  { slug: "trade-in-es", code: "BLAMO-17-4804", file: "trade-in-es.pdf", name: "El Manual del “Quiero Más por Mi Trade-In”", kind: "pdf", mime: "application/pdf" },
+  { slug: "qualifying-questions-es", code: "BLAMO-18-7769", file: "qualifying-questions-es.pdf", name: "La Guía de Preguntas de Calificación", kind: "pdf", mime: "application/pdf" },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */

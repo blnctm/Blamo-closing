@@ -87,6 +87,38 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   { slug: "prospecting", name: "Prospecting Like a Professional", priceCents: 699, fileName: "prospecting-like-a-professional.pdf", kindLabel: "PDF · 14 pages" },
   { slug: "meet-and-greet", name: "Meet & Greet Mastery", priceCents: 699, fileName: "meet-and-greet-mastery.pdf", kindLabel: "PDF · 13 pages" },
   { slug: "follow-up", name: "Follow-Up That Creates Customers for Life", priceCents: 699, fileName: "follow-up-that-creates-customers-for-life.pdf", kindLabel: "PDF · 14 pages" },
+  // ── Español (Phase 1) — Spanish versions of the flagship + first three
+  // add-ons. Same prices as the English titles; included in the Complete
+  // Package (the bundle unlocks every PRODUCT_DOWNLOADS entry, so adding a
+  // product here + in product-downloads.ts makes it bundle-included).
+  {
+    slug: "starter-kit-es",
+    name: "El Kit de Inicio del Vendedor — Los 10 Pasos de la Venta",
+    priceCents: 2499,
+    fileName: "starter-kit-10-pasos-es.pdf",
+    kindLabel: "PDF · 27 páginas",
+  },
+  {
+    slug: "spouse-es",
+    name: "El Manual de la Objeción del Cónyuge",
+    priceCents: 699,
+    fileName: "spouse-objection-es.pdf",
+    kindLabel: "PDF · 14 páginas",
+  },
+  {
+    slug: "trade-in-es",
+    name: "El Manual del “Quiero Más por Mi Trade-In”",
+    priceCents: 699,
+    fileName: "trade-in-es.pdf",
+    kindLabel: "PDF · 15 páginas",
+  },
+  {
+    slug: "qualifying-questions-es",
+    name: "La Guía de Preguntas de Calificación",
+    priceCents: 699,
+    fileName: "qualifying-questions-es.pdf",
+    kindLabel: "PDF · 13 páginas",
+  },
 ];
 export function findStoreProduct(
   slug: string | null | undefined,

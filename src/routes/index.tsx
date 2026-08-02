@@ -531,6 +531,12 @@ function ProspectingProductCard() { return <ProductCoverCard img="/cover-thumbs/
 function FollowUpProductCard() { return <ProductCoverCard img="/cover-thumbs/follow-up-that-creates-customers-for-life.png" alt="Follow-Up That Creates Customers for Life cover" badge={<QuickCardBadge />} title="Follow-Up That Creates Customers for Life" desc="A 14-page guide to the 10-day prospect plan, the SOLD customer process, and follow-up scripts that turn one sale into a customer for life." price="$6.99" slug="follow-up" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Follow-Up That Creates Customers for Life — $6.99" chipTitle="The sale doesn’t end when they leave." chipSub="14-page PDF guide" />; }
 function MeetAndGreetProductCard() { return <ProductCoverCard img="/cover-thumbs/meet-and-greet-mastery.png" alt="Meet & Greet Mastery cover" badge={<QuickCardBadge />} title="Meet & Greet Mastery" desc="The 10-second rule, word-for-word opening scripts, body language DOs and DON'Ts, four personality types, and questions that open real conversations." price="$6.99" slug="meet-and-greet" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Meet & Greet Mastery — $6.99" chipTitle="The first five minutes determine the next five hours." chipSub="13-page PDF guide" />; }
 
+/* ---------- Español (Phase 1) cover cards — Spanish versions ---------- */
+function StarterKitEsProductCard() { return <ProductCoverCard img="/cover-thumbs/starter-kit-es.png" alt="Portada del Kit de Inicio del Vendedor" badge={<QuickCardBadge />} title="El Kit de Inicio del Vendedor" desc="El proceso completo de Los 10 Pasos de la Venta — 27 páginas con guiones palabra por palabra, listas de verificación y un plan de práctica de 7 días." price="$24.99" slug="starter-kit-es" ctaLabel="Comprar ahora — $24.99" ctaAriaLabel="Consigue El Kit de Inicio del Vendedor — $24.99" chipTitle="El proceso completo de 10 pasos" chipSub="Paquete de 27 páginas · Saludo → Seguimiento" />; }
+function SpouseEsProductCard() { return <ProductCoverCard img="/cover-thumbs/spouse-es.png" alt="Portada del Manual de la Objeción del Cónyuge" badge={<QuickCardBadge />} title="El Manual de la Objeción del Cónyuge" desc="10 cierres palabra por palabra para “necesito consultarlo con mi esposo(a)” — y cómo distinguir una objeción real de una excusa para retrasar." price="$6.99" slug="spouse-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue El Manual de la Objeción del Cónyuge — $6.99" chipTitle="Respeta la pareja. Salva el trato." chipSub="Diez cierres, cero presión" />; }
+function TradeInEsProductCard() { return <ProductCoverCard img="/cover-thumbs/trade-in-es.png" alt="Portada del Manual del “Quiero Más por Mi Trade-In”" badge={<QuickCardBadge />} title="El Manual del “Quiero Más por Mi Trade-In”" desc="10 cierres para “quiero más por mi intercambio” — incluido el cierre de intercambio favorito del propietario." price="$6.99" slug="trade-in-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue El Manual del “Quiero Más por Mi Trade-In” — $6.99" chipTitle="Gana el trato completo, no un solo número." chipSub="El cierre de intercambio favorito" />; }
+function QualifyingQuestionsEsProductCard() { return <ProductCoverCard img="/cover-thumbs/qualifying-questions-es.png" alt="Portada de la Guía de Preguntas de Calificación" badge={<QuickCardBadge />} title="La Guía de Preguntas de Calificación" desc="75 preguntas en nueve categorías — el Golden 10 y el flujo completo de Razón → Compromiso." price="$6.99" slug="qualifying-questions-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue La Guía de Preguntas de Calificación — $6.99" chipTitle="Haz mejores preguntas." chipSub="75 preguntas · Golden 10" />; }
+
 /* ---------- Page ---------- */
 
 function Home() {
@@ -830,9 +836,9 @@ function Home() {
                   {/* Price */}
                   <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
                     <span className="text-2xl font-extrabold tracking-tight text-white">$79.99</span>
-                    <s className="text-lg font-semibold text-slate-400">$119.88</s>
+                    <s className="text-lg font-semibold text-slate-400">$165.84</s>
                     <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
-                      Save 33%
+                      Save 52%
                     </span>
                   </div>
                   <p className="mt-2 text-sm font-semibold text-amber-300">
@@ -842,7 +848,7 @@ function Home() {
                   <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      All 12 current titles — playbooks, guides, and the 27-page Starter Kit (a $119.88 value)
+                      All 16 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $165.84 value)
                     </li>
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
@@ -876,6 +882,18 @@ function Home() {
           </div>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
 <ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /><LeadershipProductCard /></div>
+
+          {/* En Español — Spanish Phase 1 versions (same prices, bundle-included) */}
+          <div className="mt-16 border-t border-slate-200 pt-12">
+            <div className="text-center">
+              <Eyebrow>En Español</Eyebrow>
+              <h3 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Los mismos guías, ahora en español</h3>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Versiones en español de nuestros guías principales — los mismos precios, e incluidas en el Complete Package.</p>
+            </div>
+            <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              <StarterKitEsProductCard /><SpouseEsProductCard /><TradeInEsProductCard /><QualifyingQuestionsEsProductCard />
+            </div>
+          </div>
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden"><BgArt kind="happy-client" side="left" className="hidden sm:block" /><BgArt kind="keys" side="right" className="hidden sm:block" /><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
@@ -933,7 +951,7 @@ function Home() {
             {[
               {
                 q: "What is The Complete Package?",
-                a: "It’s the whole Blamo Closing library in one purchase: all 12 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide ($119.88 if bought separately) — for $79.99, about 33% off. One checkout, one unlock, and every future title is included at no extra cost.",
+                a: "It’s the whole Blamo Closing library in one purchase: all 16 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide, English + Español ($165.84 if bought separately) — for $79.99, about 52% off. One checkout, one unlock, and every future title is included at no extra cost.",
               },
               {
                 q: "How does the bundle unlock work?",

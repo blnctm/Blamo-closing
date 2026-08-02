@@ -63,6 +63,11 @@ const PRODUCT_META: Record<
   "prospecting": { name: "Prospecting Like a Professional", fileName: "prospecting-like-a-professional.pdf", label: "Download your PDF" },
   "meet-and-greet": { name: "Meet & Greet Mastery", fileName: "meet-and-greet-mastery.pdf", label: "Download your PDF" },
   "follow-up": { name: "Follow-Up That Creates Customers for Life", fileName: "follow-up-that-creates-customers-for-life.pdf", label: "Download your PDF" },
+  // Español (Phase 1) — Spanish versions of the flagship + first three add-ons.
+  "starter-kit-es": { name: "El Kit de Inicio del Vendedor — Los 10 Pasos de la Venta", fileName: "starter-kit-10-pasos-es.pdf", label: "Descarga tu PDF" },
+  "spouse-es": { name: "El Manual de la Objeción del Cónyuge", fileName: "spouse-objection-es.pdf", label: "Descarga tu PDF" },
+  "trade-in-es": { name: "El Manual del “Quiero Más por Mi Trade-In”", fileName: "trade-in-es.pdf", label: "Descarga tu PDF" },
+  "qualifying-questions-es": { name: "La Guía de Preguntas de Calificación", fileName: "qualifying-questions-es.pdf", label: "Descarga tu PDF" },
 };
 
 function LogoMark({ className = "" }: { className?: string }) {
