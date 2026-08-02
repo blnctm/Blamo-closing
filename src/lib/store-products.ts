@@ -70,6 +70,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   { slug: "fi-awareness", name: "F&I Awareness Training Manual", priceCents: 699, fileName: "fi-awareness-training-manual.pdf", kindLabel: "PDF · 12 pages" },
   { slug: "prospecting", name: "Prospecting Like a Professional", priceCents: 699, fileName: "prospecting-like-a-professional.pdf", kindLabel: "PDF · 14 pages" },
   { slug: "meet-and-greet", name: "Meet & Greet Mastery", priceCents: 699, fileName: "meet-and-greet-mastery.pdf", kindLabel: "PDF · 13 pages" },
+  { slug: "follow-up", name: "Follow-Up That Creates Customers for Life", priceCents: 699, fileName: "follow-up-that-creates-customers-for-life.pdf", kindLabel: "PDF · 14 pages" },
 ];
 
 export function findStoreProduct(
