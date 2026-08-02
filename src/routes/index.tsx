@@ -816,7 +816,7 @@ function Home() {
               },
               {
                 q: "What do I receive?",
-                a: "A downloadable PDF guide with practical explanations, scripts, checklists, and exercises designed for same-day use. Pay securely through Stripe’s card checkout, then open the download page, enter the confirmation code we email you, and get your PDF — the \"Download your PDF\" link in the footer takes you there.",
+                a: "A downloadable PDF guide with practical explanations, scripts, checklists, and exercises designed for same-day use. After you pay through Stripe’s secure checkout, your download unlocks automatically in your account — the confirmation code and download button appear right on the thank-you page, and they’re always waiting under your account (Your purchases) whenever you log back in. Stripe emails you the payment receipt.",
               },
             ].map(({ q, a }) => (
               <details
@@ -999,11 +999,11 @@ function Home() {
             {[
               {
                 q: "Is this the same as the Sales Rep Starter Kit?",
-                a: "No. The Starter Kit is a PDF guide with the scripts written out; this video shows the closes in action with realistic dialogue. They pair well: read the scripts, then watch them come to life.",
+                a: "No. The Sales Rep Starter Kit is the 27-page 10 Steps of the Sale packet — the full sales process from Meet & Greet to Follow-up. This video is the only place the five closes appear: watch them in action with realistic dialogue.",
               },
               {
                 q: "How do I receive it?",
-                a: "Pay securely through Stripe’s card checkout, then open the download page, enter the confirmation code we email you, and get your video file (MP4, ~15 MB) — watch it on any device. The \"Download your video\" link in the footer also takes you there.",
+                a: "After you pay through Stripe’s secure checkout, your download unlocks automatically in your account — the confirmation code and download button appear right on the thank-you page, and they’re always waiting under your account (Your purchases) whenever you log back in. Stripe emails you the payment receipt. Your video is an MP4 (~15 MB) you can watch on any device.",
                 link: true,
               },
               {
