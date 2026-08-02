@@ -22,6 +22,10 @@ bun run build
 echo "[2/3] assemble .vercel/output (Build Output API v3)"
 rm -rf .vercel/output
 mkdir -p .vercel/output/functions/render.func
+# Paid product files ship INSIDE the server function (never in .vercel/output/static,
+# so their URLs are not publicly fetchable). The download endpoint reads them from
+# <function dir>/private at request time, after checking the confirmation code.
+cp -R private .vercel/output/functions/render.func/private
 cp -R dist/client .vercel/output/static
 rm -f .vercel/output/static/index.html   # SSR owns "/", not a static shell
 

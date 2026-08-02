@@ -33,6 +33,30 @@ This rebuilds the site and restarts the server on port 3000. (Editing files alon
 does not update the live site — you must publish.) It always takes over port 3000
 from whatever is running there, so it's safe to re-run no matter who started the
 current server. The server log is `.run/server.log`.
+(`/home` is a tiny 300M volume — always redirect bun's install cache to
+`/var/cache/bun`.)
+
+## Confirmation-code downloads (paid products)
+
+All paid product files are locked behind per-product confirmation codes.
+
+- **Config (server-only):** `src/lib/product-downloads.ts` — one entry per
+  product (`slug`, `code`, `file`, `name`, `kind`, `mime`). **Never import this
+  file from a route** — the codes would ship in the public JavaScript.
+- **Files:** live in `private/` (NOT `public/`), so their URLs are never
+  publicly fetchable.
+- **Endpoint:** `POST /api/download` with `{ product, code }` — implemented in
+  `server-assets/download-handler.ts` and wired into both server entry points
+  (`serve.ts` for local, `vercel-entry.ts` for Vercel). Returns the file on a
+  correct code, 401 on a wrong one. `build-vercel.sh` copies `private/` into
+  the Vercel render function so it works in production too.
+- **Download page:** `src/routes/thanks.tsx` — code-entry form; the display
+  metadata (`PRODUCT_META`) is kept in sync with the server config by hand.
+
+**To add a product** (e.g. a $2.99 playbook): (1) add an entry in
+`src/lib/product-downloads.ts`, (2) drop the file into `private/`, (3) add a
+matching display entry in `src/routes/thanks.tsx` (`PRODUCT_META`), (4) point
+its buy button at `/thanks?product=<slug>`. Nothing else changes.
 
 ## Going live (production hosting)
 
