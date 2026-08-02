@@ -18,7 +18,7 @@ const HERO_COPY = {
   highlights: [
     "Word-for-word closing scripts",
     "Objection playbooks for tough stalls",
-    "7 training products from $6.99",
+    "10 training products from $6.99",
   ],
   primaryCta: "Browse the training",
   secondaryCta: "See how it works",
@@ -534,6 +534,11 @@ function QualifyingQuestionsProductCard() {
   );
 }
 
+/* ---------- New product cover cards ---------- */
+function WalkAroundProductCard() { return <ProductCoverCard img="/cover-thumbs/walk-around-guide.png" alt="Vehicle Walk-Around Training Guide cover" badge={<QuickCardBadge />} title="Vehicle Walk-Around Training Guide" price="$6.99" slug="walk-around" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Vehicle Walk-Around Training Guide — $6.99" chipTitle="Present every vehicle with confidence." chipSub="14-page PDF guide" />; }
+function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" price="$24.99" slug="leadership" ctaLabel="Buy now — $24.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $24.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
+function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" price="$6.99" slug="fi-awareness" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get F&I Awareness Training Manual — $6.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
+
 /* ---------- Page ---------- */
 
 function Home() {
@@ -654,6 +659,15 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Complete 10-product catalog */}
+      <section id="catalog" className="border-t border-slate-100 bg-white scroll-reveal">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Ten standalone training products, built for real dealership conversations.</p></div>
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"><ProductCard /><VideoProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /></div>
+        </div>
+      </section>
+      <section id="new-products" className="border-t border-slate-100 bg-slate-50 scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
+{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$6.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$6.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
 
       {/* Benefits */}
       <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">

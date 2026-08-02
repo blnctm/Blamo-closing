@@ -72,6 +72,9 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     fileName: "the-qualifying-questions-guide.pdf",
     kindLabel: "PDF · 13 pages",
   },
+  { slug: "walk-around", name: "Vehicle Walk-Around Training Guide", priceCents: 699, fileName: "vehicle-walk-around-training-guide.pdf", kindLabel: "PDF · 14 pages" },
+  { slug: "leadership", name: "Blamo Closing Leadership Academy", priceCents: 2499, fileName: "leadership-academy-manual.pdf", kindLabel: "PDF · 40 pages" },
+  { slug: "fi-awareness", name: "F&I Awareness Training Manual", priceCents: 699, fileName: "fi-awareness-training-manual.pdf", kindLabel: "PDF · 12 pages" },
 ];
 
 export function findStoreProduct(
