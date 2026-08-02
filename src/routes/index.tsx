@@ -3,80 +3,6 @@ import { useEffect, useState } from "react";
 
 import { logoutAccount, me, startCheckout } from "~/lib/client-api";
 
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — buy button destination
- * ---------------------------------------------------------------------
- * The buy buttons point to the owner's PayPal checkout (paypal.me link).
- * To change the payment destination, replace PAYMENT_LINK below with
- * any checkout URL (PayPal button, Stripe, etc.) — this is the ONE-LINE
- * CHANGE. While it reads PAYMENT_LINK_PLACEHOLDER, clicking the button
- * shows a "store opening soon" notice instead of navigating.
- * ════════════════════════════════════════════════════════════════════ */
-const PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
-/* ════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — The 10 Steps of the Sale buy button destination
- * ---------------------------------------------------------------------
- * The owner will provide a dedicated payment link for this product;
- * when it arrives, swap TEN_STEPS_PAYMENT_LINK below (ONE-LINE CHANGE).
- * Until then it intentionally points at the same PayPal link as the
- * Starter Kit.
- * ════════════════════════════════════════════════════════════════════ */
-const TEN_STEPS_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
-/* ════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — The Five Closes in Action buy button destination
- * ---------------------------------------------------------------------
- * The owner will provide a dedicated payment link for this video product;
- * when it arrives, swap VIDEO_PAYMENT_LINK below (ONE-LINE CHANGE).
- * Until then it intentionally points at the same PayPal link as the
- * other products.
- * ════════════════════════════════════════════════════════════════════ */
-const VIDEO_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
-/* ════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — The 10 Steps to the Internet Sale buy button destination
- * ---------------------------------------------------------------------
- * The owner will provide a dedicated payment link for this product;
- * when it arrives, swap INTERNET_SALES_PAYMENT_LINK below (ONE-LINE
- * CHANGE). Until then it intentionally points at the same PayPal link
- * as the other products.
- * ════════════════════════════════════════════════════════════════════ */
-const INTERNET_SALES_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
-/* ════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — The Spouse Objection Playbook buy button destination
- * ---------------------------------------------------------------------
- * $2.99 entry-tier playbook. Uses the OWNER-SUPPLIED DEDICATED $2.99
- * PayPal link (ratified 2026-08-02) — used for ALL $2.99 playbook sales.
- * ════════════════════════════════════════════════════════════════════ */
-const SPOUSE_PAYMENT_LINK = "https://py.pl/bzHDNbxFYtCgfznaIlxIRg";
-/* ════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — The "Pray About It" Objection Playbook buy button destination
- * ---------------------------------------------------------------------
- * $2.99 entry-tier playbook. Uses the owner-supplied dedicated $2.99
- * PayPal link (ratified 2026-08-02) — used for ALL $2.99 playbook sales.
- * ════════════════════════════════════════════════════════════════════ */
-const PRAY_ABOUT_IT_PAYMENT_LINK = "https://py.pl/bzHDNbxFYtCgfznaIlxIRg";
-/* ════════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════════
- * CONFIG — The "I Want More for My Trade-In" Playbook buy button
- * ---------------------------------------------------------------------
- * $2.99 entry-tier playbook. Uses the owner-supplied dedicated $2.99
- * PayPal link (ratified 2026-08-02) — used for ALL $2.99 playbook sales.
- * ════════════════════════════════════════════════════════════════════ */
-const TRADE_IN_PAYMENT_LINK = "https://py.pl/bzHDNbxFYtCgfznaIlxIRg";
-/* $9.99 product; dedicated link pending, so reuse the current shared placeholder. */
-const QUALIFYING_QUESTIONS_PAYMENT_LINK = "https://py.pl/6MxgCaYORDvb1AAoaxma7Q";
-/* ════════════════════════════════════════════════════════════════════ */
-
 export const Route = createFileRoute("/")({
   component: Home,
 });
@@ -155,21 +81,17 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 function BuyButton({
   size = "lg",
   slug = "starter-kit",
-  href = PAYMENT_LINK,
   label = "Get the Starter Kit — $9.99",
   ariaLabel = "Get the Starter Kit — $9.99",
 }: {
   size?: "lg" | "sm";
   /** Product slug for the Stripe checkout (POST /api/checkout). */
   slug?: string;
-  /** PayPal fallback link (kept for buyers who prefer PayPal). */
-  href?: string;
   label?: string;
   ariaLabel?: string;
 }) {
   const [busy, setBusy] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const placeholder = href === "PAYMENT_LINK_PLACEHOLDER";
 
   async function handleCheckout() {
     if (busy) return;
@@ -186,18 +108,11 @@ function BuyButton({
         return;
       }
       setErrorMsg(
-        "Checkout is temporarily unavailable — try the PayPal button below, or come back in a moment.",
+        "Checkout is temporarily unavailable — please try again in a moment.",
       );
       setBusy(false);
     }
   }
-
-  const handlePayPalClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (placeholder) {
-      e.preventDefault();
-      setErrorMsg("Store opening soon — checkout will be available shortly.");
-    }
-  };
 
   const primaryClass =
     size === "lg"
@@ -217,13 +132,6 @@ function BuyButton({
           {busy ? "Starting checkout…" : label}
           <ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
         </button>
-        <a
-          href={href}
-          onClick={handlePayPalClick}
-          className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
-        >
-          or pay with PayPal
-        </a>
       </div>
       {errorMsg && (
         <p
@@ -1023,7 +931,7 @@ function Home() {
               },
               {
                 q: "What do I receive?",
-                a: "A downloadable PDF guide with practical explanations, scripts, checklists, and exercises designed for same-day use. Pay securely via PayPal, then open the download page, enter the confirmation code we email you, and get your PDF — the \"Download your PDF\" link in the footer takes you there.",
+                a: "A downloadable PDF guide with practical explanations, scripts, checklists, and exercises designed for same-day use. Pay securely through Stripe’s card checkout, then open the download page, enter the confirmation code we email you, and get your PDF — the \"Download your PDF\" link in the footer takes you there.",
               },
             ].map(({ q, a }) => (
               <details
@@ -1083,7 +991,6 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="ten-steps"
-                href={TEN_STEPS_PAYMENT_LINK}
                 label="Get The 10 Steps of the Sale — $9.99"
                 ariaLabel="Get The 10 Steps of the Sale — $9.99"
               />
@@ -1224,7 +1131,6 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="ten-steps"
-              href={TEN_STEPS_PAYMENT_LINK}
               label="Get The 10 Steps of the Sale — $9.99"
               ariaLabel="Get The 10 Steps of the Sale — $9.99"
             />
@@ -1339,7 +1245,6 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="five-closes"
-                href={VIDEO_PAYMENT_LINK}
                 label="Get The Five Closes in Action — $9.99"
                 ariaLabel="Get The Five Closes in Action — $9.99"
               />
@@ -1429,7 +1334,6 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="five-closes"
-              href={VIDEO_PAYMENT_LINK}
               label="Get The Five Closes in Action — $9.99"
               ariaLabel="Get The Five Closes in Action — $9.99"
             />
@@ -1465,7 +1369,7 @@ function Home() {
               },
               {
                 q: "How do I receive it?",
-                a: "Pay securely via PayPal, then open the download page, enter the confirmation code we email you, and get your video file (MP4, ~15 MB) — watch it on any device. The \"Download your video\" link in the footer also takes you there.",
+                a: "Pay securely through Stripe’s card checkout, then open the download page, enter the confirmation code we email you, and get your video file (MP4, ~15 MB) — watch it on any device. The \"Download your video\" link in the footer also takes you there.",
                 link: true,
               },
               {
@@ -1540,7 +1444,6 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="internet-sales"
-                href={INTERNET_SALES_PAYMENT_LINK}
                 label="Get The 10 Steps to the Internet Sale — $9.99"
                 ariaLabel="Get The 10 Steps to the Internet Sale — $9.99"
               />
@@ -1679,7 +1582,6 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="internet-sales"
-              href={INTERNET_SALES_PAYMENT_LINK}
               label="Get The 10 Steps to the Internet Sale — $9.99"
               ariaLabel="Get The 10 Steps to the Internet Sale — $9.99"
             />
@@ -1803,7 +1705,6 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="spouse"
-                href={SPOUSE_PAYMENT_LINK}
                 label="Get The Spouse Objection Playbook — $2.99"
                 ariaLabel="Get The Spouse Objection Playbook — $2.99"
               />
@@ -1944,7 +1845,6 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="spouse"
-              href={SPOUSE_PAYMENT_LINK}
               label="Get The Spouse Objection Playbook — $2.99"
               ariaLabel="Get The Spouse Objection Playbook — $2.99"
             />
@@ -2052,7 +1952,6 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="pray-about-it"
-                href={PRAY_ABOUT_IT_PAYMENT_LINK}
                 label="Get The “Pray About It” Objection Playbook — $2.99"
                 ariaLabel="Get The “Pray About It” Objection Playbook — $2.99"
               />
@@ -2192,7 +2091,6 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="pray-about-it"
-              href={PRAY_ABOUT_IT_PAYMENT_LINK}
               label="Get The “Pray About It” Objection Playbook — $2.99"
               ariaLabel="Get The “Pray About It” Objection Playbook — $2.99"
             />
@@ -2298,7 +2196,6 @@ function Home() {
             <div className="mt-9 flex justify-center sm:justify-start">
               <BuyButton
                 slug="trade-in"
-                href={TRADE_IN_PAYMENT_LINK}
                 label="Get The “I Want More for My Trade-In” Playbook — $2.99"
                 ariaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
               />
@@ -2439,7 +2336,6 @@ function Home() {
           <div className="mt-9 flex justify-center">
             <BuyButton
               slug="trade-in"
-              href={TRADE_IN_PAYMENT_LINK}
               label="Get The “I Want More for My Trade-In” Playbook — $2.99"
               ariaLabel="Get The “I Want More for My Trade-In” Playbook — $2.99"
             />
@@ -2523,7 +2419,7 @@ function Home() {
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop guessing what the customer wants — ask the questions that uncover why they’re really buying.</h2>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">Seventy-five qualification questions across nine categories, the Golden 10, and a six-step sales flow: build rapport, find the real motivation, and present with confidence — without giving away the price.</p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <BuyButton slug="qualifying-questions" href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" />
+                <BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" />
                 <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
               </div>
             </div>
@@ -2554,7 +2450,7 @@ function Home() {
           <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6"><Eyebrow>Who it’s for</Eyebrow><p className="mt-3 leading-relaxed text-slate-700">New and veteran dealership sales reps, internet sales teams, and product specialists who want to qualify customers faster, present with more confidence, and close more deals without discounting the price.</p></div>
         </div>
       </section>
-      <section className="bg-slate-900"><div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" href={QUALIFYING_QUESTIONS_PAYMENT_LINK} label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
+      <section className="bg-slate-900"><div className="mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $9.99" ariaLabel="Get The Qualifying Questions Guide — $9.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
       <section className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
         ["Do I need experience to use this?", "No. The questions are numbered 1–75 and organized by category, so you can work one category per shift and build from there. The Golden 10 gives you a complete system you can use on your very next customer."],
         ["Won’t this make my conversations feel scripted?", "The questions are conversation starters, not a script to recite. Say them out loud until they sound like you, adapt the wording to your market, and ask with genuine curiosity — the structure works because it sounds natural."],

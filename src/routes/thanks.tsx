@@ -139,7 +139,7 @@ function Thanks() {
     };
   }, [effectiveSlug, recheckTick]);
 
-  // Legacy confirmation-code path (PayPal buyers + fallback).
+  // Manual confirmation-code path for customers with emailed codes.
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -312,8 +312,7 @@ function Thanks() {
                 Check again
               </button>
               <p className="mt-4 border-t border-slate-200 pt-4 text-sm text-slate-500">
-                Bought with PayPal instead? Enter the confirmation code from
-                your email below.
+                Have a confirmation code? Enter it below.
               </p>
             </div>
             <form
@@ -445,8 +444,7 @@ function Thanks() {
                   folder) for the email from your purchase.
                 </p>
                 <p className="mt-2 text-sm text-slate-500">
-                  Didn’t receive a code? Just reply to your PayPal receipt — the
-                  seller responds directly.
+                  Didn’t receive your code? Contact us and we’ll help.
                 </p>
               </form>
             )}

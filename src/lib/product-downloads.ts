@@ -5,9 +5,8 @@
 // thanks.tsx, etc.). The codes live ONLY server-side; importing this module
 // into a route would bundle the codes into the public JavaScript.
 //
-// OWNER CAN CHANGE ANY TIME — codes are sent to buyers after purchase (the
-// owner emails the code to each buyer once the sale shows in the owner's
-// PayPal dashboard). Codes are intentionally short and easy to read/type.
+// OWNER CAN CHANGE ANY TIME — the owner emails the code to each buyer after
+// purchase. Codes are intentionally short and easy to read/type.
 //
 // Files live in /private (outside Vite's public dir) and are streamed only
 // through the code-checked endpoint (see server-assets/download-handler.ts).
