@@ -11,6 +11,10 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 
 import handler from "./dist/server/server.js";
+import {
+  DOWNLOAD_PATH,
+  handleDownloadRequest,
+} from "./server-assets/download-handler";
 
 const fetchHandler = handler as {
   fetch: (request: Request) => Response | Promise<Response>;
@@ -42,7 +46,13 @@ export default async function vercelHandler(
   res: ServerResponse,
 ): Promise<void> {
   try {
-    const webRes = await fetchHandler.fetch(toWebRequest(req));
+    const webRequest = toWebRequest(req);
+    // Code-gated download endpoint (POST only) — handled before the SSR
+    // handler so paid files can never be fetched by their old public URLs.
+    const webRes =
+      new URL(webRequest.url).pathname === DOWNLOAD_PATH
+        ? await handleDownloadRequest(webRequest)
+        : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     if (webRes.body) {

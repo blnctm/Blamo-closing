@@ -504,7 +504,7 @@ function Home() {
                 href="/thanks"
                 className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
               >
-                Already purchased? Download your PDF
+                Already purchased? Enter your code to download
               </a>
             </p>
           </div>
@@ -636,7 +636,7 @@ function Home() {
               href="/thanks"
               className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
-              Already purchased? Download your PDF
+              Already purchased? Enter your code to download
             </a>
           </p>
           <p className="mt-6 text-sm text-slate-400">
@@ -671,7 +671,7 @@ function Home() {
               },
               {
                 q: "What do I receive?",
-                a: "A downloadable PDF guide with practical explanations, scripts, checklists, and exercises designed for same-day use. Pay securely via PayPal, then open the download page to get your PDF — the \"Download your PDF\" link in the footer takes you there.",
+                a: "A downloadable PDF guide with practical explanations, scripts, checklists, and exercises designed for same-day use. Pay securely via PayPal, then open the download page, enter the confirmation code we email you, and get your PDF — the \"Download your PDF\" link in the footer takes you there.",
               },
             ].map(({ q, a }) => (
               <details
@@ -743,14 +743,7 @@ function Home() {
                 href="/thanks?product=ten-steps"
                 className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
               >
-                Already purchased? Download your PDF
-              </a>{" "}
-              <span className="text-slate-400">·</span>{" "}
-              <a
-                href="/the-10-steps-of-the-sale.pdf"
-                className="text-slate-500 underline underline-offset-2 hover:text-slate-900"
-              >
-                direct PDF
+                Already purchased? Enter your code to download
               </a>
             </p>
           </div>
@@ -887,14 +880,7 @@ function Home() {
               href="/thanks?product=ten-steps"
               className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
-              Already purchased? Download your PDF
-            </a>{" "}
-            <span className="text-slate-500">·</span>{" "}
-            <a
-              href="/the-10-steps-of-the-sale.pdf"
-              className="text-slate-400 underline underline-offset-2 hover:text-white"
-            >
-              direct PDF
+              Already purchased? Enter your code to download
             </a>
           </p>
           <p className="mt-6 text-sm text-slate-400">
@@ -924,7 +910,7 @@ function Home() {
               },
               {
                 q: "What do I receive?",
-                a: "A downloadable PDF guide with word-for-word scripts, checklists, a 7-day practice plan, and a quick-reference one-pager — built for same-day use. You’ll get the download link on the thank-you page after checkout. Already purchased? ",
+                a: "A downloadable PDF guide with word-for-word scripts, checklists, a 7-day practice plan, and a quick-reference one-pager — built for same-day use. Your confirmation code is emailed to you after checkout — enter it on the download page. Already purchased? ",
                 link: true,
               },
               {
@@ -957,14 +943,7 @@ function Home() {
                         href="/thanks?product=ten-steps"
                         className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
                       >
-                        Download your PDF
-                      </a>{" "}
-                      <span className="text-slate-400">·</span>{" "}
-                      <a
-                        href="/the-10-steps-of-the-sale.pdf"
-                        className="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900"
-                      >
-                        direct PDF link
+                        Enter your code to download
                       </a>
                     </>
                   )}
@@ -1018,14 +997,7 @@ function Home() {
                 href="/thanks?product=five-closes"
                 className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
               >
-                Already purchased? Download your video
-              </a>{" "}
-              <span className="text-slate-400">·</span>{" "}
-              <a
-                href="/the-five-closes-in-action.mp4"
-                className="text-slate-500 underline underline-offset-2 hover:text-slate-900"
-              >
-                direct video file
+                Already purchased? Enter your code to download
               </a>
             </p>
           </div>
@@ -1111,14 +1083,7 @@ function Home() {
               href="/thanks?product=five-closes"
               className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
-              Already purchased? Download your video
-            </a>{" "}
-            <span className="text-slate-500">·</span>{" "}
-            <a
-              href="/the-five-closes-in-action.mp4"
-              className="text-slate-400 underline underline-offset-2 hover:text-white"
-            >
-              direct video file
+              Already purchased? Enter your code to download
             </a>
           </p>
           <p className="mt-6 text-sm text-slate-400">
@@ -1144,7 +1109,7 @@ function Home() {
               },
               {
                 q: "How do I receive it?",
-                a: "Pay securely via PayPal, then open the download page to get your video file (MP4, ~15 MB) — watch it on any device. The \"Download your video\" link in the footer also takes you there.",
+                a: "Pay securely via PayPal, then open the download page, enter the confirmation code we email you, and get your video file (MP4, ~15 MB) — watch it on any device. The \"Download your video\" link in the footer also takes you there.",
                 link: true,
               },
               {
@@ -1177,14 +1142,7 @@ function Home() {
                         href="/thanks?product=five-closes"
                         className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
                       >
-                        Download your video
-                      </a>{" "}
-                      <span className="text-slate-400">·</span>{" "}
-                      <a
-                        href="/the-five-closes-in-action.mp4"
-                        className="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900"
-                      >
-                        direct video file
+                        Enter your code to download
                       </a>
                     </>
                   )}
@@ -1238,14 +1196,7 @@ function Home() {
                 href="/thanks?product=internet-sales"
                 className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
               >
-                Already purchased? Download your PDF
-              </a>{" "}
-              <span className="text-slate-400">·</span>{" "}
-              <a
-                href="/the-10-steps-to-the-internet-sale.pdf"
-                className="text-slate-500 underline underline-offset-2 hover:text-slate-900"
-              >
-                direct PDF
+                Already purchased? Enter your code to download
               </a>
             </p>
           </div>
@@ -1380,14 +1331,7 @@ function Home() {
               href="/thanks?product=internet-sales"
               className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
-              Already purchased? Download your PDF
-            </a>{" "}
-            <span className="text-slate-500">·</span>{" "}
-            <a
-              href="/the-10-steps-to-the-internet-sale.pdf"
-              className="text-slate-400 underline underline-offset-2 hover:text-white"
-            >
-              direct PDF
+              Already purchased? Enter your code to download
             </a>
           </p>
           <p className="mt-6 text-sm text-slate-400">
@@ -1429,7 +1373,7 @@ function Home() {
               },
               {
                 q: "What do I receive?",
-                a: "A downloadable PDF guide with the owner’s 10-step internet sales process, word-for-word templates, the BLAMO Video Formula, and a 7-day follow-up plan — built for same-day use. You’ll get the download link on the thank-you page after checkout. Already purchased? ",
+                a: "A downloadable PDF guide with the owner’s 10-step internet sales process, word-for-word templates, the BLAMO Video Formula, and a 7-day follow-up plan — built for same-day use. Your confirmation code is emailed to you after checkout — enter it on the download page. Already purchased? ",
                 link: true,
               },
             ].map(({ q, a, link }) => (
@@ -1458,14 +1402,7 @@ function Home() {
                         href="/thanks?product=internet-sales"
                         className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-800"
                       >
-                        Download your PDF
-                      </a>{" "}
-                      <span className="text-slate-400">·</span>{" "}
-                      <a
-                        href="/the-10-steps-to-the-internet-sale.pdf"
-                        className="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900"
-                      >
-                        direct PDF link
+                        Enter your code to download
                       </a>
                     </>
                   )}

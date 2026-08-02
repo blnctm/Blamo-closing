@@ -9,6 +9,10 @@
 // with an already-running server. Every sandbox user has passwordless sudo, so
 // the takeover works across user boundaries.
 import handler from "./dist/server/server.js";
+import {
+  DOWNLOAD_PATH,
+  handleDownloadRequest,
+} from "./server-assets/download-handler";
 
 // Pinned, NOT read from the environment. The published preview URL
 // (<label>.<PUBLIC_SITE_DOMAIN>) is reverse-proxied to 0.0.0.0:3000 inside the
@@ -41,6 +45,9 @@ for (let attempt = 1; ; attempt++) {
       hostname: HOST,
       async fetch(req) {
         const { pathname } = new URL(req.url);
+        // Code-gated download endpoint (POST only) — handled before static
+        // so paid files can never be fetched by their old public URLs.
+        if (pathname === DOWNLOAD_PATH) return handleDownloadRequest(req);
         if (pathname !== "/") {
           const file = Bun.file(CLIENT_DIR + pathname);
           if (await file.exists()) return new Response(file);
