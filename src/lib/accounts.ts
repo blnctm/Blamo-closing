@@ -111,7 +111,14 @@ export async function verifyPassword(
 // ---------------------------------------------------------------------------
 
 function toIso(value: unknown): string {
-  return new Date(value as string | Date).toISOString();
+  if (value instanceof Date) return value.toISOString();
+  // Neon (HTTP driver) returns timestamptz as a string like
+  // "2026-08-02 14:23:45.123456+00" — JS Date can't parse the space, so
+  // normalize to ISO 8601 first.
+  const s = String(value).replace(" ", "T");
+  const d = new Date(s);
+  if (Number.isNaN(d.getTime())) return String(value);
+  return d.toISOString();
 }
 
 function toPublicUser(row: UserRecord | Record<string, unknown>): PublicUser {
