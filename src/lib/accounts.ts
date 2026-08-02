@@ -122,11 +122,17 @@ function toIso(value: unknown): string {
 }
 
 function toPublicUser(row: UserRecord | Record<string, unknown>): PublicUser {
+  // Accepts BOTH raw DB rows (created_at) and already-mapped UserRecord rows
+  // (createdAt) — authenticateUser() passes a mapped UserRecord back through
+  // this mapper, and without the fallback createdAt would serialize as
+  // "undefined" in API responses.
+  const r = row as Record<string, unknown>;
+  const createdAt = (r.created_at ?? r.createdAt) as unknown;
   return {
-    id: String(row.id),
-    email: String(row.email),
-    name: String(row.name),
-    createdAt: toIso((row as Record<string, unknown>).created_at),
+    id: String(r.id),
+    email: String(r.email),
+    name: String(r.name),
+    createdAt: toIso(createdAt),
   };
 }
 
