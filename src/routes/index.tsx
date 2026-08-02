@@ -339,7 +339,7 @@ function ProductCoverCard({
           className="aspect-[3/4] w-full object-cover"
         />
         <div className="px-5 pb-5 pt-4">
-          <h3 className="text-base font-bold leading-snug tracking-tight text-slate-900">
+          <h3 className="whitespace-normal text-base font-bold leading-snug tracking-tight text-slate-900">
             {title}
           </h3>
           {desc && (
