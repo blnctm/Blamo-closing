@@ -130,7 +130,7 @@ function BuyNowButton({ slug }: { slug: string }) {
         disabled={busy}
         className="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:opacity-60"
       >
-        {busy ? "Starting checkout…" : `Buy now — ${formatPrice(product?.priceCents ?? 999)}`}
+        {busy ? "Starting checkout…" : `Buy now — ${formatPrice(product?.priceCents ?? 2499)}`}
       </button>
       {errorMsg && (
         <p role="alert" className="mt-2 text-sm text-red-600">
