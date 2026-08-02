@@ -654,7 +654,7 @@ function Home() {
               ))}
             </ul>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-5 sm:justify-start">
-              <a href="#buy" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
+              <a href="#catalog" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
               <a href="#faq" className="inline-flex items-center gap-2 text-sm font-bold text-slate-700 underline decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
             </div>
           </div>
@@ -665,98 +665,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      {/* Complete 11-product catalog */}
-      <section id="catalog" className="border-t border-slate-100 bg-white scroll-reveal">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{`${INDIVIDUAL_PRODUCT_COUNT} standalone training products, built for real dealership conversations.`}</p></div>
-                    {/* ═══════ The Complete Package — featured bundle card (FIRST) ═══════ */}
-          <div className="mt-14">
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 shadow-2xl shadow-slate-900/40 ring-2 ring-amber-400/60">
-              {/* BEST VALUE ribbon */}
-              <div className="absolute -right-11 top-7 z-10 rotate-45 bg-amber-400 px-12 py-1.5 shadow-lg shadow-black/30">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-950">Best Value</p>
-              </div>
-              {/* glow accents */}
-              <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-amber-400/20 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-32 -right-16 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
-              <div className="relative grid gap-8 p-8 sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12 lg:p-12">
-                {/* Cover */}
-                <div className="mx-auto w-full max-w-[16rem] lg:max-w-[15rem]">
-                  <img
-                    src="/cover-thumbs/complete-package.png"
-                    alt="The Complete Package cover — gold and navy with a BEST VALUE ribbon"
-                    width={600}
-                    height={800}
-                    loading="lazy"
-                    className="aspect-[3/4] w-full rounded-xl object-cover shadow-2xl shadow-black/50 ring-1 ring-amber-300/40"
-                  />
-                </div>
-                {/* Copy */}
-                <div className="text-center lg:text-left">
-                  <p className="inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-300">
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                    The Complete Package
-                  </p>
-                  <h3 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl">
-                    Everything you need to be successful in sales in the automotive industry
-                  </h3>
-                  <p className="mt-4 text-lg leading-relaxed text-slate-300">
-                    Every current + future title —{" "}
-                    <span className="font-semibold text-amber-300">one unlock, the whole library.</span>
-                  </p>
-                  {/* Price */}
-                  <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
-                    <span className="text-2xl font-extrabold tracking-tight text-white">$79.99</span>
-                    <s className="text-lg font-semibold text-slate-400">$119.88</s>
-                    <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
-                      Save 33%
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm font-semibold text-amber-300">
-                    Use code BLAMO10 at checkout → $71.99
-                  </p>
-                  {/* What you get */}
-                  <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
-                    <li className="flex gap-2.5">
-                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      All 12 current titles — playbooks, guides, and the 27-page Starter Kit (a $119.88 value)
-                    </li>
-                    <li className="flex gap-2.5">
-                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      Every future release, added to your account automatically
-                    </li>
-                    <li className="flex gap-2.5">
-                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      One purchase, one unlock — download any title, any time
-                    </li>
-                  </ul>
-                  <div className="mt-8 flex justify-center lg:justify-start">
-                    <BuyButton
-                      slug="complete-package"
-                      promoCode={promoApplied ? "BLAMO10" : undefined}
-                      label="Get The Complete Package — $79.99"
-                      ariaLabel="Get The Complete Package — everything you need to be successful in sales — $79.99"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="mt-8 text-center text-sm text-slate-500">
-              Want just one guide? Every title below is available separately —{" "}
-              <span className="font-medium text-slate-700">buy what you need.</span>
-            </p>
-          </div>
-          <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
-            <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $6.99 becomes $6.29 · $24.99 becomes $22.49 · $79.99 becomes $71.99.</p></div>
-            <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white">Apply</button></div>
-            {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
-          </div>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-<InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
-        </div>
-      </section>
-      <section id="new-products" className="border-t border-slate-100 bg-slate-50 scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
-{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$6.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$6.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
 
       {/* Benefits */}
       <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
@@ -859,6 +767,98 @@ function Home() {
           </p>
         </div>
       </section>
+
+      {/* Complete 11-product catalog */}
+      <section id="catalog" className="border-t border-slate-100 bg-slate-50 scroll-reveal">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{`${INDIVIDUAL_PRODUCT_COUNT} standalone training products, built for real dealership conversations.`}</p></div>
+                    {/* ═══════ The Complete Package — featured bundle card (FIRST) ═══════ */}
+          <div className="mt-14">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 shadow-2xl shadow-slate-900/40 ring-2 ring-amber-400/60">
+              {/* BEST VALUE ribbon */}
+              <div className="absolute -right-11 top-7 z-10 rotate-45 bg-amber-400 px-12 py-1.5 shadow-lg shadow-black/30">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-950">Best Value</p>
+              </div>
+              {/* glow accents */}
+              <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-amber-400/20 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-32 -right-16 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
+              <div className="relative grid gap-8 p-8 sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12 lg:p-12">
+                {/* Cover */}
+                <div className="mx-auto w-full max-w-[16rem] lg:max-w-[15rem]">
+                  <img
+                    src="/cover-thumbs/complete-package.png"
+                    alt="The Complete Package cover — gold and navy with a BEST VALUE ribbon"
+                    width={600}
+                    height={800}
+                    loading="lazy"
+                    className="aspect-[3/4] w-full rounded-xl object-cover shadow-2xl shadow-black/50 ring-1 ring-amber-300/40"
+                  />
+                </div>
+                {/* Copy */}
+                <div className="text-center lg:text-left">
+                  <p className="inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-400/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    The Complete Package
+                  </p>
+                  <h3 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl">
+                    Everything you need to be successful in sales in the automotive industry
+                  </h3>
+                  <p className="mt-4 text-lg leading-relaxed text-slate-300">
+                    Every current + future title —{" "}
+                    <span className="font-semibold text-amber-300">one unlock, the whole library.</span>
+                  </p>
+                  {/* Price */}
+                  <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
+                    <span className="text-2xl font-extrabold tracking-tight text-white">$79.99</span>
+                    <s className="text-lg font-semibold text-slate-400">$119.88</s>
+                    <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
+                      Save 33%
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold text-amber-300">
+                    Use code BLAMO10 at checkout → $71.99
+                  </p>
+                  {/* What you get */}
+                  <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
+                    <li className="flex gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      All 12 current titles — playbooks, guides, and the 27-page Starter Kit (a $119.88 value)
+                    </li>
+                    <li className="flex gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      Every future release, added to your account automatically
+                    </li>
+                    <li className="flex gap-2.5">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      One purchase, one unlock — download any title, any time
+                    </li>
+                  </ul>
+                  <div className="mt-8 flex justify-center lg:justify-start">
+                    <BuyButton
+                      slug="complete-package"
+                      promoCode={promoApplied ? "BLAMO10" : undefined}
+                      label="Get The Complete Package — $79.99"
+                      ariaLabel="Get The Complete Package — everything you need to be successful in sales — $79.99"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p className="mt-8 text-center text-sm text-slate-500">
+              Want just one guide? Every title below is available separately —{" "}
+              <span className="font-medium text-slate-700">buy what you need.</span>
+            </p>
+          </div>
+          <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
+            <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $6.99 becomes $6.29 · $24.99 becomes $22.49 · $79.99 becomes $71.99.</p></div>
+            <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white">Apply</button></div>
+            {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
+          </div>
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+<InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><LeadershipProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /></div>
+        </div>
+      </section>
+      <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
+{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$6.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$6.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
 
       {/* CTA band */}
       <section id="buy" className="bg-slate-900 relative overflow-hidden">
