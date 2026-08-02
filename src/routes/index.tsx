@@ -581,6 +581,12 @@ function Home() {
             <AuthNav />
             <div className="hidden items-center gap-5 lg:flex">
             <a
+              href="#buy"
+              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+            >
+              10 Steps of the Sale
+            </a>
+            <a
               href="#internet-sales"
               className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
