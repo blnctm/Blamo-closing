@@ -123,17 +123,20 @@ function BgArt({
   dark = false,
   className = "",
 }: {
-  kind?: "mascot" | "car";
+  kind?: "mascot" | "car" | "handshake" | "driving" | "keys" | "happy-client" | "happy-rep" | "mascot-keys";
   side?: "left" | "right";
   /** Renders slightly more opaque so it reads on dark (slate-900) sections. */
   dark?: boolean;
   className?: string;
 }) {
-  const src = kind === "mascot" ? "/blamo-mascot.svg" : "/blamo-car.svg";
-  const size =
-    kind === "mascot"
-      ? "w-24 sm:w-32 lg:w-44"
-      : "w-24 sm:w-36 lg:w-52";
+  const src = kind === "mascot" ? "/blamo-mascot.svg" : kind === "car" ? "/blamo-car.svg" : `/bg-${kind}.svg`;
+  const size = kind === "mascot"
+    ? "w-24 sm:w-32 lg:w-44"
+    : kind === "car" || kind === "handshake" || kind === "driving" || kind === "happy-rep"
+      ? (kind === "happy-rep" ? "w-24 sm:w-32 lg:w-44" : "w-24 sm:w-36 lg:w-52")
+      : kind === "keys"
+        ? "w-20 sm:w-28 lg:w-36"
+        : "w-28 sm:w-40 lg:w-56";
   const horiz =
     side === "left"
       ? "-left-4 sm:-left-8 lg:-left-12"
@@ -669,6 +672,7 @@ function Home() {
       {/* Benefits */}
       <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
+        <BgArt kind="happy-rep" side="right" />
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
@@ -706,6 +710,7 @@ function Home() {
       {/* What's inside */}
       <section id="inside" className="bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
+        <BgArt kind="handshake" side="left" />
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
@@ -754,6 +759,7 @@ function Home() {
       {/* Who it's for */}
       <section id="audience" className="bg-white relative overflow-hidden">
         <BgArt side="left" />
+        <BgArt kind="driving" side="right" />
         <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -769,7 +775,9 @@ function Home() {
       </section>
 
       {/* Complete 11-product catalog */}
-      <section id="catalog" className="border-t border-slate-100 bg-slate-50 scroll-reveal">
+      <section id="catalog" className="border-t border-slate-100 bg-slate-50 scroll-reveal relative overflow-hidden">
+        <BgArt kind="mascot-keys" side="left" className="hidden sm:block top-8 bottom-auto" />
+        <BgArt kind="keys" side="right" className="hidden sm:block top-8 bottom-auto" />
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>Browse the training</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Practical training for every part of the deal</h2><p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{`${INDIVIDUAL_PRODUCT_COUNT} standalone training products, built for real dealership conversations.`}</p></div>
                     {/* ═══════ The Complete Package — featured bundle card (FIRST) ═══════ */}
           <div className="mt-14">
@@ -857,12 +865,13 @@ function Home() {
 <ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /><LeadershipProductCard /></div>
         </div>
       </section>
-      <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal"><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
+      <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden"><BgArt kind="happy-client" side="left" className="hidden sm:block" /><BgArt kind="keys" side="right" className="hidden sm:block" /><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
 {id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$6.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$6.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
 
       {/* CTA band */}
       <section id="buy" className="bg-slate-900 relative overflow-hidden">
         <BgArt side="right" dark />
+        <BgArt kind="happy-rep" side="left" dark />
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28">
           <div className="flex justify-center">
             <LogoMark className="h-12 w-12" />
@@ -899,6 +908,7 @@ function Home() {
       {/* FAQs */}
       <section id="faq" className="bg-white relative overflow-hidden">
         <BgArt side="left" />
+        <BgArt kind="happy-client" side="right" />
         <div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <Eyebrow>FAQs</Eyebrow>
