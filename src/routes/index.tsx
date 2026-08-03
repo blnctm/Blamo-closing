@@ -653,7 +653,6 @@ function Home() {
         </div>
       </header>
 
-      {/* Spanish coming-soon banner removed: all guides are live */}
       <div className="hidden">
         <span aria-hidden="true">🇪🇸&nbsp;</span>
         Spanish versions of every training guide — <a href="/es" className="underline decoration-amber-500 underline-offset-2 hover:text-amber-700">available right here once completed</a>. ·&nbsp;
