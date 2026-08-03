@@ -60,3 +60,5 @@
     .hero-copy, .hero-mascot { animation: none; }
   }
 }
+
+@layer components { .blog-prose h2 { @apply mt-10 text-2xl font-bold tracking-tight text-slate-900; } .blog-prose h3 { @apply mt-8 text-xl font-bold text-slate-900; } .blog-prose p { @apply mt-5 leading-relaxed text-slate-700; } .blog-prose strong { @apply font-bold text-slate-900; } .blog-prose blockquote { @apply mt-6 border-l-4 border-amber-400 bg-amber-50 px-5 py-4 italic text-slate-800; } .blog-prose ol { @apply mt-5 list-decimal space-y-2 pl-6 text-slate-700; } .blog-prose ul { @apply mt-5 list-disc space-y-2 pl-6 text-slate-700; } .blog-prose a { @apply font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-800; } }

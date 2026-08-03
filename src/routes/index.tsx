@@ -2298,6 +2298,9 @@ function Home() {
             <a href="/thanks?product=qualifying-questions" className="hover:text-slate-900">
               Download the Qualifying Questions PDF
             </a>
+            <a href="/blog" className="font-medium text-amber-700 hover:text-amber-800">
+              Blog
+            </a>
             <a href="/login" className="hover:text-slate-900">
               Log in
             </a>
