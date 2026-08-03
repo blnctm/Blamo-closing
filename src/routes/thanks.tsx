@@ -56,6 +56,7 @@ const PRODUCT_META: Record<
     label: "Download your PDF",
   },
   "trade-in-tax-credit": { name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", fileName: "trade-in-tax-credit.pdf", label: "Download your PDF" },
+  "sales-log-template": { name: "Sales Log Template — Deals, Gross & Commission", fileName: "sales-log-template.zip", label: "Download your PDF + Excel ZIP" },
   "qualifying-questions": {
     name: "The Qualifying Questions Guide",
     fileName: "the-qualifying-questions-guide.pdf",

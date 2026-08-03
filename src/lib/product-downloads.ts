@@ -20,7 +20,7 @@
 // from this one table.
 // ============================================================================
 
-export type ProductKind = "pdf" | "video";
+export type ProductKind = "pdf" | "video" | "zip";
 
 export interface ProductDownload {
   /** Value of the ?product= search param on /thanks. */
@@ -77,6 +77,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     mime: "application/pdf",
   },
   { slug: "trade-in-tax-credit", code: "BLAMO-27-6721", file: "trade-in-tax-credit.pdf", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", kind: "pdf", mime: "application/pdf" },
+  { slug: "sales-log-template", code: "BLAMO-28-0636", file: "sales-log-template.zip", name: "Sales Log Template — Deals, Gross & Commission", kind: "zip", mime: "application/zip" },
   {
     slug: "qualifying-questions",
     code: "BLAMO-08-4836",
