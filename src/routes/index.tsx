@@ -880,7 +880,6 @@ function Home() {
             </nav>
           </div>
         )}
-        </div>
       </header>
 
       {/* Hero: the brand moment */}
