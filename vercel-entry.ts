@@ -19,6 +19,12 @@ import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
+  handleLeadMagnetCapture,
+  handleLeadMagnetDue,
+  handleUnsubscribeApi,
+  handleUnsubscribePage,
+} from "./src/routes/api/-lead-magnet";
+import {
   handleLogin,
   handleLogout,
   handleMe,
@@ -72,9 +78,17 @@ export default async function vercelHandler(
               ? await handleLogout(webRequest)
               : pathname === "/api/me"
                 ? await handleMe(webRequest)
-                : pathname === DOWNLOAD_PATH
-                  ? await handleDownloadRequest(webRequest)
-                  : await fetchHandler.fetch(webRequest);
+                : pathname === "/api/lead-magnet"
+                  ? await handleLeadMagnetCapture(webRequest)
+                  : pathname === "/api/lead-magnet/due"
+                    ? await handleLeadMagnetDue(webRequest)
+                    : pathname === "/api/unsubscribe"
+                      ? await handleUnsubscribeApi(webRequest)
+                      : pathname === "/unsubscribe"
+                        ? await handleUnsubscribePage(webRequest)
+                        : pathname === DOWNLOAD_PATH
+                          ? await handleDownloadRequest(webRequest)
+                          : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     if (webRes.body) {
