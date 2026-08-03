@@ -149,12 +149,27 @@ export async function handleTestimonial(request: Request): Promise<Response> {
         set text = ${text}, purchase_id = ${purchaseId}, status = 'pending',
             submitted_at = now(), created_at = now(), resolved_at = null
         where id = ${String((existing[0] as Record<string, unknown>).id)}
-        returning id, text, status, created_at`
+        returning id, text, status, created_at, purchase_id`
     : await db`insert into testimonials (user_id, purchase_id, text)
         values (${user.id}, ${purchaseId}, ${text})
-        returning id, text, status, created_at`;
+        returning id, text, status, created_at, purchase_id`;
 
-  return json({ ok: true, testimonial: mapRow(rows[0] as Record<string, unknown>) });
+  // The insert/update RETURNING doesn't carry the product slug — resolve it
+  // from the purchase so the response includes productName like the other
+  // endpoints.
+  const row = rows[0] as Record<string, unknown>;
+  let productSlug: string | null = null;
+  if (row.purchase_id) {
+    const purchase = await db`select product_slug from purchases where id = ${String(row.purchase_id)}`;
+    if (purchase[0]) {
+      productSlug = String((purchase[0] as Record<string, unknown>).product_slug);
+    }
+  }
+
+  return json({
+    ok: true,
+    testimonial: mapRow({ ...row, product_slug: productSlug }),
+  });
 }
 
 /** Public wall — approved only, with reviewer first name + last initial. */
