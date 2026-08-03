@@ -24,6 +24,8 @@ import {
   currentUser,
   getPurchasesForUser,
   makeSessionCookie,
+  getTeamCodeForOwner,
+  redeemTeamCode,
 } from "../../lib/accounts";
 import { BUNDLE_SLUG } from "../../lib/store-products";
 import { PRODUCT_DOWNLOADS } from "../../lib/product-downloads";
@@ -74,6 +76,7 @@ export async function handleRegister(request: Request): Promise<Response> {
   const name = typeof body.name === "string" ? body.name.trim() : "";
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
   const password = typeof body.password === "string" ? body.password : "";
+  const teamCode = typeof body.teamCode === "string" ? body.teamCode.trim() : "";
 
   if (!name) return json({ error: "name_required" }, 400);
   if (!EMAIL_RE.test(email)) return json({ error: "invalid_email" }, 400);
@@ -90,8 +93,13 @@ export async function handleRegister(request: Request): Promise<Response> {
     return json({ error: "register_failed" }, 500);
   }
 
+  let teamCodeRedemption: string | undefined;
+  if (teamCode) {
+    try { teamCodeRedemption = await redeemTeamCode(user.id, teamCode); }
+    catch (error) { console.error("[auth] team code redemption failed", error); teamCodeRedemption = "redemption_failed"; }
+  }
   const token = createSession(user.id);
-  return withSessionCookie({ user }, token);
+  return withSessionCookie({ user, ...(teamCodeRedemption ? { teamCodeRedemption } : {}) }, token);
 }
 
 export async function handleLogin(request: Request): Promise<Response> {
@@ -128,6 +136,7 @@ export async function handleMe(request: Request): Promise<Response> {
   const user = await currentUser(request);
   if (!user) return json({ error: "unauthorized" }, 401);
   const purchases = await getPurchasesForUser(user.id);
+  const teamCode = await getTeamCodeForOwner(user.id);
 
   // Complete Package entitlement: an unlocked bundle purchase means EVERY
   // title (present AND future) is unlocked. The webhook already inserts rows
@@ -153,5 +162,5 @@ export async function handleMe(request: Request): Promise<Response> {
     }
   }
 
-  return json({ user, purchases });
+  return json({ user, purchases, teamCode });
 }

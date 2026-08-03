@@ -882,6 +882,12 @@ function Home() {
               <span className="font-medium text-slate-700">buy what you need.</span>
             </p>
           </div>
+          <article id="team-license" className="mt-10 overflow-hidden rounded-2xl border-2 border-amber-300 bg-slate-900 p-7 text-white shadow-xl sm:p-9">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div><p className="text-xs font-black uppercase tracking-widest text-amber-300">For dealerships and managers</p><h3 className="mt-2 text-2xl font-extrabold">Team License — Train Up to 10 Reps</h3><p className="mt-3 max-w-2xl text-slate-300">One team code · up to 10 reps · the whole library — English + Español, present + future</p><p className="mt-4 text-2xl font-black text-amber-300">$299.00</p></div>
+              <BuyButton slug="team-license" promoCode={promoApplied ? "BLAMO10" : undefined} label="Get the Team License — $299.00" ariaLabel="Get the Team License — train up to 10 reps — $299.00" />
+            </div>
+          </article>
           <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
             <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $6.99 becomes $6.29 · $24.99 becomes $22.49 · $79.99 becomes $71.99.</p></div>
             <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white">Apply</button></div>

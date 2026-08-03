@@ -201,6 +201,7 @@ function Account() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<ClientUser | null>(null);
   const [purchases, setPurchases] = useState<ClientPurchase[]>([]);
+  const [teamCode, setTeamCode] = useState<{code:string;maxSeats:number;seatsUsed:number} | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -210,6 +211,7 @@ function Account() {
         if (data) {
           setUser(data.user);
           setPurchases(data.purchases);
+          setTeamCode(data.teamCode ? { code: data.teamCode.code, maxSeats: data.teamCode.maxSeats, seatsUsed: data.teamCode.seatsUsed } : null);
         }
       })
       .catch(() => {
@@ -309,7 +311,8 @@ function Account() {
               </p>
             </section>
 
-            <TeamCodeCard purchases={purchases} onRedeemed={() => me().then(d => d && setPurchases(d.purchases))} />
+            <>{teamCode && <section className="mt-8 rounded-2xl border-2 border-amber-300 bg-slate-900 p-6 text-white"><h2 className="text-xl font-bold">Your Team License</h2><p className="mt-2 text-slate-300">Share this code with your reps — they redeem it at registration or here.</p><div className="mt-4 flex flex-wrap items-center gap-3"><input readOnly value={teamCode.code} onFocus={(e) => e.currentTarget.select()} className="w-56 rounded-lg border border-amber-300 bg-white px-3 py-2 font-mono font-bold tracking-wider text-slate-900" aria-label="Your team code" /><button type="button" onClick={() => navigator.clipboard?.writeText(teamCode.code)} className="rounded-lg bg-amber-400 px-4 py-2 font-bold text-slate-950">Copy code</button></div><p className="mt-4 font-semibold text-amber-300">{teamCode.seatsUsed} of {teamCode.maxSeats} seats used</p></section>}</>
+      <TeamCodeCard purchases={purchases} onRedeemed={() => me().then(d => d && setPurchases(d.purchases))} />
 
             {/* Purchases */}
             <section className="mt-8">
