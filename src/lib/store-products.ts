@@ -77,6 +77,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     kindLabel: "PDF · 15 pages",
   },
   { slug: "trade-in-tax-credit", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", priceCents: 699, fileName: "trade-in-tax-credit.pdf", kindLabel: "PDF · 4 pages" },
+  { slug: "sales-log-template", name: "Sales Log Template — Deals, Gross & Commission", priceCents: 699, fileName: "sales-log-template.zip", kindLabel: "Printable PDF + Excel · Template" },
   {
     slug: "qualifying-questions",
     name: "The Qualifying Questions Guide",
