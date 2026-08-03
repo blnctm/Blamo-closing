@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/refunds")({
@@ -45,25 +46,51 @@ function FAQ({ q, a }: { q: string; a: string }) {
 // Starter Kit preview at /preview instead of the old "coming soon" line).
 // Delivery FAQ Q&As appended verbatim from delivery-faq.md per the wiring notes.
 function Refunds() {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="min-h-dvh bg-slate-50 text-slate-900">
       <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <a href="/" className="text-lg font-extrabold tracking-tight">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+          <a href="/" className="rounded-lg py-2 text-lg font-extrabold tracking-tight">
             Blamo<span className="text-slate-400"> Closing</span>
           </a>
-          <nav className="flex items-center gap-5 text-sm font-medium">
-            <a href="/" className="text-slate-500 hover:text-slate-900">
+          <nav aria-label="Main" className="hidden items-center gap-5 text-sm font-medium sm:flex">
+            <a href="/" className="rounded-lg py-2.5 text-slate-500 hover:text-slate-900">
               Home
             </a>
-            <a href="/testimonials" className="font-semibold text-amber-700">Reviews</a><a href="/contact" className="text-slate-500 hover:text-slate-900">
+            <a href="/testimonials" className="rounded-lg py-2.5 font-semibold text-amber-700">Reviews</a><a href="/contact" className="rounded-lg py-2.5 text-slate-500 hover:text-slate-900">
               Contact
             </a>
-            <a href="/refunds" className="text-slate-900">
+            <a href="/refunds" className="rounded-lg py-2.5 text-slate-900">
               Refunds
             </a>
           </nav>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-expanded={menuOpen}
+            aria-controls="refunds-mobile-menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 transition hover:bg-slate-100 sm:hidden"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
+              {menuOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            </svg>
+          </button>
         </div>
+        {menuOpen && (
+          <div id="refunds-mobile-menu" className="border-t border-slate-200 bg-white shadow-xl sm:hidden">
+            <nav aria-label="Mobile" className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+              <div className="grid gap-1">
+                {[["Home", "/"], ["Reviews", "/testimonials"], ["Contact", "/contact"], ["Refunds", "/refunds"]].map(([label, href]) => (
+                  <a key={label} href={href} onClick={() => setMenuOpen(false)} className="flex items-center rounded-lg px-4 py-3.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900">
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
       <main className="relative overflow-hidden px-6 py-20 sm:py-28">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50rem_30rem_at_50%_-10%,rgba(251,191,36,0.22),transparent)]" />
@@ -231,7 +258,7 @@ function Refunds() {
             Questions?{" "}
             <a
               href="/contact"
-              className="font-semibold text-amber-700 hover:text-amber-800"
+              className="inline-block rounded-lg py-2.5 font-semibold text-amber-700 hover:text-amber-800"
             >
               Contact us
             </a>

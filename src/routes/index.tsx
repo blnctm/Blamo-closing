@@ -205,7 +205,7 @@ function BuyButton({
   const primaryClass =
     size === "lg"
       ? "group inline-flex items-center justify-center gap-2.5 rounded-xl bg-amber-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-60"
-      : "group inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-sm transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-60";
+      : "group inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-3 text-sm font-semibold text-slate-950 shadow-sm transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-60";
 
   return (
     <div className="flex flex-col items-center gap-3 sm:items-start">
@@ -369,7 +369,7 @@ function FreePdfBand() {
 
 /* ---------- Header auth (Login/Register vs Account/Logout) ---------- */
 
-function AuthNav() {
+function AuthNav({ stacked = false }: { stacked?: boolean }) {
   const [user, setUser] = useState<{ name?: string } | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -407,17 +407,21 @@ function AuthNav() {
 
   if (user) {
     return (
-      <div className="flex items-center gap-3">
+      <div className={stacked ? "flex flex-col gap-2" : "flex items-center gap-3"}>
         <a
           href="/account"
-          className="rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
+          className={stacked
+            ? "flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-700 transition hover:bg-slate-100"
+            : "rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"}
         >
           My account
         </a>
         <button
           type="button"
           onClick={handleLogout}
-          className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+          className={stacked
+            ? "rounded-lg px-4 py-3 text-base font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+            : "rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"}
         >
           Log out
         </button>
@@ -426,16 +430,20 @@ function AuthNav() {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className={stacked ? "flex flex-col gap-2" : "flex items-center gap-4"}>
       <a
         href="/login"
-        className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+        className={stacked
+          ? "flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-700 transition hover:bg-slate-100"
+          : "rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"}
       >
         Log in
       </a>
       <a
         href="/register"
-        className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+        className={stacked
+          ? "flex items-center justify-center rounded-lg bg-slate-900 px-4 py-3 text-base font-semibold text-white transition hover:bg-slate-700"
+          : "rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"}
       >
         Sign up
       </a>
@@ -518,7 +526,7 @@ function ProductCoverCard({
             {title}
           </h3>
           {desc && (
-            <p className="mt-2 text-sm leading-snug text-slate-600">{desc}</p>
+            <p className="mt-2 text-base leading-snug text-slate-600 sm:text-sm">{desc}</p>
           )}
           <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-3">
             <span className="text-xl font-extrabold tracking-tight text-slate-900">
@@ -534,7 +542,7 @@ function ProductCoverCard({
           {previewHref && (
             <a
               href={previewHref}
-              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 transition hover:text-amber-800"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-lg py-2.5 text-sm font-semibold text-amber-700 transition hover:text-amber-800"
             >
               Preview sample pages
               <span aria-hidden="true">→</span>
@@ -720,6 +728,7 @@ function LeadershipEsProductCard() { return <ProductCoverCard img="/cover-thumbs
 
 function Home() {
   const [promo, setPromo] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const [promoApplied, setPromoApplied] = useState(false);
   useEffect(() => {
     const fromUrl = new URLSearchParams(window.location.search).get("promo")?.trim().toUpperCase();
@@ -762,66 +771,115 @@ function Home() {
             <LogoMark className="h-8 w-8" />
             <Wordmark />
           </a>
-          <div className="flex items-center gap-5">
-            <AuthNav />
+          <div className="flex items-center gap-4 sm:gap-5">
             <div className="hidden items-center gap-5 lg:flex">
             <a
               href="#buy"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               10 Steps of the Sale
             </a>
             <a
               href="#internet-sales"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               The Internet Sale
             </a>
             <a
               href="#spouse"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               Spouse
             </a>
             <a
               href="#pray-about-it"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               Pray About It
             </a>
             <a
               href="#trade-in"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               Trade-In
             </a>
             <a
               href="#qualifying-questions"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               Qualifying Questions
             </a>
             <a
               href="/es"
-              className="text-sm font-medium text-amber-700 transition hover:text-amber-500"
+              className="rounded-lg py-2.5 text-sm font-medium text-amber-700 transition hover:text-amber-500"
             >
               Español
             </a>
             <a
               href="/contact"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
+              className="rounded-lg py-2.5 text-sm font-medium text-slate-500 transition hover:text-slate-900"
             >
               Contact
             </a>
             <a
               href="#catalog"
-              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              className="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
               Get the Complete Package
             </a>
             </div>
+            <div className="hidden lg:block"><AuthNav /></div>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 lg:hidden"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden="true">
+                {menuOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+              </svg>
+            </button>
           </div>
         </div>
+        {menuOpen && (
+          <div id="mobile-menu" className="border-t border-slate-200 bg-white shadow-xl lg:hidden">
+            <nav aria-label="Mobile" className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+              <a
+                href="#catalog"
+                onClick={() => setMenuOpen(false)}
+                className="flex w-full items-center justify-center rounded-xl bg-slate-900 px-5 py-4 text-base font-bold text-white shadow-sm transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              >
+                Get the Complete Package
+              </a>
+              <div className="mt-2 grid gap-1">
+                {[
+                  ["10 Steps of the Sale", "#buy"],
+                  ["The Internet Sale", "#internet-sales"],
+                  ["Spouse", "#spouse"],
+                  ["Pray About It", "#pray-about-it"],
+                  ["Trade-In", "#trade-in"],
+                  ["Qualifying Questions", "#qualifying-questions"],
+                  ["En Español", "/es"],
+                  ["Contact", "/contact"],
+                ].map(([label, href]) => (
+                  <a
+                    key={label}
+                    href={href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center rounded-lg px-4 py-3.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <div className="mt-2 border-t border-slate-200 pt-3">
+                <AuthNav stacked />
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero: the brand moment */}
@@ -855,7 +913,7 @@ function Home() {
             </ul>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-5 sm:justify-start">
               <a href="#catalog" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
-              <a href="#faq" className="inline-flex items-center gap-2 text-sm font-bold text-slate-700 underline decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
+              <a href="#faq" className="inline-flex items-center gap-2 rounded-lg py-3 text-sm font-bold text-slate-700 underline decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
             </div>
           </div>
           <div className="hero-mascot relative mx-auto flex min-h-[300px] w-full max-w-md items-end justify-center sm:min-h-[390px] lg:min-h-[470px]">
@@ -1064,7 +1122,7 @@ function Home() {
           </article>
           <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
             <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $6.99 becomes $6.29 · $24.99 becomes $22.49 · $79.99 becomes $71.99.</p></div>
-            <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white">Apply</button></div>
+            <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2.5 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-bold text-white">Apply</button></div>
             {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
           </div>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -1111,7 +1169,7 @@ function Home() {
           <p className="mt-5 text-sm">
             <a
               href="/thanks"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
+              className="inline-block rounded-lg py-3 font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
               Already purchased? Enter your code to download
             </a>
@@ -1197,14 +1255,14 @@ function Home() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
         <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
-          <div className="text-center sm:text-left">
+          <div className="max-w-2xl text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               New · The 10 Steps to the Internet Sale
             </p>
             <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Win the internet lead—{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
+              <span className="underline decoration-amber-400 decoration-[6px] underline-offset-8">
                 before they walk into another dealership.
               </span>
             </h2>
@@ -1366,7 +1424,7 @@ function Home() {
           <p className="mt-5 text-sm">
             <a
               href="/thanks?product=internet-sales"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
+              className="inline-block rounded-lg py-3 font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
               Already purchased? Enter your code to download
             </a>
@@ -1463,7 +1521,7 @@ function Home() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
         <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
-          <div className="text-center sm:text-left">
+          <div className="max-w-2xl text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               New · The Spouse Objection Playbook
@@ -1471,7 +1529,7 @@ function Home() {
             <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Turn “I need to ask my spouse” into a conversation you can help
               win—{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
+              <span className="underline decoration-amber-400 decoration-[6px] underline-offset-8">
                 not a dead end.
               </span>
             </h2>
@@ -1634,7 +1692,7 @@ function Home() {
           <p className="mt-5 text-sm">
             <a
               href="/thanks?product=spouse"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
+              className="inline-block rounded-lg py-3 font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
               Already purchased? Enter your code to download
             </a>
@@ -1715,14 +1773,14 @@ function Home() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_75%_-15%,rgba(251,191,36,0.14),transparent)]" />
         <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
-          <div className="text-center sm:text-left">
+          <div className="max-w-2xl text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               New · The “Pray About It” Objection Playbook
             </p>
             <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Honor their faith—{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
+              <span className="underline decoration-amber-400 decoration-[6px] underline-offset-8">
                 and find out what’s really behind “I need to pray about it.”
               </span>
             </h2>
@@ -1885,7 +1943,7 @@ function Home() {
           <p className="mt-5 text-sm">
             <a
               href="/thanks?product=pray-about-it"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
+              className="inline-block rounded-lg py-3 font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
               Already purchased? Enter your code to download
             </a>
@@ -1965,14 +2023,14 @@ function Home() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55rem_38rem_at_25%_-15%,rgba(251,191,36,0.14),transparent)]" />
         <BgArt side="left" />
         <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-28">
-          <div className="text-center sm:text-left">
+          <div className="max-w-2xl text-center sm:text-left">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               New · The “I Want More for My Trade-In” Playbook
             </p>
             <h2 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Stop arguing over one number.{" "}
-              <span className="whitespace-nowrap underline decoration-amber-400 decoration-[6px] underline-offset-8">
+              <span className="underline decoration-amber-400 decoration-[6px] underline-offset-8">
                 Win the whole deal.
               </span>
             </h2>
@@ -2135,7 +2193,7 @@ function Home() {
           <p className="mt-5 text-sm">
             <a
               href="/thanks?product=trade-in"
-              className="font-medium text-slate-300 underline underline-offset-2 hover:text-white"
+              className="inline-block rounded-lg py-3 font-medium text-slate-300 underline underline-offset-2 hover:text-white"
             >
               Already purchased? Enter your code to download
             </a>
@@ -2204,11 +2262,11 @@ function Home() {
       </section>
 
       {/* Meet & Greet Mastery — product section */}
-      <section id="meet-and-greet" className="relative overflow-hidden border-t border-slate-100 bg-white scroll-reveal"><BgArt side="right" /><div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28"><div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><Eyebrow>New · Meet & Greet Mastery</Eyebrow><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Win the first five minutes — and earn the next five hours.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">A 13-page guide to the 10-second rule, opening scripts, body language, personality types, and questions that turn a greeting into a real conversation.</p><div className="mt-8 flex flex-wrap gap-4"><BuyButton slug="meet-and-greet" label="Get Meet & Greet Mastery — $6.99" ariaLabel="Get Meet & Greet Mastery — $6.99" /><a href="/thanks?product=meet-and-greet" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a></div></div><div className="pb-8 lg:pb-0"><MeetAndGreetProductCard /></div></div><div className="mt-16 grid gap-12 lg:grid-cols-2"><div><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-5 space-y-3">{["Apply the 10-second rule to make a confident first impression.","Use word-for-word opening scripts for different customer situations.","Read body language and adapt to four customer personality types.","Ask questions that open real conversations and move the sale forward."].map((item)=><li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div><div><Eyebrow>FAQs</Eyebrow><div className="mt-5 space-y-3">{[["What is the 10-second rule?","It is the first-impression window: greet with confidence, warmth, and a clear opening that gives the customer room to engage."],["Is this only for experienced sales reps?","No. The scripts and practice guidance are useful for a brand-new rep and a seasoned professional."],["What does the guide include?","It includes opening scripts, body-language guidance, four personality types, conversation-opening questions, and practice exercises."],["How does it fit with the other guides?","It gives you a stronger start to the conversation, while the other guides build the skills that carry the customer through the rest of the sale."]].map(([q,a])=><details key={q} className="faq rounded-xl border border-slate-200 bg-white"><summary className="px-5 py-4 font-semibold text-slate-900">{q}</summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></div></div></section>
+      <section id="meet-and-greet" className="relative overflow-hidden border-t border-slate-100 bg-white scroll-reveal"><BgArt side="right" /><div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28"><div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><Eyebrow>New · Meet & Greet Mastery</Eyebrow><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Win the first five minutes — and earn the next five hours.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">A 13-page guide to the 10-second rule, opening scripts, body language, personality types, and questions that turn a greeting into a real conversation.</p><div className="mt-8 flex flex-wrap gap-4"><BuyButton slug="meet-and-greet" label="Get Meet & Greet Mastery — $6.99" ariaLabel="Get Meet & Greet Mastery — $6.99" /><a href="/thanks?product=meet-and-greet" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3.5 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a></div></div><div className="pb-8 lg:pb-0"><MeetAndGreetProductCard /></div></div><div className="mt-16 grid gap-12 lg:grid-cols-2"><div><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-5 space-y-3">{["Apply the 10-second rule to make a confident first impression.","Use word-for-word opening scripts for different customer situations.","Read body language and adapt to four customer personality types.","Ask questions that open real conversations and move the sale forward."].map((item)=><li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div><div><Eyebrow>FAQs</Eyebrow><div className="mt-5 space-y-3">{[["What is the 10-second rule?","It is the first-impression window: greet with confidence, warmth, and a clear opening that gives the customer room to engage."],["Is this only for experienced sales reps?","No. The scripts and practice guidance are useful for a brand-new rep and a seasoned professional."],["What does the guide include?","It includes opening scripts, body-language guidance, four personality types, conversation-opening questions, and practice exercises."],["How does it fit with the other guides?","It gives you a stronger start to the conversation, while the other guides build the skills that carry the customer through the rest of the sale."]].map(([q,a])=><details key={q} className="faq rounded-xl border border-slate-200 bg-white"><summary className="px-5 py-4 font-semibold text-slate-900">{q}</summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></div></div></section>
       {/* Follow-Up That Creates Customers for Life — product section */}
       <section id="follow-up" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28"><div className="grid gap-12 lg:grid-cols-2"><div><Eyebrow>New · Follow-Up That Creates Customers for Life</Eyebrow><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">The sale doesn’t end when they leave. That’s where the relationship begins.</h2><p className="mt-6 text-lg leading-relaxed text-slate-600">A 14-page guide to the 10-day prospect follow-up plan, the SOLD customer process, and scripts that turn one sale into a customer for life.</p><div className="mt-8"><BuyButton slug="follow-up" label="Get Follow-Up That Creates Customers for Life — $6.99" ariaLabel="Get Follow-Up That Creates Customers for Life — $6.99" /></div></div><div><FollowUpProductCard /><div className="mt-8"><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-4 space-y-2 text-slate-600">{["Run the 10-day prospect follow-up plan with word-for-word scripts.","Stay top of mind without becoming annoying.","Use the SOLD customer process to keep buyers happy after delivery.","Ask for reviews and referrals at the right moments.","Follow up on birthdays, vehicle anniversaries, and service visits."].map(x=><li key={x}>• {x}</li>)}</ul></div><div className="mt-8"><Eyebrow>FAQs</Eyebrow><p className="mt-3 text-slate-600">The guide includes prospect and long-term follow-up plans, the SOLD process, and scripts for reviews, referrals, birthdays, anniversaries, and service visits.</p></div></div></div></div></section>
       {/* Prospecting Like a Professional — product section */}
-      <section id="prospecting" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28"><div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><Eyebrow>New · Prospecting Like a Professional</Eyebrow><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop waiting for traffic. Start bringing customers to you.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">A 14-page playbook to build your personal brand, work your first 100 contacts, and fill your pipeline with people who know, like, and trust you — without a single pressure play.</p><div className="mt-8 flex flex-wrap gap-4"><BuyButton slug="prospecting" label="Get Prospecting Like a Professional — $6.99" ariaLabel="Get Prospecting Like a Professional — $6.99" /><a href="/thanks?product=prospecting" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700">Already purchased? Enter your code</a></div></div><div className="pb-8 lg:pb-0"><ProspectingProductCard /></div></div><div className="mt-16 grid gap-12 lg:grid-cols-2"><div><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-5 space-y-3">{["Build a personal brand and introduce yourself as an Automotive Product Specialist.","Create your first 100-contact list with ready-to-use announcement, text, social, and phone scripts.","Use a daily social media strategy, community moves, and the Referral Formula.","Follow a daily prospecting scorecard and a 30-Day Challenge to build the habit."].map((item)=><li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div><div><Eyebrow>FAQs</Eyebrow><div className="mt-5 space-y-3">{[["Is this too advanced for a brand-new rep?","No. It starts with your first 100 contacts and walks you through the daily habits one step at a time."],["Does it promise a certain number of sales?","No. It gives you a pressure-free system; results depend on your market and consistency."],["Is this about cold-calling strangers?","No. It starts with people you already know, then grows through community visibility and referrals."],["Does it work with the other playbooks?","Yes. Prospecting fills your pipeline while the other guides help you close what walks in."]].map(([q,a])=><details key={q} className="faq rounded-xl border border-slate-200 bg-white"><summary className="px-5 py-4 font-semibold text-slate-900">{q}</summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></div></div></section>
+      <section id="prospecting" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28"><div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><Eyebrow>New · Prospecting Like a Professional</Eyebrow><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Stop waiting for traffic. Start bringing customers to you.</h2><p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">A 14-page playbook to build your personal brand, work your first 100 contacts, and fill your pipeline with people who know, like, and trust you — without a single pressure play.</p><div className="mt-8 flex flex-wrap gap-4"><BuyButton slug="prospecting" label="Get Prospecting Like a Professional — $6.99" ariaLabel="Get Prospecting Like a Professional — $6.99" /><a href="/thanks?product=prospecting" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3.5 font-semibold text-slate-700">Already purchased? Enter your code</a></div></div><div className="pb-8 lg:pb-0"><ProspectingProductCard /></div></div><div className="mt-16 grid gap-12 lg:grid-cols-2"><div><Eyebrow>What you’ll learn</Eyebrow><ul className="mt-5 space-y-3">{["Build a personal brand and introduce yourself as an Automotive Product Specialist.","Create your first 100-contact list with ready-to-use announcement, text, social, and phone scripts.","Use a daily social media strategy, community moves, and the Referral Formula.","Follow a daily prospecting scorecard and a 30-Day Challenge to build the habit."].map((item)=><li key={item} className="flex gap-3 leading-relaxed text-slate-600"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />{item}</li>)}</ul></div><div><Eyebrow>FAQs</Eyebrow><div className="mt-5 space-y-3">{[["Is this too advanced for a brand-new rep?","No. It starts with your first 100 contacts and walks you through the daily habits one step at a time."],["Does it promise a certain number of sales?","No. It gives you a pressure-free system; results depend on your market and consistency."],["Is this about cold-calling strangers?","No. It starts with people you already know, then grows through community visibility and referrals."],["Does it work with the other playbooks?","Yes. Prospecting fills your pipeline while the other guides help you close what walks in."]].map(([q,a])=><details key={q} className="faq rounded-xl border border-slate-200 bg-white"><summary className="px-5 py-4 font-semibold text-slate-900">{q}</summary><p className="px-5 pb-5 leading-relaxed text-slate-600">{a}</p></details>)}</div></div></div></div></section>
       {/* Qualifying Questions Guide — product section */}
       <section id="qualifying-questions" className="relative overflow-hidden border-t border-slate-100 bg-slate-50 scroll-reveal">
         <BgArt side="right" />
@@ -2220,7 +2278,7 @@ function Home() {
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">Seventy-five qualification questions across nine categories, the Golden 10, and a six-step sales flow: build rapport, find the real motivation, and present with confidence — without giving away the price.</p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $6.99" ariaLabel="Get The Qualifying Questions Guide — $6.99" />
-                <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
+                <a href="/thanks?product=qualifying-questions" className="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3.5 font-semibold text-slate-700 transition hover:border-slate-500 hover:text-slate-900">Already purchased? Enter your code</a>
               </div>
             </div>
             <div className="pb-8 lg:pb-0">
@@ -2247,7 +2305,7 @@ function Home() {
           <div className="mt-14 rounded-2xl border border-amber-200 bg-amber-50 p-6"><Eyebrow>Who it’s for</Eyebrow><p className="mt-3 leading-relaxed text-slate-700">New and veteran dealership sales reps, internet sales teams, and product specialists who want to qualify customers faster, present with more confidence, and close more deals without discounting the price.</p></div>
         </div>
       </section>
-      <section className="relative overflow-hidden bg-slate-900"><BgArt side="right" dark /><div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $6.99" ariaLabel="Get The Qualifying Questions Guide — $6.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
+      <section className="relative overflow-hidden bg-slate-900"><BgArt side="right" dark /><div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-28"><LogoMark className="mx-auto h-12 w-12" /><h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Ask better questions. Close with confidence.</h2><p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-300">Get The Qualifying Questions Guide — a 13-page PDF with 75 questions, the Golden 10, and a complete sales flow you can use today.</p><div className="mt-9 flex justify-center"><BuyButton slug="qualifying-questions" label="Get The Qualifying Questions Guide — $6.99" ariaLabel="Get The Qualifying Questions Guide — $6.99" /></div><p className="mt-5 text-sm"><a href="/thanks?product=qualifying-questions" className="inline-block rounded-lg py-3 font-medium text-slate-300 underline underline-offset-2 hover:text-white">Already purchased? Enter your code to download</a></p></div></section>
       <section className="relative overflow-hidden border-t border-slate-100 bg-white scroll-reveal"><BgArt side="left" /><div className="relative mx-auto max-w-3xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>FAQs</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Qualifying Questions Guide, answered</h2></div><div className="mt-12 space-y-3">{[
         ["Do I need experience to use this?", "No. The questions are numbered 1–75 and organized by category, so you can work one category per shift and build from there. The Golden 10 gives you a complete system you can use on your very next customer."],
         ["Won’t this make my conversations feel scripted?", "The questions are conversation starters, not a script to recite. Say them out loud until they sound like you, adapt the wording to your market, and ask with genuine curiosity — the structure works because it sounds natural."],

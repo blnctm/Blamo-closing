@@ -91,7 +91,7 @@ function Register() {
           </a>
           <a
             href="/"
-            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+            className="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700"
           >
             Back to home
           </a>
@@ -197,7 +197,7 @@ function Register() {
               Already have an account?{" "}
               <a
                 href={`/login?next=${encodeURIComponent(destination)}`}
-                className="font-semibold text-slate-900 underline underline-offset-2 hover:text-amber-700"
+                className="inline-block rounded-lg py-2.5 font-semibold text-slate-900 underline underline-offset-2 hover:text-amber-700"
               >
                 Log in
               </a>
