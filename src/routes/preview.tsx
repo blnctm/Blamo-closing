@@ -178,19 +178,19 @@ function Preview() {
             </h2>
             <p className="mx-auto mt-3 max-w-md leading-relaxed text-slate-600">
               Word-for-word scripts, mistakes-to-avoid checklists, role-play
-              drills, and a 7-day practice plan — $24.99, yours to keep forever.
+              drills, and a 7-day practice plan — $9.99, yours to keep forever.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <BuyButton
                 slug="starter-kit"
-                label="Get the Starter Kit — $24.99"
-                ariaLabel="Get the Sales Rep Starter Kit — $24.99"
+                label="Get the Starter Kit — $9.99"
+                ariaLabel="Get the Sales Rep Starter Kit — $9.99"
                 variant="primary"
               />
               <BuyButton
                 slug="complete-package"
-                label="Get the Complete Package — $79.99"
-                ariaLabel="Get the Complete Package — $79.99"
+                label="Get the Complete Package — $34.95"
+                ariaLabel="Get the Complete Package — $34.95"
                 variant="secondary"
               />
             </div>

@@ -10,8 +10,8 @@
 export interface StoreProduct {
   slug: string;
   name: string;
-  /** Display price in dollars and cents, e.g. "24.99" (no $ sign). */
-  priceCents: 699 | 2499 | 7999 | 29900;
+  /** Display price in dollars and cents, e.g. "1.99" (no $ sign). */
+  priceCents: 199 | 999 | 2499 | 3495 | 9995;
   /**
    * File name the browser saves the download as (used for the <a download>).
    * Absent on the Complete Package bundle — it has no single PDF; buying it
@@ -23,7 +23,7 @@ export interface StoreProduct {
   /**
    * True for the Complete Package bundle ("complete-package"). The bundle is a
    * library unlock, not a single product: it has no fileName, its price is
-   * 7999, and count copy ("N standalone training products") must exclude it.
+   * 3495, and count copy ("N standalone training products") must exclude it.
    */
   isBundle?: boolean;
   isTeamLicense?: boolean;
@@ -36,61 +36,61 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
     slug: BUNDLE_SLUG,
     name: "The Complete Package: Everything You Need to Be Successful in Sales in the Automotive Industry",
-    priceCents: 7999,
+    priceCents: 3495,
     kindLabel: "The whole library · every current + future title",
     isBundle: true,
   },
-  { slug: "team-license", name: "Team License — Train Up to 10 Reps", priceCents: 29900, kindLabel: "One purchase · one team code · the whole library for up to 10 reps", isTeamLicense: true },
+  { slug: "team-license", name: "Team License — Train Up to 10 Reps", priceCents: 9995, kindLabel: "One purchase · one team code · the whole library for up to 10 reps", isTeamLicense: true },
   {
     slug: "starter-kit",
     name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
-    priceCents: 2499,
+    priceCents: 999,
     fileName: "sales-rep-starter-kit-10-steps.pdf",
     kindLabel: "PDF · 27 pages",
   },
   {
     slug: "internet-sales",
     name: "The 10 Steps to the Internet Sale",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "the-10-steps-to-the-internet-sale.pdf",
     kindLabel: "PDF · 15 pages",
   },
   {
     slug: "spouse",
     name: "The Spouse Objection Playbook",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "the-spouse-objection-playbook.pdf",
     kindLabel: "PDF · 14 pages",
   },
   {
     slug: "pray-about-it",
     name: "The “Pray About It” Objection Playbook",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "the-pray-about-it-objection-playbook.pdf",
     kindLabel: "PDF · 13 pages",
   },
   {
     slug: "trade-in",
     name: "The “I Want More for My Trade-In” Playbook",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "the-trade-in-objection-playbook.pdf",
     kindLabel: "PDF · 15 pages",
   },
-  { slug: "trade-in-tax-credit", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", priceCents: 699, fileName: "trade-in-tax-credit.pdf", kindLabel: "PDF · 4 pages" },
-  { slug: "sales-log-template", name: "Sales Log Template — Deals, Gross & Commission", priceCents: 699, fileName: "sales-log-template.zip", kindLabel: "Printable PDF + Excel · Template" },
+  { slug: "trade-in-tax-credit", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", priceCents: 199, fileName: "trade-in-tax-credit.pdf", kindLabel: "PDF · 4 pages" },
+  { slug: "sales-log-template", name: "Sales Log Template — Deals, Gross & Commission", priceCents: 199, fileName: "sales-log-template.zip", kindLabel: "Printable PDF + Excel · Template" },
   {
     slug: "qualifying-questions",
     name: "The Qualifying Questions Guide",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "the-qualifying-questions-guide.pdf",
     kindLabel: "PDF · 13 pages",
   },
-  { slug: "walk-around", name: "Vehicle Walk-Around Training Guide", priceCents: 699, fileName: "vehicle-walk-around-training-guide.pdf", kindLabel: "PDF · 14 pages" },
+  { slug: "walk-around", name: "Vehicle Walk-Around Training Guide", priceCents: 199, fileName: "vehicle-walk-around-training-guide.pdf", kindLabel: "PDF · 14 pages" },
   { slug: "leadership", name: "Blamo Closing Leadership Academy", priceCents: 2499, fileName: "leadership-academy-manual.pdf", kindLabel: "PDF · 40 pages" },
-  { slug: "fi-awareness", name: "F&I Awareness Training Manual", priceCents: 699, fileName: "fi-awareness-training-manual.pdf", kindLabel: "PDF · 12 pages" },
-  { slug: "prospecting", name: "Prospecting Like a Professional", priceCents: 699, fileName: "prospecting-like-a-professional.pdf", kindLabel: "PDF · 14 pages" },
-  { slug: "meet-and-greet", name: "Meet & Greet Mastery", priceCents: 699, fileName: "meet-and-greet-mastery.pdf", kindLabel: "PDF · 13 pages" },
-  { slug: "follow-up", name: "Follow-Up That Creates Customers for Life", priceCents: 699, fileName: "follow-up-that-creates-customers-for-life.pdf", kindLabel: "PDF · 14 pages" },
+  { slug: "fi-awareness", name: "F&I Awareness Training Manual", priceCents: 199, fileName: "fi-awareness-training-manual.pdf", kindLabel: "PDF · 12 pages" },
+  { slug: "prospecting", name: "Prospecting Like a Professional", priceCents: 199, fileName: "prospecting-like-a-professional.pdf", kindLabel: "PDF · 14 pages" },
+  { slug: "meet-and-greet", name: "Meet & Greet Mastery", priceCents: 199, fileName: "meet-and-greet-mastery.pdf", kindLabel: "PDF · 13 pages" },
+  { slug: "follow-up", name: "Follow-Up That Creates Customers for Life", priceCents: 199, fileName: "follow-up-that-creates-customers-for-life.pdf", kindLabel: "PDF · 14 pages" },
   // ── Español (Phase 1) — Spanish versions of the flagship + first three
   // add-ons. Same prices as the English titles; included in the Complete
   // Package (the bundle unlocks every PRODUCT_DOWNLOADS entry, so adding a
@@ -98,32 +98,32 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
     slug: "starter-kit-es",
     name: "El Kit de Inicio del Vendedor — Los 10 Pasos de la Venta",
-    priceCents: 2499,
+    priceCents: 999,
     fileName: "starter-kit-10-pasos-es.pdf",
     kindLabel: "PDF · 27 páginas",
   },
   {
     slug: "spouse-es",
     name: "El Manual de la Objeción del Cónyuge",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "spouse-objection-es.pdf",
     kindLabel: "PDF · 14 páginas",
   },
   {
     slug: "trade-in-es",
     name: "El Manual del “Quiero Más por Mi Trade-In”",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "trade-in-es.pdf",
     kindLabel: "PDF · 15 páginas",
   },
   {
     slug: "qualifying-questions-es",
     name: "La Guía de Preguntas de Calificación",
-    priceCents: 699,
+    priceCents: 199,
     fileName: "qualifying-questions-es.pdf",
     kindLabel: "PDF · 13 páginas",
   },
-  { slug: "internet-sale-es", name: "Los 10 Pasos de la Venta por Internet", priceCents: 699, fileName: "internet-sale-es.pdf", kindLabel: "PDF · 15 páginas" }, { slug: "pray-about-it-es", name: "El Manual de la Objeción 'Déjeme Orarlo'", priceCents: 699, fileName: "pray-about-it-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "walk-around-es", name: "Guía de Capacitación del Recorrido del Vehículo", priceCents: 699, fileName: "walk-around-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "fi-awareness-es", name: "El Manual de Capacitación en F&I", priceCents: 699, fileName: "fi-awareness-es.pdf", kindLabel: "PDF · 12 páginas" }, { slug: "prospecting-es", name: "Prospectando Como un Profesional", priceCents: 699, fileName: "prospecting-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "meet-and-greet-es", name: "Maestría en el Recibimiento y el Saludo", priceCents: 699, fileName: "meet-and-greet-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "follow-up-es", name: "El Seguimiento Que Crea Clientes de Por Vida", priceCents: 699, fileName: "follow-up-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "leadership-es", name: "Academia de Liderazgo de Blamo Closing", priceCents: 2499, fileName: "leadership-academy-es.pdf", kindLabel: "PDF · 38 páginas" },
+  { slug: "internet-sale-es", name: "Los 10 Pasos de la Venta por Internet", priceCents: 199, fileName: "internet-sale-es.pdf", kindLabel: "PDF · 15 páginas" }, { slug: "pray-about-it-es", name: "El Manual de la Objeción 'Déjeme Orarlo'", priceCents: 199, fileName: "pray-about-it-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "walk-around-es", name: "Guía de Capacitación del Recorrido del Vehículo", priceCents: 199, fileName: "walk-around-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "fi-awareness-es", name: "El Manual de Capacitación en F&I", priceCents: 199, fileName: "fi-awareness-es.pdf", kindLabel: "PDF · 12 páginas" }, { slug: "prospecting-es", name: "Prospectando Como un Profesional", priceCents: 199, fileName: "prospecting-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "meet-and-greet-es", name: "Maestría en el Recibimiento y el Saludo", priceCents: 199, fileName: "meet-and-greet-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "follow-up-es", name: "El Seguimiento Que Crea Clientes de Por Vida", priceCents: 199, fileName: "follow-up-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "leadership-es", name: "Academia de Liderazgo de Blamo Closing", priceCents: 2499, fileName: "leadership-academy-es.pdf", kindLabel: "PDF · 38 páginas" },
 ];
 export function findStoreProduct(
   slug: string | null | undefined,

@@ -11,7 +11,7 @@
 // Files live in /private (outside Vite's public dir) and are streamed only
 // through the code-checked endpoint (see server-assets/download-handler.ts).
 //
-// To add a product (e.g. a $6.99 objection playbook):
+// To add a product (e.g. a $1.99 objection playbook):
 //   1. Add one entry below (slug, code, file, name, kind, mime).
 //   2. Drop the PDF/MP4 into /private.
 //   3. Point the product's buy button at /thanks?product=<slug> and add a
