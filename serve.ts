@@ -34,6 +34,7 @@ import {
   handleMe,
   handleRegister,
 } from "./src/routes/api/-auth";
+import { handleTestimonial, handleTestimonialsPublic, handleTestimonialsPending, handleTestimonialApprove, handleTestimonialReject } from "./src/routes/api/-testimonials";
 
 // Pinned, NOT read from the environment. The published preview URL
 // (<label>.<PUBLIC_SITE_DOMAIN>) is reverse-proxied to 0.0.0.0:3000 inside the
@@ -74,6 +75,11 @@ for (let attempt = 1; ; attempt++) {
         if (pathname === "/api/login") return handleLogin(req);
         if (pathname === "/api/logout") return handleLogout(req);
         if (pathname === "/api/me") return handleMe(req);
+        if (pathname === "/api/testimonial") return handleTestimonial(req);
+        if (pathname === "/api/testimonials") return handleTestimonialsPublic(req);
+        if (pathname === "/api/testimonials/pending") return handleTestimonialsPending(req);
+        if (pathname === "/api/testimonials/approve") return handleTestimonialApprove(req);
+        if (pathname === "/api/testimonials/reject") return handleTestimonialReject(req);
         // Lead-magnet capture + admin batching + unsubscribe (free PDF, no login).
         if (pathname === "/api/lead-magnet") return handleLeadMagnetCapture(req);
         if (pathname === "/api/lead-magnet/due") return handleLeadMagnetDue(req);
