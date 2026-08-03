@@ -41,8 +41,8 @@ function FAQ({ q, a }: { q: string; a: string }) {
 }
 
 // Copy: /home/team/shared/refund-policy/refund-policy.md (verbatim except the
-// "See the format before you buy" section — the watermarked Starter Kit preview
-// page is not built yet, so that claim is softened rather than linked dead).
+// "See the format before you buy" section — it links the live watermarked
+// Starter Kit preview at /preview instead of the old "coming soon" line).
 // Delivery FAQ Q&As appended verbatim from delivery-faq.md per the wiring notes.
 function Refunds() {
   return (
@@ -155,10 +155,16 @@ function Refunds() {
           <H2>See the format before you buy</H2>
           <P>
             Every guide follows the same format — a professionally designed PDF
-            you can read on any device. A watermarked preview of the Sales Rep
-            Starter Kit is coming soon, so you can see exactly what
-            you&rsquo;re buying before you spend anything. You should know what
-            you&rsquo;re getting.
+            you can read on any device.{" "}
+            <a
+              href="/preview"
+              className="font-semibold text-amber-700 underline-offset-2 transition hover:text-amber-800 hover:underline"
+            >
+              See a watermarked preview of the Sales Rep Starter Kit
+            </a>{" "}
+            — three real pages, so you can see exactly what you&rsquo;re buying
+            before you spend anything. You should know what you&rsquo;re
+            getting.
           </P>
 
           <H2>How to request a refund</H2>
