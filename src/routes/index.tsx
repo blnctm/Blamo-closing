@@ -653,12 +653,6 @@ function Home() {
         </div>
       </header>
 
-      <div className="hidden">
-        <span aria-hidden="true">🇪🇸&nbsp;</span>
-        Spanish versions of every training guide — <a href="/es" className="underline decoration-amber-500 underline-offset-2 hover:text-amber-700">available right here once completed</a>. ·&nbsp;
-        <span lang="es">Versiones en español de todas las guías: próximamente.</span>
-      </div>
-
       {/* Hero: the brand moment */}
       <section id="top" className="hero-brand relative overflow-hidden bg-slate-50">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_34rem_at_88%_10%,rgba(251,191,36,0.2),transparent)]" />
