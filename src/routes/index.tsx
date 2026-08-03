@@ -294,8 +294,8 @@ function FreePdfBand() {
     >
       <BgArt kind="keys" side="left" />
       <BgArt kind="handshake" side="right" />
-      <div className="relative mx-auto max-w-4xl px-6 py-14 sm:py-16">
-        <div className="rounded-2xl border border-amber-200/80 bg-white p-6 shadow-lg shadow-amber-500/10 sm:p-10">
+      <div className="relative mx-auto max-w-4xl px-6 py-8 sm:py-16">
+        <div className="rounded-2xl border border-amber-200/80 bg-white p-4 shadow-lg shadow-amber-500/10 sm:p-10">
           <div className="text-center">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">
               Free PDF
@@ -313,7 +313,7 @@ function FreePdfBand() {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="mx-auto mt-7 flex max-w-xl flex-col gap-3 sm:flex-row"
+            className="mx-auto mt-4 flex max-w-xl flex-col gap-3 sm:mt-7 sm:flex-row"
             noValidate
           >
             <label htmlFor="free-pdf-email" className="sr-only">
@@ -889,9 +889,9 @@ function Home() {
         {/* Keep the shared background art present in this section. */}
         <BgArt kind="car" side="left" />
         <BgArt kind="mascot" side="right" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-14 sm:pb-28 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-32 lg:pt-24">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-6 pb-10 pt-8 sm:gap-12 sm:pb-28 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-32 lg:pt-24">
           <div className="hero-copy max-w-2xl text-center sm:text-left">
-            <div className="mb-7 flex items-center justify-center gap-3 sm:justify-start">
+            <div className="mb-4 flex items-center justify-center gap-3 sm:mb-7 sm:justify-start">
               <LogoMark className="h-11 w-11 shadow-lg shadow-slate-900/20" />
               <div className="text-left">
                 <p className="text-xl font-extrabold tracking-tight text-slate-950">Blamo<span className="text-amber-500"> Closing</span></p>
@@ -900,10 +900,10 @@ function Home() {
             </div>
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">{HERO_COPY.tagline}</p>
             <p className="mt-3 flex items-center justify-center gap-2 text-base font-extrabold tracking-tight text-slate-900 sm:justify-start sm:text-lg"><span className="text-amber-500" aria-hidden="true">★</span>{HERO_COPY.credibility}</p>
-            <h1 className="mt-4 max-w-xl text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
-            <p className="mt-6 max-w-xl text-lg font-extrabold leading-snug tracking-tight text-slate-900 sm:text-xl">{HERO_COPY.opener}</p>
+            <h1 className="mt-3 max-w-xl text-3xl font-extrabold sm:mt-4 sm:text-6xl leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
+            <p className="mt-4 max-w-xl text-lg font-extrabold sm:mt-6 leading-snug tracking-tight text-slate-900 sm:text-xl">{HERO_COPY.opener}</p>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{HERO_COPY.subheadline}</p>
-            <ul className="mt-7 grid gap-3 text-left sm:grid-cols-3 sm:gap-4">
+            <ul className="mt-5 grid gap-2 text-left sm:mt-7 sm:grid-cols-3 sm:gap-4">
               {HERO_COPY.highlights.map((highlight) => (
                 <li key={highlight} className="flex items-start gap-2 text-sm font-semibold leading-snug text-slate-700">
                   <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-400 text-slate-950"><CheckIcon className="h-3.5 w-3.5" /></span>
@@ -911,14 +911,14 @@ function Home() {
                 </li>
               ))}
             </ul>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-5 sm:justify-start">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:mt-9 sm:gap-5 sm:justify-start">
               <a href="#catalog" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
               <a href="#faq" className="inline-flex items-center gap-2 rounded-lg py-3 text-sm font-bold text-slate-700 underline decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
             </div>
           </div>
-          <div className="hero-mascot relative mx-auto flex min-h-[300px] w-full max-w-md items-end justify-center sm:min-h-[390px] lg:min-h-[470px]">
+          <div className="hero-mascot relative mx-auto hidden min-h-[160px] w-full max-w-md items-end justify-center sm:flex sm:min-h-[390px] lg:min-h-[470px]">
             <div className="absolute bottom-5 h-40 w-64 rounded-full bg-amber-300/25 blur-2xl sm:h-52 sm:w-80" />
-            <img src="/blamo-mascot.svg" alt="Blamo Closing car-salesman mascot" className="mascot-float relative z-10 w-64 drop-shadow-2xl sm:w-80 lg:w-[25rem]" />
+            <img src="/blamo-mascot.svg" alt="Blamo Closing car-salesman mascot" className="mascot-float relative z-10 w-44 drop-shadow-2xl sm:w-80 lg:w-[25rem]" />
             <div className="absolute bottom-1 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/80 bg-white/90 px-4 py-2 text-center text-xs font-bold text-slate-700 shadow-lg shadow-slate-900/10">Practical words for real conversations.</div>
           </div>
         </div>
@@ -931,7 +931,7 @@ function Home() {
       <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
         <BgArt kind="happy-rep" side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What it does for you</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -943,7 +943,7 @@ function Home() {
               next, and always know what to say.
             </p>
           </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <ul className="mt-4 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-x-10 sm:gap-y-8 md:grid-cols-2">
             {[
               "Run every customer through the full process in order — no skipped steps, no guessing what comes next.",
               "Know exactly what to say at every moment: greeting lines and ice-breakers, needs-discovery questions, the walk-around talk track, test-drive guidance, and the paperwork walkthrough.",
@@ -952,11 +952,11 @@ function Home() {
               "Turn one sale into many — delivery-day details and follow-up scripts that earn reviews, referrals, and repeat buyers.",
               "Use it same-day: a checklist for every step, a one-page quick reference for the lot, and a 7-day practice plan.",
             ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
+              <li key={benefit} className="flex items-start gap-3 sm:gap-4">
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                   <CheckIcon className="h-4 w-4" />
                 </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
+                <p className="text-xs leading-snug text-slate-700 sm:text-[1.05rem] sm:leading-relaxed">
                   {benefit}
                 </p>
               </li>
@@ -969,15 +969,15 @@ function Home() {
       <section id="inside" className="bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
         <BgArt kind="handshake" side="left" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Every step, every script, every checklist
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <ul className="grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <ul className="grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-2">
               {[
                 "All 10 steps in order: Meet & Greet, Understand Needs, Showcase Features, Test Drive, Review Feedback, Address Objections, Negotiations, Paperwork, Delivery, and Follow-up.",
                 "The goal of each step, the process in the owner’s own words, and the one common mistake to avoid.",
@@ -987,18 +987,18 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
                   </span>
-                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-[0.95rem] sm:leading-relaxed">
                     {item}
                   </p>
                 </li>
               ))}
             </ul>
-            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <aside className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
               <h3 className="text-lg font-bold tracking-tight text-slate-900">
                 Delivered as a PDF
               </h3>
@@ -1018,7 +1018,7 @@ function Home() {
       <section id="audience" className="bg-white relative overflow-hidden">
         <BgArt side="left" />
         <BgArt kind="driving" side="right" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+        <div className="relative mx-auto max-w-3xl px-6 py-6 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Car dealership sales reps
@@ -1142,7 +1142,7 @@ function Home() {
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden"><BgArt kind="happy-client" side="left" className="hidden sm:block" /><BgArt kind="keys" side="right" className="hidden sm:block" /><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
-{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$6.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$6.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
+{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$6.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$6.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
 
       {/* CTA band */}
       <section id="buy" className="bg-slate-900 relative overflow-hidden">
@@ -1299,7 +1299,7 @@ function Home() {
       {/* Internet Sale — what you'll learn */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1310,7 +1310,7 @@ function Home() {
               follow-up that gets the customer to the showroom — ready to buy.
             </p>
           </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <ul className="mt-4 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-x-10 sm:gap-y-8 md:grid-cols-2">
             {[
               "The owner’s exact 10-step internet sales process, from Respond in Under 5 Minutes to Close Before They Walk In.",
               "Word-for-word first-response, rapport, appointment, confirmation, follow-up, and objection-handling templates.",
@@ -1319,11 +1319,11 @@ function Home() {
               "The signature 3-3-3 Rule: name and introduction, vehicle and benefits, then a clear appointment ask.",
               "A seven-day internet lead follow-up plan and a quick-reference page for daily practice.",
             ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
+              <li key={benefit} className="flex items-start gap-3 sm:gap-4">
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                   <CheckIcon className="h-4 w-4" />
                 </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
+                <p className="text-xs leading-snug text-slate-700 sm:text-[1.05rem] sm:leading-relaxed">
                   {benefit}
                 </p>
               </li>
@@ -1335,15 +1335,15 @@ function Home() {
       {/* Internet Sale — what's inside */}
       <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               From first response to a booked appointment
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <ul className="grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <ul className="grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-2">
               {[
                 "Opening guidance on why internet sales are different, how to use the guide, and the honesty rule.",
                 "All 10 steps in the owner’s exact order, each with a goal, process, scripts, common mistake, checklist, drill, and bridge to the next step.",
@@ -1353,18 +1353,18 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
                   </span>
-                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-[0.95rem] sm:leading-relaxed">
                     {item}
                   </p>
                 </li>
               ))}
             </ul>
-            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <aside className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
               <h3 className="text-lg font-bold tracking-tight text-slate-900">
                 Delivered as a PDF
               </h3>
@@ -1387,7 +1387,7 @@ function Home() {
       {/* Internet Sale — who it's for */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+        <div className="relative mx-auto max-w-3xl px-6 py-6 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Internet sales reps, BDC reps & desk managers
@@ -1566,7 +1566,7 @@ function Home() {
       {/* Spouse — what you'll learn */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1577,7 +1577,7 @@ function Home() {
               up — and which close fits the real situation.
             </p>
           </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <ul className="mt-4 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-x-10 sm:gap-y-8 md:grid-cols-2">
             {[
               "The owner’s ten closes in order — from the Partnership Close to the Gentle Close — each with a word-for-word script.",
               "How to tell whether the spouse is the true decision-maker or a polite cover for another concern: price, payment, trade value, or uncertainty.",
@@ -1586,11 +1586,11 @@ function Home() {
               "How to offer the call or FaceTime without sounding pushy, and how to make a reservation offer you can actually honor.",
               "The four signals that separate a genuine partnership decision from a delay tactic.",
             ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
+              <li key={benefit} className="flex items-start gap-3 sm:gap-4">
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                   <CheckIcon className="h-4 w-4" />
                 </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
+                <p className="text-xs leading-snug text-slate-700 sm:text-[1.05rem] sm:leading-relaxed">
                   {benefit}
                 </p>
               </li>
@@ -1602,15 +1602,15 @@ function Home() {
       {/* Spouse — what's inside */}
       <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Every close, every script, every checklist
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <ul className="grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <ul className="grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-2">
               {[
                 "A 14-page playbook (PDF) with every close on its own page: goal, when to use it, the word-for-word script, why it works, and a checklist.",
                 "The owner’s real-objection-versus-delay diagnosis guidance, with the four signals to look for.",
@@ -1620,18 +1620,18 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
                   </span>
-                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-[0.95rem] sm:leading-relaxed">
                     {item}
                   </p>
                 </li>
               ))}
             </ul>
-            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <aside className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
               <h3 className="text-lg font-bold tracking-tight text-slate-900">
                 Delivered as a PDF
               </h3>
@@ -1654,7 +1654,7 @@ function Home() {
       {/* Spouse — who it's for */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+        <div className="relative mx-auto max-w-3xl px-6 py-6 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Dealership reps, internet teams & specialists
@@ -1818,7 +1818,7 @@ function Home() {
       {/* Pray About It — what you'll learn */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -1829,7 +1829,7 @@ function Home() {
               pray — and how to keep the door open with respect.
             </p>
           </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <ul className="mt-4 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-x-10 sm:gap-y-8 md:grid-cols-2">
             {[
               "The owner’s eight closes in order — from the Clarifying Close to the Respect Close — each with a word-for-word script.",
               "How to ask “what answer are you hoping to receive?” without sounding pushy — and what to do with the answer.",
@@ -1838,11 +1838,11 @@ function Home() {
               "The lines you never cross — including the phrases that sound well-intended but come across as manipulative.",
               "How to tell whether “I need to pray about it” is genuine or a polite way of saying there are still unresolved concerns.",
             ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
+              <li key={benefit} className="flex items-start gap-3 sm:gap-4">
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                   <CheckIcon className="h-4 w-4" />
                 </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
+                <p className="text-xs leading-snug text-slate-700 sm:text-[1.05rem] sm:leading-relaxed">
                   {benefit}
                 </p>
               </li>
@@ -1854,15 +1854,15 @@ function Home() {
       {/* Pray About It — what's inside */}
       <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Eight respectful closes, from script to practice
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <ul className="grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <ul className="grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-2">
               {[
                 "A 13-page playbook (PDF) with every close on its own page: goal, when to use it, the word-for-word script, why it works, and a checklist.",
                 "The “What to Avoid” section — the three phrases never to say, and why they’re dangerous.",
@@ -1872,18 +1872,18 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
                   </span>
-                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-[0.95rem] sm:leading-relaxed">
                     {item}
                   </p>
                 </li>
               ))}
             </ul>
-            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <aside className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
               <h3 className="text-lg font-bold tracking-tight text-slate-900">
                 Delivered as a PDF
               </h3>
@@ -1905,7 +1905,7 @@ function Home() {
       {/* Pray About It — who it's for */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+        <div className="relative mx-auto max-w-3xl px-6 py-6 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Sales reps & internet teams
@@ -2067,7 +2067,7 @@ function Home() {
       {/* Trade-In — what you'll learn */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What you’ll learn</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -2078,7 +2078,7 @@ function Home() {
               deal — honestly and without friction.
             </p>
           </div>
-          <ul className="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <ul className="mt-4 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-x-10 sm:gap-y-8 md:grid-cols-2">
             {[
               "The owner’s ten closes in order — from the Isolation Close to the Commitment Close — each with a word-for-word script.",
               "The owner’s favorite trade close, front and center: how to validate, set realistic expectations, and get a commitment before you go back to the manager.",
@@ -2087,11 +2087,11 @@ function Home() {
               "How to find out whether you’re competing with a real offer or an expectation — the Comparison Close.",
               "When waiting for more costs more than it saves — the Cost of Waiting Close.",
             ].map((benefit) => (
-              <li key={benefit} className="flex items-start gap-4">
+              <li key={benefit} className="flex items-start gap-3 sm:gap-4">
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
                   <CheckIcon className="h-4 w-4" />
                 </span>
-                <p className="text-[1.05rem] leading-relaxed text-slate-700">
+                <p className="text-xs leading-snug text-slate-700 sm:text-[1.05rem] sm:leading-relaxed">
                   {benefit}
                 </p>
               </li>
@@ -2103,15 +2103,15 @@ function Home() {
       {/* Trade-In — what's inside */}
       <section className="bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt side="right" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="relative mx-auto max-w-6xl px-6 py-6 sm:py-24">
           <div className="max-w-2xl">
             <Eyebrow>What’s inside</Eyebrow>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Every close, every script, every checklist
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <ul className="grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <ul className="grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-2">
               {[
                 "A 15-page playbook (PDF) with every close on its own page: goal, when to use it, the word-for-word script, why it works, and a checklist.",
                 "The Favorite Trade Close featured on its own page, with the four reasons it works and how to deliver it.",
@@ -2121,18 +2121,18 @@ function Home() {
               ].map((item) => (
                 <li
                   key={item}
-                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="product-card flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm"
                 >
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-900 text-amber-400">
                     <CheckIcon className="h-3.5 w-3.5" />
                   </span>
-                  <p className="text-[0.95rem] leading-relaxed text-slate-700">
+                  <p className="text-xs leading-snug text-slate-700 sm:text-[0.95rem] sm:leading-relaxed">
                     {item}
                   </p>
                 </li>
               ))}
             </ul>
-            <aside className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <aside className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm">
               <h3 className="text-lg font-bold tracking-tight text-slate-900">
                 Delivered as a PDF
               </h3>
@@ -2155,7 +2155,7 @@ function Home() {
       {/* Trade-In — who it's for */}
       <section className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
         <BgArt side="left" />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+        <div className="relative mx-auto max-w-3xl px-6 py-6 text-center sm:py-24">
           <Eyebrow>Who it’s for</Eyebrow>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Floor reps, internet teams & desk managers
