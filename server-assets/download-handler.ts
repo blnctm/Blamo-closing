@@ -11,11 +11,28 @@
 //     downloads it. The file is read from /private, which is NEVER exposed as a
 //     static path.
 //   - 400 → malformed body or missing fields
-//   - 401 → wrong confirmation code
+//   - 401 → not logged in, no unlocked purchase for this product, or the
+//     confirmation code doesn't match
 //   - 404 → unknown product slug
 //   - 405 → non-POST method
 //   - 500 → private dir/file missing on the server (shouldn't happen if the
 //     build copied /private next to the bundle)
+//
+// OWNERSHIP GATE (security fix 2026-08-03): a matching code alone is NO LONGER
+// sufficient — a code can be learned (screenshots, sharing) or, before this
+// fix, extracted from the public JS bundle. The caller must be logged in AND
+// hold an UNLOCKED purchase row for the requested product slug:
+//   * single-product buyers  → their one purchase row (unlocked by the Stripe
+//     webhook),
+//   * Complete Package owners → every title row is unlocked at purchase, so the
+//     per-product row check covers current titles; for FUTURE titles the
+//     bundle-owner branch below lets them use any valid catalog code,
+//   * Team License owners & redeemed reps → the webhook/redemption unlock a row
+//     for every product, so the same per-product check covers them with no
+//     special-casing.
+// The exact-code match still applies ON TOP of ownership (both must hold): the
+// entered code must match the requested product's confirmation code, unless the
+// caller is a Complete Package owner (then any valid catalog code is accepted).
 //
 // Only POST is accepted so codes never travel in URLs (no log/analytics leak).
 // ============================================================================
@@ -102,15 +119,35 @@ export async function handleDownloadRequest(
     return jsonResponse(404, "Unknown product.");
   }
 
-  // The Complete Package unlocks EVERY title with ANY valid product code
-  // (present and future). Logged-in bundle owners may therefore download any
-  // file by entering any code that matches something in the catalog; everyone
-  // else keeps the exact per-product code gate.
+  // ── OWNERSHIP GATE (security fix 2026-08-03) ──────────────────────────────
+  // A matching code alone is no longer enough: the caller must be logged in
+  // AND hold an unlocked purchase row for this product (single purchase,
+  // Complete Package, or Team License owner/rep all unlock per-product rows
+  // via the Stripe webhook or team-code redemption, so one check covers every
+  // legitimate path). Complete Package owners may additionally download any
+  // title — including future ones — with any valid catalog code (their bundle
+  // purchase is the ownership marker). The exact-code match still applies on
+  // top of ownership.
   const user = await currentUser(request);
-  const bundlePurchase = user
-    ? await getPurchase(user.id, BUNDLE_SLUG)
-    : null;
+  if (!user) {
+    return jsonResponse(
+      401,
+      "Log in to download your purchase — your unlock codes live in your account.",
+    );
+  }
+
+  const ownPurchase = await getPurchase(user.id, entry.slug);
+  const isOwner = ownPurchase?.status === "unlocked";
+
+  const bundlePurchase = await getPurchase(user.id, BUNDLE_SLUG);
   const isBundleOwner = bundlePurchase?.status === "unlocked";
+
+  if (!isOwner && !isBundleOwner) {
+    return jsonResponse(
+      401,
+      "This code isn’t linked to a purchase on your account. Log in with the account you bought with, or buy the product to unlock it.",
+    );
+  }
 
   const matchesRequested = codeMatches(entry, code);
   const matchesAnyProduct = PRODUCT_DOWNLOADS.some((p) => codeMatches(p, code));
