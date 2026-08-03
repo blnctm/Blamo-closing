@@ -16,6 +16,10 @@ const INDIVIDUAL_PRODUCT_COUNT = STORE_PRODUCTS.filter(
 ).length;
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [{ property: "og:url", content: "https://blamoclosing.com/" }],
+    links: [{ rel: "canonical", href: "https://blamoclosing.com/" }],
+  }),
   component: Home,
 });
 
