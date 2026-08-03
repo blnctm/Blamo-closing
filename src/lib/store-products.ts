@@ -119,6 +119,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     fileName: "qualifying-questions-es.pdf",
     kindLabel: "PDF · 13 páginas",
   },
+  { slug: "internet-sale-es", name: "Los 10 Pasos de la Venta por Internet", priceCents: 699, fileName: "internet-sale-es.pdf", kindLabel: "PDF · 15 páginas" }, { slug: "pray-about-it-es", name: "El Manual de la Objeción 'Déjeme Orarlo'", priceCents: 699, fileName: "pray-about-it-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "walk-around-es", name: "Guía de Capacitación del Recorrido del Vehículo", priceCents: 699, fileName: "walk-around-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "fi-awareness-es", name: "El Manual de Capacitación en F&I", priceCents: 699, fileName: "fi-awareness-es.pdf", kindLabel: "PDF · 12 páginas" }, { slug: "prospecting-es", name: "Prospectando Como un Profesional", priceCents: 699, fileName: "prospecting-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "meet-and-greet-es", name: "Maestría en el Recibimiento y el Saludo", priceCents: 699, fileName: "meet-and-greet-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "follow-up-es", name: "El Seguimiento Que Crea Clientes de Por Vida", priceCents: 699, fileName: "follow-up-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "leadership-es", name: "Academia de Liderazgo de Blamo Closing", priceCents: 2499, fileName: "leadership-academy-es.pdf", kindLabel: "PDF · 38 páginas" },
 ];
 export function findStoreProduct(
   slug: string | null | undefined,

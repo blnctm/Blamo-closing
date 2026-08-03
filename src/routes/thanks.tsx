@@ -68,6 +68,14 @@ const PRODUCT_META: Record<
   "spouse-es": { name: "El Manual de la Objeción del Cónyuge", fileName: "spouse-objection-es.pdf", label: "Descarga tu PDF" },
   "trade-in-es": { name: "El Manual del “Quiero Más por Mi Trade-In”", fileName: "trade-in-es.pdf", label: "Descarga tu PDF" },
   "qualifying-questions-es": { name: "La Guía de Preguntas de Calificación", fileName: "qualifying-questions-es.pdf", label: "Descarga tu PDF" },
+    "internet-sale-es": { name: "Los 10 Pasos de la Venta por Internet", fileName: "internet-sale-es.pdf", label: "Descarga tu PDF" },
+  "pray-about-it-es": { name: "El Manual de la Objeción 'Déjeme Orarlo'", fileName: "pray-about-it-es.pdf", label: "Descarga tu PDF" },
+  "walk-around-es": { name: "Guía de Capacitación del Recorrido del Vehículo", fileName: "walk-around-es.pdf", label: "Descarga tu PDF" },
+  "fi-awareness-es": { name: "El Manual de Capacitación en F&I", fileName: "fi-awareness-es.pdf", label: "Descarga tu PDF" },
+  "prospecting-es": { name: "Prospectando Como un Profesional", fileName: "prospecting-es.pdf", label: "Descarga tu PDF" },
+  "meet-and-greet-es": { name: "Maestría en el Recibimiento y el Saludo", fileName: "meet-and-greet-es.pdf", label: "Descarga tu PDF" },
+  "follow-up-es": { name: "El Seguimiento Que Crea Clientes de Por Vida", fileName: "follow-up-es.pdf", label: "Descarga tu PDF" },
+  "leadership-es": { name: "Academia de Liderazgo de Blamo Closing", fileName: "leadership-academy-es.pdf", label: "Descarga tu PDF" },
 };
 
 function LogoMark({ className = "" }: { className?: string }) {

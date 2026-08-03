@@ -97,6 +97,14 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
   { slug: "spouse-es", code: "BLAMO-16-1988", file: "spouse-objection-es.pdf", name: "El Manual de la Objeción del Cónyuge", kind: "pdf", mime: "application/pdf" },
   { slug: "trade-in-es", code: "BLAMO-17-4804", file: "trade-in-es.pdf", name: "El Manual del “Quiero Más por Mi Trade-In”", kind: "pdf", mime: "application/pdf" },
   { slug: "qualifying-questions-es", code: "BLAMO-18-7769", file: "qualifying-questions-es.pdf", name: "La Guía de Preguntas de Calificación", kind: "pdf", mime: "application/pdf" },
+  { slug: "internet-sale-es", code: "BLAMO-19-4827", file: "internet-sale-es.pdf", name: "Los 10 Pasos de la Venta por Internet", kind: "pdf", mime: "application/pdf" },
+  { slug: "pray-about-it-es", code: "BLAMO-20-7314", file: "pray-about-it-es.pdf", name: "El Manual de la Objeción 'Déjeme Orarlo'", kind: "pdf", mime: "application/pdf" },
+  { slug: "walk-around-es", code: "BLAMO-21-9068", file: "walk-around-es.pdf", name: "Guía de Capacitación del Recorrido del Vehículo", kind: "pdf", mime: "application/pdf" },
+  { slug: "fi-awareness-es", code: "BLAMO-22-1549", file: "fi-awareness-es.pdf", name: "El Manual de Capacitación en F&I", kind: "pdf", mime: "application/pdf" },
+  { slug: "prospecting-es", code: "BLAMO-23-6283", file: "prospecting-es.pdf", name: "Prospectando Como un Profesional", kind: "pdf", mime: "application/pdf" },
+  { slug: "meet-and-greet-es", code: "BLAMO-24-3751", file: "meet-and-greet-es.pdf", name: "Maestría en el Recibimiento y el Saludo", kind: "pdf", mime: "application/pdf" },
+  { slug: "follow-up-es", code: "BLAMO-25-8406", file: "follow-up-es.pdf", name: "El Seguimiento Que Crea Clientes de Por Vida", kind: "pdf", mime: "application/pdf" },
+  { slug: "leadership-es", code: "BLAMO-26-2974", file: "leadership-academy-es.pdf", name: "Academia de Liderazgo de Blamo Closing", kind: "pdf", mime: "application/pdf" },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */
