@@ -450,3 +450,23 @@ export async function unlockCodeForUser(
   }
   return effective;
 }
+
+export interface TeamCode { code: string; ownerUserId: string; maxSeats: number; seatsUsed: number; }
+export async function getTeamCodeForOwner(userId: string): Promise<TeamCode | null> {
+ const rows=await sql()`select code, owner_user_id, max_seats, seats_used from team_codes where owner_user_id=${userId} limit 1`;
+ const r=rows[0] as any; return r ? {code:String(r.code),ownerUserId:String(r.owner_user_id),maxSeats:Number(r.max_seats),seatsUsed:Number(r.seats_used)} : null;
+}
+export async function createTeamCode(userId:string):Promise<TeamCode>{
+ const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let code=''; for(let i=0;i<6;i++) code+=chars[Math.floor(Math.random()*chars.length)];
+ const rows=await sql()`insert into team_codes(code,owner_user_id) values(${'TEAM-'+code},${userId}) returning code,owner_user_id,max_seats,seats_used`; const r=rows[0] as any;
+ return {code:String(r.code),ownerUserId:String(r.owner_user_id),maxSeats:Number(r.max_seats),seatsUsed:Number(r.seats_used)};
+}
+export async function redeemTeamCode(userId:string, codeInput:string):Promise<'ok'|'invalid_team_code'|'team_code_full'>{
+ const code=codeInput.trim().toUpperCase(); const existing=await getPurchase(userId,'team-license'); if(existing?.status==='unlocked') return 'ok';
+ const found=await sql()`select code from team_codes where code=${code}`; if(!found[0]) return 'invalid_team_code';
+ const updated=await sql()`update team_codes set seats_used=seats_used+1 where code=${code} and seats_used < max_seats returning code`;
+ if(!updated[0]) return 'team_code_full';
+ await recordPurchase({userId,productSlug:'team-license',status:'paid'}); await unlockCodeForUser(userId,'team-license','TEAM-LICENSE-ALL');
+ for(const p of (await import('./product-downloads')).PRODUCT_DOWNLOADS){ await recordPurchase({userId,productSlug:p.slug,status:'paid'}); await unlockCodeForUser(userId,p.slug,p.code); }
+ return 'ok';
+}

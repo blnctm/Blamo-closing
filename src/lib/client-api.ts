@@ -142,3 +142,4 @@ export async function downloadWithCode(
   // Give the browser a moment to start the download before revoking.
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
+export async function redeemTeamCode(code: string): Promise<void> { await apiPost('/api/redeem-team-code', { code }); }

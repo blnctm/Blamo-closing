@@ -1,0 +1,3 @@
+import { currentUser, redeemTeamCode } from '../../lib/accounts';
+const json=(b:unknown,s=200)=>new Response(JSON.stringify(b),{status:s,headers:{'content-type':'application/json'}});
+export async function handleRedeemTeamCode(req:Request){if(req.method!=='POST')return json({error:'method_not_allowed'},405);const u=await currentUser(req);if(!u)return json({error:'unauthorized'},401);let b:any;try{b=await req.json()}catch{return json({error:'invalid_json'},400)}const r=await redeemTeamCode(u.id,typeof b.code==='string'?b.code:'');return r==='ok'?json({ok:true}):json({error:r},r==='team_code_full'?409:400)}
