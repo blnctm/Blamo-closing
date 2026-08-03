@@ -2,13 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { BLOG_ARTICLES } from "~/lib/blog-content";
 
 export const Route = createFileRoute("/blog")({
-  head: () => ({ meta: [
+  head: ({ matches }) => ({ meta: [
     { title: "Automotive Sales Training Tips | Blamo Closing Blog" },
     { name: "description", content: "Practical automotive sales tips, objection-handling scripts, and dealership training advice from Blamo Closing." },
     { property: "og:title", content: "Automotive Sales Training Tips | Blamo Closing Blog" },
     { property: "og:description", content: "Practical automotive sales tips, objection-handling scripts, and dealership training advice from Blamo Closing." },
     { property: "og:type", content: "website" }, { property: "og:url", content: "https://blamoclosing.com/blog" },
-  ], links: [{ rel: "canonical", href: "https://blamoclosing.com/blog" }] }),
+  ], links: matches.some((match) => match.routeId === "/blog/$slug") ? [] : [{ rel: "canonical", href: "https://blamoclosing.com/blog" }] }),
   component: BlogIndex,
 });
 
