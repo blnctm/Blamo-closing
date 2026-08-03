@@ -377,7 +377,7 @@ function Thanks() {
                 type="text"
                 value={code}
                 onChange={(event) => setCode(event.target.value)}
-                placeholder="BLAMO-00-0000"
+                placeholder="BLAMO-XX-XXXX"
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="characters"
@@ -482,7 +482,7 @@ function Thanks() {
                   type="text"
                   value={code}
                   onChange={(event) => setCode(event.target.value)}
-                  placeholder="BLAMO-00-0000"
+                  placeholder="BLAMO-XX-XXXX"
                   autoComplete="off"
                   autoCorrect="off"
                   autoCapitalize="characters"
