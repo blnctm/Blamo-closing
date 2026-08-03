@@ -39,7 +39,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { currentUser, getPurchase } from "../src/lib/accounts";
+import { currentUser, getPurchase, markDownloaded } from "../src/lib/accounts";
 import { BUNDLE_SLUG } from "../src/lib/store-products";
 import {
   codeMatches,
@@ -172,6 +172,22 @@ export async function handleDownloadRequest(
   } catch (error) {
     console.error(`[download] failed to read ${entry.file}`, error);
     return jsonResponse(500, "Downloads are temporarily unavailable.");
+  }
+
+  // ── DOWNLOAD TRACKING (refund policy line, migration 004) ────────────────
+  // Record the FIRST successful download on the buyer's purchase row(s):
+  //  * single product → the product row (ownPurchase),
+  //  * bundle owner   → ALSO the bundle ownership row, so a bundle refund is
+  //    declined once ANY title has been pulled (including future titles that
+  //    have no per-product row yet).
+  // markDownloaded uses coalesce(downloaded_at, now()) — the first timestamp
+  // is kept, later re-downloads never overwrite it. A tracking failure must
+  // never block the actual download, so errors are logged and swallowed.
+  try {
+    if (ownPurchase) await markDownloaded(ownPurchase.id);
+    if (bundlePurchase) await markDownloaded(bundlePurchase.id);
+  } catch (error) {
+    console.error("[download] failed to record downloaded_at", error);
   }
 
   return new Response(new Uint8Array(data), {

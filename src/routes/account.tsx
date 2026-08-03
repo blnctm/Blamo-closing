@@ -7,6 +7,7 @@ import {
   me,
   startCheckout,
   redeemTeamCode,
+  requestRefund,
 } from "~/lib/client-api";
 import type {
   ClientPurchase,
@@ -45,6 +46,17 @@ const STATUS_LABEL: Record<ClientPurchase["status"], string> = {
   pending: "Payment pending",
   paid: "Confirming payment",
   unlocked: "Unlocked",
+  refunded: "Refunded",
+};
+
+/** 30 days, in milliseconds — mirrors REFUND_WINDOW_MS in src/routes/api/-refunds.ts. */
+const REFUND_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
+
+const REFUND_STATE_LABEL: Record<string, string> = {
+  pending: "Refund requested — we're reviewing it.",
+  approved: "Refund approved.",
+  rejected: "Refund request declined.",
+  refunded: "Refunded — the unlock has been revoked.",
 };
 
 function DownloadButton({
@@ -97,6 +109,92 @@ function DownloadButton({
   );
 }
 
+/**
+ * Inline "Request refund" control for one purchase. Rendered only for
+ * unlocked purchases with no existing request that are still inside the
+ * 30-day window. On success the parent refreshes /api/me so the row shows
+ * the new refund_status.
+ */
+function RefundControl({
+  purchase,
+  onRefunded,
+}: {
+  purchase: ClientPurchase;
+  onRefunded: () => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
+
+  const outsideWindow =
+    Date.now() - new Date(purchase.createdAt).getTime() > REFUND_WINDOW_MS;
+
+  // Only unlocked purchases can request a refund (revoked/refunded rows and
+  // not-yet-unlocked rows get no control at all).
+  if (purchase.status !== "unlocked") return null;
+
+  // Existing request → show its state, no button.
+  if (purchase.refundStatus) {
+    return (
+      <p className="mt-2 text-sm font-medium text-slate-500">
+        {REFUND_STATE_LABEL[purchase.refundStatus] ?? "Refund request on file."}
+      </p>
+    );
+  }
+  // Outside the window → muted text, no button.
+  if (outsideWindow) {
+    return (
+      <p className="mt-2 text-sm text-slate-400">
+        Outside 30-day refund window
+      </p>
+    );
+  }
+
+  async function handleRequest() {
+    if (busy) return;
+    setBusy(true);
+    setMsg(null);
+    try {
+      await requestRefund(purchase.productSlug);
+      setMsg({
+        kind: "ok",
+        text: "Refund requested — we'll review it and reply to the email on your account.",
+      });
+      onRefunded();
+    } catch (error) {
+      setMsg({
+        kind: "error",
+        text:
+          error instanceof Error
+            ? error.message
+            : "Unable to request a refund right now.",
+      });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={handleRequest}
+        disabled={busy}
+        className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:opacity-60"
+      >
+        {busy ? "Requesting…" : "Request refund"}
+      </button>
+      {msg && (
+        <p
+          role="alert"
+          className={`mt-2 text-sm ${msg.kind === "ok" ? "text-emerald-700" : "text-red-600"}`}
+        >
+          {msg.text}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function BuyNowButton({ slug }: { slug: string }) {
   const product = findStoreProduct(slug);
   const [busy, setBusy] = useState(false);
@@ -142,7 +240,13 @@ function BuyNowButton({ slug }: { slug: string }) {
   );
 }
 
-function PurchaseCard({ purchase }: { purchase: ClientPurchase }) {
+function PurchaseCard({
+  purchase,
+  onRefunded,
+}: {
+  purchase: ClientPurchase;
+  onRefunded: () => void;
+}) {
   const product = findStoreProduct(purchase.productSlug);
   const isBundle = product?.isBundle === true;
   return (
@@ -177,11 +281,16 @@ function PurchaseCard({ purchase }: { purchase: ClientPurchase }) {
             )}
             {purchase.status !== "unlocked" && (
               <p className="mt-2 text-sm text-slate-500">
-                Your unlock code appears here the moment payment confirms.
+                {purchase.status === "refunded"
+                  ? "This purchase was refunded — the download has been revoked."
+                  : "Your unlock code appears here the moment payment confirms."}
               </p>
             )}
           </>
         )}
+        {/* Refund control: unlocked + no request + inside 30 days → button;
+            otherwise state text or nothing (see RefundControl). */}
+        <RefundControl purchase={purchase} onRefunded={onRefunded} />
       </div>
       {purchase.status === "unlocked" && !isBundle && (
         <DownloadButton purchase={purchase} />
@@ -327,7 +436,13 @@ function Account() {
               ) : (
                 <ul className="mt-4 space-y-3">
                   {purchases.map((purchase) => (
-                    <PurchaseCard key={purchase.id} purchase={purchase} />
+                    <PurchaseCard
+                      key={purchase.id}
+                      purchase={purchase}
+                      onRefunded={() =>
+                        me().then((d) => d && setPurchases(d.purchases))
+                      }
+                    />
                   ))}
                 </ul>
               )}

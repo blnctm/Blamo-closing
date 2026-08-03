@@ -17,6 +17,12 @@ import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
+  handleRefundApprove,
+  handleRefundReject,
+  handleRefundRequest,
+  handleRefundsPending,
+} from "./src/routes/api/-refunds";
+import {
   handleLeadMagnetCapture,
   handleLeadMagnetDue,
   handleUnsubscribeApi,
@@ -73,6 +79,11 @@ for (let attempt = 1; ; attempt++) {
         if (pathname === "/api/lead-magnet/due") return handleLeadMagnetDue(req);
         if (pathname === "/api/unsubscribe") return handleUnsubscribeApi(req);
         if (pathname === "/unsubscribe") return handleUnsubscribePage(req);
+        // Refund flow: buyer request + admin queue/approve/reject.
+        if (pathname === "/api/refund-request") return handleRefundRequest(req);
+        if (pathname === "/api/refunds/pending") return handleRefundsPending(req);
+        if (pathname === "/api/refunds/approve") return handleRefundApprove(req);
+        if (pathname === "/api/refunds/reject") return handleRefundReject(req);
         // Code-gated download endpoint (POST only) — handled before static
         // so paid files can never be fetched by their old public URLs.
         if (pathname === DOWNLOAD_PATH) return handleDownloadRequest(req);

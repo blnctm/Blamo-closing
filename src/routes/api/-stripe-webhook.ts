@@ -20,7 +20,7 @@ export async function handleStripeWebhook(request: Request): Promise<Response> {
   if (request.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
   const payload = await request.text();
   if (!verifyStripeSignature(payload, request.headers.get("stripe-signature"))) return new Response("Invalid signature", { status: 400 });
-  let event: { type?: string; data?: { object?: { id?: string; metadata?: { userId?: string; productSlug?: string } } } };
+  let event: { type?: string; data?: { object?: { id?: string; payment_intent?: string | null; metadata?: { userId?: string; productSlug?: string } } } };
   try { event = JSON.parse(payload) as typeof event; } catch { return new Response("Invalid payload", { status: 400 }); }
   if (event.type === "checkout.session.expired") {
     console.log("Stripe checkout session expired", event.data?.object?.id);
@@ -32,14 +32,18 @@ export async function handleStripeWebhook(request: Request): Promise<Response> {
   const productSlug = session?.metadata?.productSlug;
   const product = findCatalogProduct(productSlug);
   if (!userId || !product || !session?.id) return new Response("Invalid session metadata", { status: 400 });
+  // Stripe's PaymentIntent for the completed session (string on
+  // checkout.session.completed). Stored so the refund-approve admin endpoint
+  // can issue the refund via POST /v1/refunds {payment_intent: ...}.
+  const paymentIntent = session.payment_intent ?? null;
 
   if (product.slug === "team-license") {
-    await recordPurchase({ userId, productSlug: product.slug, stripeSessionId: session.id, status: "paid" });
+    await recordPurchase({ userId, productSlug: product.slug, stripeSessionId: session.id, stripePaymentIntent: paymentIntent, status: "paid" });
     await unlockCodeForUser(userId, product.slug, TEAM_LICENSE_CONFIRMATION_CODE);
     const existing = await getTeamCodeForOwner(userId);
     if (!existing) await createTeamCode(userId);
     for (const downloadable of PRODUCT_DOWNLOADS) {
-      await recordPurchase({ userId, productSlug: downloadable.slug, stripeSessionId: session.id, status: "paid" });
+      await recordPurchase({ userId, productSlug: downloadable.slug, stripeSessionId: session.id, stripePaymentIntent: paymentIntent, status: "paid" });
       await unlockCodeForUser(userId, downloadable.slug, downloadable.code);
     }
     return new Response("ok");
@@ -51,18 +55,18 @@ export async function handleStripeWebhook(request: Request): Promise<Response> {
     // "BUNDLE-ALL") plus an unlocked row for EVERY downloadable product, so
     // /api/me and /thanks list all codes immediately. Both helpers are
     // idempotent, so webhook re-deliveries are safe.
-    await recordPurchase({ userId, productSlug: BUNDLE_SLUG, stripeSessionId: session.id, status: "paid" });
+    await recordPurchase({ userId, productSlug: BUNDLE_SLUG, stripeSessionId: session.id, stripePaymentIntent: paymentIntent, status: "paid" });
     await unlockCodeForUser(userId, BUNDLE_SLUG, BUNDLE_CONFIRMATION_CODE);
     for (const downloadable of PRODUCT_DOWNLOADS) {
       // recordPurchase("paid") first keeps the Stripe session id on each row;
       // unlockCodeForUser then marks it unlocked with the product's code.
-      await recordPurchase({ userId, productSlug: downloadable.slug, stripeSessionId: session.id, status: "paid" });
+      await recordPurchase({ userId, productSlug: downloadable.slug, stripeSessionId: session.id, stripePaymentIntent: paymentIntent, status: "paid" });
       await unlockCodeForUser(userId, downloadable.slug, downloadable.code);
     }
     return new Response("ok");
   }
 
-  await recordPurchase({ userId, productSlug: product.slug, stripeSessionId: session.id, status: "paid" });
+  await recordPurchase({ userId, productSlug: product.slug, stripeSessionId: session.id, stripePaymentIntent: paymentIntent, status: "paid" });
   await unlockCodeForUser(userId, product.slug, product.confirmationCode);
   return new Response("ok");
 }

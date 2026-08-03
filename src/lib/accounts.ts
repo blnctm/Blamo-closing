@@ -63,15 +63,25 @@ export interface UserRecord extends PublicUser {
 
 export type PurchaseStatus = "pending" | "paid" | "unlocked";
 
+export type RefundStatus = "pending" | "approved" | "rejected" | "refunded";
+
 export interface Purchase {
   id: string;
   userId: string;
   productSlug: string;
   stripeSessionId: string | null;
-  status: PurchaseStatus;
+  /** Stripe PaymentIntent id for the checkout session (migration 004). */
+  stripePaymentIntent: string | null;
+  status: PurchaseStatus | "refunded";
   confirmationCode: string | null;
   /** ISO-8601 string. */
   createdAt: string;
+  /** ISO-8601 string | null — set on the FIRST successful download. */
+  downloadedAt: string | null;
+  refundStatus: RefundStatus | null;
+  refundRequestedAt: string | null;
+  refundStripeRefundId: string | null;
+  refundResolvedAt: string | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -150,10 +160,36 @@ function toPurchase(row: Record<string, unknown>): Purchase {
     userId: String(row.user_id),
     productSlug: String(row.product_slug),
     stripeSessionId: row.stripe_session_id == null ? null : String(row.stripe_session_id),
-    status: String(row.status) as PurchaseStatus,
+    stripePaymentIntent: row.stripe_payment_intent == null ? null : String(row.stripe_payment_intent),
+    status: String(row.status) as Purchase["status"],
     confirmationCode: row.confirmation_code == null ? null : String(row.confirmation_code),
     createdAt: toIso(row.created_at),
+    downloadedAt: row.downloaded_at == null ? null : toIso(row.downloaded_at),
+    refundStatus: row.refund_status == null ? null : String(row.refund_status) as RefundStatus,
+    refundRequestedAt: row.refund_requested_at == null ? null : toIso(row.refund_requested_at),
+    refundStripeRefundId: row.refund_stripe_refund_id == null ? null : String(row.refund_stripe_refund_id),
+    refundResolvedAt: row.refund_resolved_at == null ? null : toIso(row.refund_resolved_at),
   };
+}
+
+/** Columns shared by every purchase SELECT — keep in sync with toPurchase(). */
+const PURCHASE_COLUMNS = `
+  id, user_id, product_slug, stripe_session_id, stripe_payment_intent, status,
+  confirmation_code, created_at, downloaded_at, refund_status, refund_requested_at,
+  refund_stripe_refund_id, refund_resolved_at
+`;
+
+/**
+ * Run a query that needs PURCHASE_COLUMNS inlined. The Neon tagged template
+ * binds every `${}` interpolation as a parameter, so the static column list
+ * can NEVER go inside one — it must be part of the SQL text. Values go in as
+ * positional $1/$2 params via the documented `sql.query(text, params)` path.
+ */
+function purchaseQuery<T extends Record<string, unknown>>(
+  text: string,
+  params: unknown[],
+): Promise<T[]> {
+  return sql().query(text, params) as Promise<T[]>;
 }
 
 /** True when a Postgres unique-violation error mentions the constraint. */
@@ -377,48 +413,166 @@ export async function recordPurchase(input: {
   userId: string;
   productSlug: string;
   stripeSessionId?: string | null;
+  stripePaymentIntent?: string | null;
   status?: PurchaseStatus;
 }): Promise<Purchase> {
   const status = input.status ?? "pending";
-  const rows = await sql()`
-    insert into purchases (user_id, product_slug, stripe_session_id, status)
-    values (${input.userId}, ${input.productSlug}, ${input.stripeSessionId ?? null}, ${status})
-    on conflict (user_id, product_slug) do update
-      set stripe_session_id = coalesce(excluded.stripe_session_id, purchases.stripe_session_id),
-          status = case
-            when purchases.status = 'unlocked' then purchases.status
-            when excluded.status = 'unlocked' then 'unlocked'
-            when purchases.status = 'paid' then purchases.status
-            else excluded.status
-          end
-    returning id, user_id, product_slug, stripe_session_id, status, confirmation_code, created_at
-  `;
+  const rows = await purchaseQuery<Record<string, unknown>>(
+    `insert into purchases (user_id, product_slug, stripe_session_id, stripe_payment_intent, status)
+     values ($1, $2, $3, $4, $5)
+     on conflict (user_id, product_slug) do update
+       set stripe_session_id = coalesce(excluded.stripe_session_id, purchases.stripe_session_id),
+           stripe_payment_intent = coalesce(excluded.stripe_payment_intent, purchases.stripe_payment_intent),
+           status = case
+             when purchases.status in ('unlocked', 'refunded') then purchases.status
+             when excluded.status = 'unlocked' then 'unlocked'
+             when purchases.status = 'paid' then purchases.status
+             else excluded.status
+           end
+     returning ${PURCHASE_COLUMNS}`,
+    [input.userId, input.productSlug, input.stripeSessionId ?? null, input.stripePaymentIntent ?? null, status],
+  );
   const row = rows[0] as Record<string, unknown> | undefined;
   if (!row) throw new Error("Failed to record purchase.");
   return toPurchase(row);
 }
 
 export async function getPurchasesForUser(userId: string): Promise<Purchase[]> {
-  const rows = await sql()`
-    select id, user_id, product_slug, stripe_session_id, status, confirmation_code, created_at
-    from purchases
-    where user_id = ${userId}
-    order by created_at desc
-  `;
-  return (rows as Record<string, unknown>[]).map(toPurchase);
+  const rows = await purchaseQuery<Record<string, unknown>>(
+    `select ${PURCHASE_COLUMNS} from purchases where user_id = $1 order by created_at desc`,
+    [userId],
+  );
+  return rows.map(toPurchase);
 }
 
 export async function getPurchase(
   userId: string,
   productSlug: string,
 ): Promise<Purchase | null> {
-  const rows = await sql()`
-    select id, user_id, product_slug, stripe_session_id, status, confirmation_code, created_at
-    from purchases
-    where user_id = ${userId} and product_slug = ${productSlug}
-  `;
+  const rows = await purchaseQuery<Record<string, unknown>>(
+    `select ${PURCHASE_COLUMNS} from purchases where user_id = $1 and product_slug = $2`,
+    [userId, productSlug],
+  );
   const row = rows[0] as Record<string, unknown> | undefined;
   return row ? toPurchase(row) : null;
+}
+
+/** Full purchase row by id (admin use — refund approve/reject). */
+export async function getPurchaseById(purchaseId: string): Promise<Purchase | null> {
+  const rows = await purchaseQuery<Record<string, unknown>>(
+    `select ${PURCHASE_COLUMNS} from purchases where id = $1`,
+    [purchaseId],
+  );
+  const row = rows[0] as Record<string, unknown> | undefined;
+  return row ? toPurchase(row) : null;
+}
+
+// ---------------------------------------------------------------------------
+// Refund flow + download tracking (migration 004)
+// ---------------------------------------------------------------------------
+
+/**
+ * Record the FIRST download timestamp for a purchase row (never overwrites —
+ * `coalesce` keeps the original, so the policy line is the first download).
+ */
+export async function markDownloaded(purchaseId: string): Promise<void> {
+  await sql()`
+    update purchases
+    set downloaded_at = coalesce(downloaded_at, now())
+    where id = ${purchaseId}
+  `;
+}
+
+/**
+ * True when ANY row of the buyer's unlock set for a given Stripe session has
+ * been downloaded. The webhook writes the same session id to the ownership row
+ * (single guide / bundle / team license) AND every title row it unlocks, so
+ * this is exactly "has the buyer downloaded this purchase's product (or any
+ * title of it)". NULL session → false (cannot prove a download).
+ */
+export async function hasDownloadedInSession(
+  userId: string,
+  sessionId: string | null,
+): Promise<boolean> {
+  if (!sessionId) return false;
+  const rows = await sql()`
+    select 1 from purchases
+    where user_id = ${userId} and stripe_session_id = ${sessionId} and downloaded_at is not null
+    limit 1
+  `;
+  return rows.length > 0;
+}
+
+/** Open a refund request: refund_status='pending', refund_requested_at=now(). */
+export async function markRefundRequested(purchaseId: string): Promise<void> {
+  await sql()`
+    update purchases
+    set refund_status = 'pending', refund_requested_at = now()
+    where id = ${purchaseId}
+  `;
+}
+
+/**
+ * Revoke the whole unlock set of a purchase (all rows sharing its Stripe
+ * session): status -> 'refunded', which fails the download handler's
+ * status === 'unlocked' check and stops /api/me's bundle/team synthesis.
+ */
+export async function revokePurchaseSession(
+  userId: string,
+  sessionId: string | null,
+): Promise<void> {
+  if (!sessionId) return;
+  await sql()`
+    update purchases
+    set status = 'refunded'
+    where user_id = ${userId} and stripe_session_id = ${sessionId} and status = 'unlocked'
+  `;
+}
+
+/** Resolve a pending refund request on one row (approve → 'refunded'). */
+export async function resolveRefund(
+  purchaseId: string,
+  status: "refunded" | "rejected",
+  stripeRefundId?: string,
+): Promise<void> {
+  await sql()`
+    update purchases
+    set refund_status = ${status},
+        refund_stripe_refund_id = ${stripeRefundId ?? null},
+        refund_resolved_at = now()
+    where id = ${purchaseId}
+  `;
+}
+
+export interface PendingRefundRow {
+  id: string;
+  userEmail: string;
+  productSlug: string;
+  stripeSessionId: string | null;
+  stripePaymentIntent: string | null;
+  requestedAt: string;
+  purchasedAt: string;
+}
+
+/** Admin listing: every row with refund_status='pending', newest first. */
+export async function getPendingRefundRequests(): Promise<PendingRefundRow[]> {
+  const rows = await sql()`
+    select p.id, u.email as user_email, p.product_slug, p.stripe_session_id,
+           p.stripe_payment_intent, p.refund_requested_at, p.created_at as purchased_at
+    from purchases p
+    join users u on u.id = p.user_id
+    where p.refund_status = 'pending'
+    order by p.refund_requested_at asc
+  `;
+  return (rows as Record<string, unknown>[]).map((r) => ({
+    id: String(r.id),
+    userEmail: String(r.user_email),
+    productSlug: String(r.product_slug),
+    stripeSessionId: r.stripe_session_id == null ? null : String(r.stripe_session_id),
+    stripePaymentIntent: r.stripe_payment_intent == null ? null : String(r.stripe_payment_intent),
+    requestedAt: toIso(r.refund_requested_at),
+    purchasedAt: toIso(r.purchased_at),
+  }));
 }
 
 /**
