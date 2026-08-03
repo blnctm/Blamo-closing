@@ -3,14 +3,17 @@ import { useEffect, useState } from "react";
 
 import {
   downloadWithCode,
+  fetchPendingTestimonials,
   logoutAccount,
   me,
-  startCheckout,
   redeemTeamCode,
   requestRefund,
+  resolveTestimonial,
+  startCheckout,
 } from "~/lib/client-api";
 import type {
   ClientPurchase,
+  ClientTestimonial,
   ClientUser,
 } from "~/lib/client-api";
 import {
@@ -306,6 +309,118 @@ function TeamCodeCard({ purchases, onRedeemed }: { purchases: ClientPurchase[]; 
  return <section className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-6"><h2 className="text-xl font-bold text-slate-900">{own?'Your Team License':'Redeem a team code'}</h2><p className="mt-2 text-sm text-slate-600">Share or enter a manager’s code to unlock the entire library.</p><div className="mt-4 flex gap-2"><input value={code} onChange={e=>setCode(e.target.value)} placeholder="TEAM-ABC123" className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2"/><button onClick={submit} disabled={busy||!code} className="rounded-lg bg-slate-900 px-4 py-2 font-semibold text-white">{busy?'Activating…':'Redeem'}</button></div>{own&&<p className="mt-3 font-mono font-bold">Your team code is available from your purchase confirmation.</p>}{msg&&<p className="mt-3 text-sm font-semibold text-slate-700">{msg}</p>}</section>;
 }
 
+const OWNER_EMAIL = "blnctm@gmail.com";
+
+/**
+ * Owner-only moderation panel for buyer testimonials. Rendered on /account
+ * ONLY when the logged-in user's email is the owner's; the server endpoints
+ * independently enforce the same check (401 for anyone else).
+ */
+function PendingReviewsAdmin() {
+  const [reviews, setReviews] = useState<ClientTestimonial[] | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPendingTestimonials()
+      .then((rows) => {
+        if (!cancelled) setReviews(rows);
+      })
+      .catch(() => {
+        if (!cancelled) setReviews([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function refresh() {
+    const rows = await fetchPendingTestimonials();
+    setReviews(rows);
+  }
+
+  async function handleResolve(id: string, action: "approve" | "reject") {
+    if (busyId) return;
+    setBusyId(id);
+    setMsg(null);
+    try {
+      await resolveTestimonial(id, action);
+      await refresh();
+    } catch {
+      setMsg("Unable to update that review right now.");
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  return (
+    <section className="mt-8">
+      <h2 className="text-xl font-bold tracking-tight text-slate-900">
+        Pending reviews
+      </h2>
+      {reviews === null ? (
+        <p className="mt-4 rounded-xl border border-slate-200 bg-white p-6 text-slate-500">
+          Loading reviews…
+        </p>
+      ) : reviews.length === 0 ? (
+        <p className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white p-6 text-slate-500">
+          No pending reviews
+        </p>
+      ) : (
+        <ul className="mt-4 space-y-3">
+          {reviews.map((review) => (
+            <li
+              key={review.id}
+              className="rounded-xl border border-slate-200 bg-white p-5"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="font-semibold text-slate-900">
+                  {review.userName || review.userEmail || "Anonymous"}
+                </p>
+                <time className="text-xs text-slate-400">
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </time>
+              </div>
+              {review.productName && (
+                <p className="mt-0.5 text-sm font-medium text-amber-700">
+                  {review.productName}
+                </p>
+              )}
+              <p className="mt-3 text-sm leading-relaxed text-slate-700">
+                “{review.text}”
+              </p>
+              <div className="mt-4 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleResolve(review.id, "approve")}
+                  disabled={busyId === review.id}
+                  className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-60"
+                >
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleResolve(review.id, "reject")}
+                  disabled={busyId === review.id}
+                  className="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50 disabled:opacity-60"
+                >
+                  Reject
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+      {msg && (
+        <p role="alert" className="mt-3 text-sm text-red-600">
+          {msg}
+        </p>
+      )}
+    </section>
+  );
+}
+
 function Account() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<ClientUser | null>(null);
@@ -347,6 +462,7 @@ function Account() {
   const available = STORE_PRODUCTS.filter(
     (product) => !purchasedSlugs.has(product.slug),
   );
+  const isOwner = !!user && user.email.toLowerCase() === OWNER_EMAIL;
 
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50">
@@ -447,6 +563,9 @@ function Account() {
                 </ul>
               )}
             </section>
+
+            {/* Owner moderation: pending reviews (owner email only) */}
+            {isOwner && <PendingReviewsAdmin />}
 
             {/* Available products */}
             {available.length > 0 && (
