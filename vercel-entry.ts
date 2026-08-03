@@ -36,6 +36,7 @@ import {
   handleMe,
   handleRegister,
 } from "./src/routes/api/-auth";
+import { handleTestimonial, handleTestimonialsPublic, handleTestimonialsPending, handleTestimonialApprove, handleTestimonialReject } from "./src/routes/api/-testimonials";
 
 const fetchHandler = handler as {
   fetch: (request: Request) => Response | Promise<Response>;
@@ -84,6 +85,16 @@ export default async function vercelHandler(
               ? await handleLogout(webRequest)
               : pathname === "/api/me"
                 ? await handleMe(webRequest)
+                : pathname === "/api/testimonial"
+                  ? await handleTestimonial(webRequest)
+                : pathname === "/api/testimonials"
+                  ? await handleTestimonialsPublic(webRequest)
+                : pathname === "/api/testimonials/pending"
+                  ? await handleTestimonialsPending(webRequest)
+                : pathname === "/api/testimonials/approve"
+                  ? await handleTestimonialApprove(webRequest)
+                : pathname === "/api/testimonials/reject"
+                  ? await handleTestimonialReject(webRequest)
                 : pathname === "/api/lead-magnet"
                   ? await handleLeadMagnetCapture(webRequest)
                   : pathname === "/api/lead-magnet/due"

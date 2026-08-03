@@ -2,8 +2,8 @@ import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 
-import { downloadWithCode, me } from "~/lib/client-api";
-import type { ClientPurchase, ClientUser } from "~/lib/client-api";
+import { downloadWithCode, me, myTestimonial, submitTestimonial } from "~/lib/client-api";
+import type { ClientPurchase, ClientTestimonial, ClientUser } from "~/lib/client-api";
 
 export const Route = createFileRoute("/thanks")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -159,6 +159,75 @@ function Thanks() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
+
+  // Post-purchase review block: visible only to a logged-in buyer with an
+  // unlocked purchase and no pending/approved review (rejected → can resubmit).
+  const [review, setReview] = useState<ClientTestimonial | null | undefined>(
+    undefined,
+  );
+  const [reviewText, setReviewText] = useState("");
+  const [reviewBusy, setReviewBusy] = useState(false);
+  const [reviewMsg, setReviewMsg] = useState<{
+    kind: "ok" | "error";
+    text: string;
+  } | null>(null);
+  const [reviewSent, setReviewSent] = useState(false);
+
+  useEffect(() => {
+    if (!user || purchase?.status !== "unlocked") return;
+    let cancelled = false;
+    myTestimonial()
+      .then((t) => {
+        if (!cancelled) setReview(t);
+      })
+      .catch(() => {
+        if (!cancelled) setReview(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user, purchase?.status]);
+
+  const reviewBlocked =
+    review !== undefined && review !== null && review.status !== "rejected";
+  const showReviewForm =
+    !!user &&
+    purchase?.status === "unlocked" &&
+    review !== undefined &&
+    !reviewBlocked &&
+    !reviewSent;
+
+  async function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const text = reviewText.trim();
+    if (text.length < 20) {
+      setReviewMsg({
+        kind: "error",
+        text: "Tell us a little more — at least 20 characters.",
+      });
+      return;
+    }
+    setReviewBusy(true);
+    setReviewMsg(null);
+    try {
+      await submitTestimonial(text);
+      setReviewSent(true);
+    } catch (error) {
+      setReviewMsg({
+        kind: "error",
+        text:
+          error instanceof Error
+            ? error.message === "too_long"
+              ? "Reviews must be 600 characters or fewer."
+              : error.message === "not_verified"
+                ? "Only verified buyers can leave a review."
+                : "Unable to submit your review right now — please try again."
+            : "Unable to submit your review right now — please try again.",
+      });
+    } finally {
+      setReviewBusy(false);
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -519,6 +588,67 @@ function Thanks() {
               </form>
             )}
           </>
+        )}
+
+        {/* ── Post-purchase review (below the download section, unobtrusive) ── */}
+        {showReviewForm && (
+          <section className="mt-14 w-full max-w-md rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left">
+            <h2 className="text-lg font-bold text-slate-900">
+              How did the guide help you?
+            </h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600">
+              A quick review helps other reps know what to expect. It appears
+              on the site once approved.
+            </p>
+            <form onSubmit={handleReviewSubmit} className="mt-4">
+              <label
+                htmlFor="review-text"
+                className="block text-sm font-semibold text-slate-800"
+              >
+                Your review
+              </label>
+              <textarea
+                id="review-text"
+                rows={4}
+                value={reviewText}
+                onChange={(event) => setReviewText(event.target.value)}
+                maxLength={600}
+                placeholder={`What did you use from ${meta.name}? How did it help you close?`}
+                className="mt-2 w-full resize-y rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm leading-relaxed text-slate-900 placeholder-slate-400 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30"
+              />
+              <p className="mt-1 text-right text-xs text-slate-400">
+                {reviewText.length}/600
+              </p>
+              {reviewMsg && (
+                <p
+                  role="alert"
+                  className={`mt-1 rounded-lg border px-3 py-2 text-sm ${
+                    reviewMsg.kind === "error"
+                      ? "border-red-200 bg-red-50 text-red-700"
+                      : "border-emerald-200 bg-emerald-50 text-emerald-700"
+                  }`}
+                >
+                  {reviewMsg.text}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={reviewBusy}
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-slate-700 disabled:opacity-60"
+              >
+                {reviewBusy ? "Submitting…" : "Submit review"}
+              </button>
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                Reviews are shown with your first name and last initial.
+                They’re moderated before appearing on the wall.
+              </p>
+            </form>
+          </section>
+        )}
+        {reviewSent && (
+          <p className="mt-12 w-full max-w-md rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-center text-sm font-medium text-emerald-800">
+            Thanks — your review is pending approval.
+          </p>
         )}
       </main>
 

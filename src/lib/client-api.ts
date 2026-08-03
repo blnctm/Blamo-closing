@@ -175,3 +175,64 @@ export async function requestRefund(productSlug: string): Promise<{ ok: true; re
   }
   return { ok: true, refundStatus: data?.refundStatus ?? "pending" };
 }
+
+// ============================================================================
+// TESTIMONIALS — verified-buyer reviews + owner moderation.
+// ============================================================================
+
+export interface ClientTestimonial {
+  id: string;
+  text: string;
+  status: string;
+  createdAt: string;
+  productSlug?: string | null;
+  productName?: string | null;
+  /** Public wall: "Marcus J." style attribution ("Verified buyer" fallback). */
+  reviewerName?: string;
+  /** Moderation queue only: */
+  userEmail?: string;
+  userName?: string;
+}
+
+/**
+ * Current user's latest testimonial, or null when they have none (or are
+ * logged out). Used by /thanks to decide whether to show the review block.
+ */
+export async function myTestimonial(): Promise<ClientTestimonial | null> {
+  try {
+    const data = (await apiGet("/api/testimonial")) as {
+      ok?: boolean;
+      testimonial?: ClientTestimonial | null;
+    };
+    return data?.testimonial ?? null;
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 401) return null;
+    throw error;
+  }
+}
+
+/** Submit a review (verified buyers only). Throws ApiError("too_short"|"too_long"|"not_verified"|"already_submitted", …). */
+export async function submitTestimonial(text: string): Promise<ClientTestimonial> {
+  const data = (await apiPost("/api/testimonial", { text })) as {
+    ok?: boolean;
+    testimonial: ClientTestimonial;
+  };
+  return data.testimonial;
+}
+
+/** Owner-only moderation queue. Non-owners get ApiError("unauthorized", 401). */
+export async function fetchPendingTestimonials(): Promise<ClientTestimonial[]> {
+  const data = (await apiGet("/api/testimonials/pending")) as {
+    ok?: boolean;
+    testimonials?: ClientTestimonial[];
+  };
+  return data?.testimonials ?? [];
+}
+
+/** Owner-only: approve or reject a pending review. */
+export async function resolveTestimonial(
+  id: string,
+  action: "approve" | "reject",
+): Promise<void> {
+  await apiPost(`/api/testimonials/${action}`, { id });
+}
