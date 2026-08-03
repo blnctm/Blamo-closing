@@ -25,7 +25,7 @@ function Testimonials() {
   return (
     <main className="min-h-dvh bg-slate-50 px-6 py-16 text-slate-900">
       <div className="mx-auto max-w-4xl">
-        <a href="/" className="text-sm font-semibold text-amber-700">
+        <a href="/" className="inline-block rounded-lg py-2.5 text-sm font-semibold text-amber-700">
           ← Blamo Closing
         </a>
         <h1 className="mt-8 text-4xl font-extrabold tracking-tight">

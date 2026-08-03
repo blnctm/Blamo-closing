@@ -110,13 +110,13 @@ function Preview() {
             Blamo<span className="text-slate-400"> Closing</span>
           </a>
           <nav className="flex items-center gap-5 text-sm font-medium">
-            <a href="/" className="text-slate-500 hover:text-slate-900">
+            <a href="/" className="rounded-lg py-2 text-slate-500 hover:text-slate-900">
               Home
             </a>
-            <a href="/refunds" className="text-slate-500 hover:text-slate-900">
+            <a href="/refunds" className="rounded-lg py-2 text-slate-500 hover:text-slate-900">
               Refunds
             </a>
-            <a href="/contact" className="text-slate-500 hover:text-slate-900">
+            <a href="/contact" className="rounded-lg py-2 text-slate-500 hover:text-slate-900">
               Contact
             </a>
           </nav>
