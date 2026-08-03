@@ -18,7 +18,7 @@ export interface StoreProduct {
    * unlocks every title's file instead.
    */
   fileName?: string;
-  /** Short kind label shown next to the name ("PDF · 12 pages", "Video · MP4"). */
+  /** Short kind label shown next to the name ("PDF · 12 pages", "Printable PDF + Excel · Template"). */
   kindLabel: string;
   /**
    * True for the Complete Package bundle ("complete-package"). The bundle is a

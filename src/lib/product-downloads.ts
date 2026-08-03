@@ -20,7 +20,7 @@
 // from this one table.
 // ============================================================================
 
-export type ProductKind = "pdf" | "video" | "zip";
+export type ProductKind = "pdf" | "zip";
 
 export interface ProductDownload {
   /** Value of the ?product= search param on /thanks. */
