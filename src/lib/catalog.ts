@@ -19,7 +19,7 @@ export const PRODUCT_CATALOG: readonly CatalogProduct[] = [
   ...PRODUCT_DOWNLOADS.map((product): CatalogProduct => ({
     slug: product.slug,
     name: product.name,
-    unitAmountCents: product.slug === STARTER_KIT_SLUG || product.slug === STARTER_KIT_ES_SLUG || product.slug === "leadership" ? 2499 : 699,
+    unitAmountCents: product.slug === STARTER_KIT_SLUG || product.slug === STARTER_KIT_ES_SLUG || product.slug === "leadership" || product.slug === "leadership-es" ? 2499 : 699,
     confirmationCode: product.code,
   })),
   // The Complete Package: a library unlock, not a downloadable file. Checkout

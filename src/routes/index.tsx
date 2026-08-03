@@ -537,6 +537,14 @@ function SpouseEsProductCard() { return <ProductCoverCard img="/cover-thumbs/spo
 function TradeInEsProductCard() { return <ProductCoverCard img="/cover-thumbs/trade-in-es.png" alt="Portada del Manual del “Quiero Más por Mi Trade-In”" badge={<QuickCardBadge />} title="El Manual del “Quiero Más por Mi Trade-In”" desc="10 cierres para “quiero más por mi intercambio” — incluido el cierre de intercambio favorito del propietario." price="$6.99" slug="trade-in-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue El Manual del “Quiero Más por Mi Trade-In” — $6.99" chipTitle="Gana el trato completo, no un solo número." chipSub="El cierre de intercambio favorito" />; }
 function QualifyingQuestionsEsProductCard() { return <ProductCoverCard img="/cover-thumbs/qualifying-questions-es.png" alt="Portada de la Guía de Preguntas de Calificación" badge={<QuickCardBadge />} title="La Guía de Preguntas de Calificación" desc="75 preguntas en nueve categorías — el Golden 10 y el flujo completo de Razón → Compromiso." price="$6.99" slug="qualifying-questions-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue La Guía de Preguntas de Calificación — $6.99" chipTitle="Haz mejores preguntas." chipSub="75 preguntas · Golden 10" />; }
 
+function InternetSaleEsProductCard() { return <ProductCoverCard img="/cover-thumbs/internet-sale-es.png" alt="Los 10 Pasos de la Venta por Internet" badge={<QuickCardBadge />} title="Los 10 Pasos de la Venta por Internet" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="internet-sale-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue Los 10 Pasos de la Venta por Internet — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function PrayAboutItEsProductCard() { return <ProductCoverCard img="/cover-thumbs/pray-about-it-es.png" alt="El Manual de la Objeción 'Déjeme Orarlo'" badge={<QuickCardBadge />} title="El Manual de la Objeción 'Déjeme Orarlo'" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="pray-about-it-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue El Manual de la Objeción 'Déjeme Orarlo' — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function WalkAroundEsProductCard() { return <ProductCoverCard img="/cover-thumbs/walk-around-es.png" alt="Guía de Capacitación del Recorrido del Vehículo" badge={<QuickCardBadge />} title="Guía de Capacitación del Recorrido del Vehículo" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="walk-around-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue Guía de Capacitación del Recorrido del Vehículo — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function FIAwarenessEsProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness-es.png" alt="El Manual de Capacitación en F&I" badge={<QuickCardBadge />} title="El Manual de Capacitación en F&I" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="fi-awareness-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue El Manual de Capacitación en F&I — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function ProspectingEsProductCard() { return <ProductCoverCard img="/cover-thumbs/prospecting-es.png" alt="Prospectando Como un Profesional" badge={<QuickCardBadge />} title="Prospectando Como un Profesional" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="prospecting-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue Prospectando Como un Profesional — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function MeetAndGreetEsProductCard() { return <ProductCoverCard img="/cover-thumbs/meet-and-greet-es.png" alt="Maestría en el Recibimiento y el Saludo" badge={<QuickCardBadge />} title="Maestría en el Recibimiento y el Saludo" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="meet-and-greet-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue Maestría en el Recibimiento y el Saludo — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function FollowUpEsProductCard() { return <ProductCoverCard img="/cover-thumbs/follow-up-es.png" alt="El Seguimiento Que Crea Clientes de Por Vida" badge={<QuickCardBadge />} title="El Seguimiento Que Crea Clientes de Por Vida" desc="Guía práctica de capacitación automotriz en español." price="$6.99" slug="follow-up-es" ctaLabel="Comprar ahora — $6.99" ctaAriaLabel="Consigue El Seguimiento Que Crea Clientes de Por Vida — $6.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function LeadershipEsProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-es.png" alt="Academia de Liderazgo de Blamo Closing" badge={<QuickCardBadge />} title="Academia de Liderazgo de Blamo Closing" desc="Guía práctica de capacitación automotriz en español." price="$24.99" slug="leadership-es" ctaLabel="Comprar ahora — $24.99" ctaAriaLabel="Consigue Academia de Liderazgo de Blamo Closing — $24.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
 /* ---------- Page ---------- */
 
 function Home() {
@@ -645,8 +653,7 @@ function Home() {
         </div>
       </header>
 
-      {/* Spanish coming-soon banner */}
-      <div className="border-b border-amber-300/40 bg-amber-400/10 px-4 py-2 text-center text-xs font-semibold text-slate-800 sm:text-sm">
+      <div className="hidden">
         <span aria-hidden="true">🇪🇸&nbsp;</span>
         Spanish versions of every training guide — <a href="/es" className="underline decoration-amber-500 underline-offset-2 hover:text-amber-700">available right here once completed</a>. ·&nbsp;
         <span lang="es">Versiones en español de todas las guías: próximamente.</span>
@@ -842,9 +849,9 @@ function Home() {
                   {/* Price */}
                   <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
                     <span className="text-2xl font-extrabold tracking-tight text-white">$79.99</span>
-                    <s className="text-lg font-semibold text-slate-400">$165.84</s>
+                    <s className="text-lg font-semibold text-slate-400">$239.76</s>
                     <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
-                      Save 52%
+                      Save 67%
                     </span>
                   </div>
                   <p className="mt-2 text-sm font-semibold text-amber-300">
@@ -854,7 +861,7 @@ function Home() {
                   <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      All 16 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $165.84 value)
+                      All 24 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $239.76 value)
                     </li>
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
@@ -897,7 +904,7 @@ function Home() {
               <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">Versiones en español de nuestros guías principales — los mismos precios, e incluidas en el Complete Package.</p>
             </div>
             <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-              <StarterKitEsProductCard /><SpouseEsProductCard /><TradeInEsProductCard /><QualifyingQuestionsEsProductCard />
+              <StarterKitEsProductCard /><SpouseEsProductCard /><TradeInEsProductCard /><QualifyingQuestionsEsProductCard /><InternetSaleEsProductCard /><PrayAboutItEsProductCard /><WalkAroundEsProductCard /><FIAwarenessEsProductCard /><ProspectingEsProductCard /><MeetAndGreetEsProductCard /><FollowUpEsProductCard /><LeadershipEsProductCard />
             </div>
           </div>
         </div>
@@ -957,7 +964,7 @@ function Home() {
             {[
               {
                 q: "What is The Complete Package?",
-                a: "It’s the whole Blamo Closing library in one purchase: all 16 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide, English + Español ($165.84 if bought separately) — for $79.99, about 52% off. One checkout, one unlock, and every future title is included at no extra cost.",
+                a: "It’s the whole Blamo Closing library in one purchase: all 24 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide, English + Español ($239.76 if bought separately) — for $79.99, about 67% off. One checkout, one unlock, and every future title is included at no extra cost.",
               },
               {
                 q: "How does the bundle unlock work?",
