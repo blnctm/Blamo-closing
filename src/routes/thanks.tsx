@@ -55,6 +55,7 @@ const PRODUCT_META: Record<
     fileName: "the-trade-in-objection-playbook.pdf",
     label: "Download your PDF",
   },
+  "trade-in-tax-credit": { name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", fileName: "trade-in-tax-credit.pdf", label: "Download your PDF" },
   "qualifying-questions": {
     name: "The Qualifying Questions Guide",
     fileName: "the-qualifying-questions-guide.pdf",

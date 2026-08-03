@@ -76,6 +76,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     fileName: "the-trade-in-objection-playbook.pdf",
     kindLabel: "PDF · 15 pages",
   },
+  { slug: "trade-in-tax-credit", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", priceCents: 699, fileName: "trade-in-tax-credit.pdf", kindLabel: "PDF · 4 pages" },
   {
     slug: "qualifying-questions",
     name: "The Qualifying Questions Guide",

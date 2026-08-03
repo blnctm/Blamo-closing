@@ -76,6 +76,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     kind: "pdf",
     mime: "application/pdf",
   },
+  { slug: "trade-in-tax-credit", code: "BLAMO-27-6721", file: "trade-in-tax-credit.pdf", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", kind: "pdf", mime: "application/pdf" },
   {
     slug: "qualifying-questions",
     code: "BLAMO-08-4836",
