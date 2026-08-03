@@ -11,7 +11,7 @@ export interface StoreProduct {
   slug: string;
   name: string;
   /** Display price in dollars and cents, e.g. "1.99" (no $ sign). */
-  priceCents: 199 | 999 | 3495 | 9995;
+  priceCents: 199 | 999 | 2499 | 3495 | 9995;
   /**
    * File name the browser saves the download as (used for the <a download>).
    * Absent on the Complete Package bundle — it has no single PDF; buying it
@@ -86,7 +86,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     kindLabel: "PDF · 13 pages",
   },
   { slug: "walk-around", name: "Vehicle Walk-Around Training Guide", priceCents: 199, fileName: "vehicle-walk-around-training-guide.pdf", kindLabel: "PDF · 14 pages" },
-  { slug: "leadership", name: "Blamo Closing Leadership Academy", priceCents: 199, fileName: "leadership-academy-manual.pdf", kindLabel: "PDF · 40 pages" },
+  { slug: "leadership", name: "Blamo Closing Leadership Academy", priceCents: 2499, fileName: "leadership-academy-manual.pdf", kindLabel: "PDF · 40 pages" },
   { slug: "fi-awareness", name: "F&I Awareness Training Manual", priceCents: 199, fileName: "fi-awareness-training-manual.pdf", kindLabel: "PDF · 12 pages" },
   { slug: "prospecting", name: "Prospecting Like a Professional", priceCents: 199, fileName: "prospecting-like-a-professional.pdf", kindLabel: "PDF · 14 pages" },
   { slug: "meet-and-greet", name: "Meet & Greet Mastery", priceCents: 199, fileName: "meet-and-greet-mastery.pdf", kindLabel: "PDF · 13 pages" },
@@ -123,7 +123,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     fileName: "qualifying-questions-es.pdf",
     kindLabel: "PDF · 13 páginas",
   },
-  { slug: "internet-sale-es", name: "Los 10 Pasos de la Venta por Internet", priceCents: 199, fileName: "internet-sale-es.pdf", kindLabel: "PDF · 15 páginas" }, { slug: "pray-about-it-es", name: "El Manual de la Objeción 'Déjeme Orarlo'", priceCents: 199, fileName: "pray-about-it-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "walk-around-es", name: "Guía de Capacitación del Recorrido del Vehículo", priceCents: 199, fileName: "walk-around-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "fi-awareness-es", name: "El Manual de Capacitación en F&I", priceCents: 199, fileName: "fi-awareness-es.pdf", kindLabel: "PDF · 12 páginas" }, { slug: "prospecting-es", name: "Prospectando Como un Profesional", priceCents: 199, fileName: "prospecting-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "meet-and-greet-es", name: "Maestría en el Recibimiento y el Saludo", priceCents: 199, fileName: "meet-and-greet-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "follow-up-es", name: "El Seguimiento Que Crea Clientes de Por Vida", priceCents: 199, fileName: "follow-up-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "leadership-es", name: "Academia de Liderazgo de Blamo Closing", priceCents: 199, fileName: "leadership-academy-es.pdf", kindLabel: "PDF · 38 páginas" },
+  { slug: "internet-sale-es", name: "Los 10 Pasos de la Venta por Internet", priceCents: 199, fileName: "internet-sale-es.pdf", kindLabel: "PDF · 15 páginas" }, { slug: "pray-about-it-es", name: "El Manual de la Objeción 'Déjeme Orarlo'", priceCents: 199, fileName: "pray-about-it-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "walk-around-es", name: "Guía de Capacitación del Recorrido del Vehículo", priceCents: 199, fileName: "walk-around-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "fi-awareness-es", name: "El Manual de Capacitación en F&I", priceCents: 199, fileName: "fi-awareness-es.pdf", kindLabel: "PDF · 12 páginas" }, { slug: "prospecting-es", name: "Prospectando Como un Profesional", priceCents: 199, fileName: "prospecting-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "meet-and-greet-es", name: "Maestría en el Recibimiento y el Saludo", priceCents: 199, fileName: "meet-and-greet-es.pdf", kindLabel: "PDF · 13 páginas" }, { slug: "follow-up-es", name: "El Seguimiento Que Crea Clientes de Por Vida", priceCents: 199, fileName: "follow-up-es.pdf", kindLabel: "PDF · 14 páginas" }, { slug: "leadership-es", name: "Academia de Liderazgo de Blamo Closing", priceCents: 2499, fileName: "leadership-academy-es.pdf", kindLabel: "PDF · 38 páginas" },
 ];
 export function findStoreProduct(
   slug: string | null | undefined,

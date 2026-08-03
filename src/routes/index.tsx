@@ -703,7 +703,7 @@ function QualifyingQuestionsProductCard() {
 
 /* ---------- New product cover cards ---------- */
 function WalkAroundProductCard() { return <ProductCoverCard img="/cover-thumbs/walk-around-guide.png" alt="Vehicle Walk-Around Training Guide cover" badge={<QuickCardBadge />} title="Vehicle Walk-Around Training Guide" desc="The 11-step walk-around: engage the customer, build ownership, and flow into the test drive." price="$1.99" slug="walk-around" ctaLabel="Buy now — $1.99" ctaAriaLabel="Get Vehicle Walk-Around Training Guide — $1.99" chipTitle="Present every vehicle with confidence." chipSub="14-page PDF guide" />; }
-function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" desc="A 40-page leadership course: coaching formula, daily meetings, scorecards, motivation, and the Blamo Standards." price="$1.99" slug="leadership" ctaLabel="Buy now — $1.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $1.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
+function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" desc="A 40-page leadership course: coaching formula, daily meetings, scorecards, motivation, and the Blamo Standards." price="$24.99" slug="leadership" ctaLabel="Buy now — $24.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $24.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
 function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" extraImg="/cover-thumbs/product-art/fi-awareness-art.png" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" desc="8-chapter manual: prepare the customer for finance, present protection products, and hand off with confidence." price="$1.99" slug="fi-awareness" ctaLabel="Buy now — $1.99" ctaAriaLabel="Get F&I Awareness Training Manual — $1.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
 
 function ProspectingProductCard() { return <ProductCoverCard img="/cover-thumbs/prospecting.png" alt="Prospecting Like a Professional cover" badge={<QuickCardBadge />} title="Prospecting Like a Professional" desc="Build your brand and fill your pipeline: the 100-person list, daily prospecting plan, scripts, and the 30-day challenge." price="$1.99" slug="prospecting" ctaLabel="Buy now — $1.99" ctaAriaLabel="Get Prospecting Like a Professional — $1.99" chipTitle="Stop waiting for traffic. Start bringing customers to you." chipSub="14-page PDF guide" />; }
@@ -724,7 +724,7 @@ function FIAwarenessEsProductCard() { return <ProductCoverCard img="/cover-thumb
 function ProspectingEsProductCard() { return <ProductCoverCard img="/cover-thumbs/prospecting-es.png" alt="Prospectando Como un Profesional" badge={<QuickCardBadge />} title="Prospectando Como un Profesional" desc="Guía práctica de capacitación automotriz en español." price="$1.99" slug="prospecting-es" ctaLabel="Comprar ahora — $1.99" ctaAriaLabel="Consigue Prospectando Como un Profesional — $1.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
 function MeetAndGreetEsProductCard() { return <ProductCoverCard img="/cover-thumbs/meet-and-greet-es.png" alt="Maestría en el Recibimiento y el Saludo" badge={<QuickCardBadge />} title="Maestría en el Recibimiento y el Saludo" desc="Guía práctica de capacitación automotriz en español." price="$1.99" slug="meet-and-greet-es" ctaLabel="Comprar ahora — $1.99" ctaAriaLabel="Consigue Maestría en el Recibimiento y el Saludo — $1.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
 function FollowUpEsProductCard() { return <ProductCoverCard img="/cover-thumbs/follow-up-es.png" alt="El Seguimiento Que Crea Clientes de Por Vida" badge={<QuickCardBadge />} title="El Seguimiento Que Crea Clientes de Por Vida" desc="Guía práctica de capacitación automotriz en español." price="$1.99" slug="follow-up-es" ctaLabel="Comprar ahora — $1.99" ctaAriaLabel="Consigue El Seguimiento Que Crea Clientes de Por Vida — $1.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
-function LeadershipEsProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-es.png" alt="Academia de Liderazgo de Blamo Closing" badge={<QuickCardBadge />} title="Academia de Liderazgo de Blamo Closing" desc="Guía práctica de capacitación automotriz en español." price="$1.99" slug="leadership-es" ctaLabel="Comprar ahora — $1.99" ctaAriaLabel="Consigue Academia de Liderazgo de Blamo Closing — $1.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
+function LeadershipEsProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-es.png" alt="Academia de Liderazgo de Blamo Closing" badge={<QuickCardBadge />} title="Academia de Liderazgo de Blamo Closing" desc="Guía práctica de capacitación automotriz en español." price="$24.99" slug="leadership-es" ctaLabel="Comprar ahora — $24.99" ctaAriaLabel="Consigue Academia de Liderazgo de Blamo Closing — $24.99" chipTitle="Guía PDF en español" chipSub="Lectura práctica" />; }
 /* ---------- Page ---------- */
 
 function Home() {
@@ -1076,19 +1076,19 @@ function Home() {
                   {/* Price */}
                   <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
                     <span className="text-2xl font-extrabold tracking-tight text-white">$34.95</span>
-                    <s className="text-lg font-semibold text-slate-400">$59.74</s>
+                    <s className="text-lg font-semibold text-slate-400">$105.74</s>
                     <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
-                      Save 42%
+                      Save 67%
                     </span>
                   </div>
                   <p className="mt-2 text-sm font-semibold text-amber-300">
-                    Use code BLAMO10 at checkout → $31.46
+                    Use code BLAMO10 at checkout → $31.45
                   </p>
                   {/* What you get */}
                   <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      All 26 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $59.74 value)
+                      All 26 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $105.74 value)
                     </li>
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
@@ -1122,7 +1122,7 @@ function Home() {
             </div>
           </article>
           <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-6">
-            <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $1.99 becomes $1.79 · $9.99 becomes $8.99 · $34.95 becomes $31.46.</p></div>
+            <div><p className="font-bold text-slate-900">Save 10% with BLAMO10</p><p className="mt-1 text-sm text-slate-600">Apply it to your next checkout. $1.99 becomes $1.79 · $9.99 becomes $8.99 · $24.99 becomes $22.49 · $34.95 becomes $31.45.</p></div>
             <div className="mt-4 flex shrink-0 gap-2 sm:mt-0"><label htmlFor="promo-code" className="sr-only">Promo code</label><input id="promo-code" value={promo} onChange={(e) => setPromo(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") applyPromo(); }} placeholder="BLAMO10" className="w-32 rounded-lg border border-amber-300 bg-white px-3 py-2.5 text-sm font-semibold uppercase text-slate-900"/><button type="button" onClick={applyPromo} className="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-bold text-white">Apply</button></div>
             {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
           </div>
@@ -1143,7 +1143,7 @@ function Home() {
         </div>
       </section>
       <section id="new-products" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden"><BgArt kind="happy-client" side="left" className="hidden sm:block" /><BgArt kind="keys" side="right" className="hidden sm:block" /><div className="mx-auto max-w-6xl px-6 py-20 sm:py-24"><div className="text-center"><Eyebrow>More tools for the sales floor</Eyebrow><h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Build skill beyond the close</h2></div><div className="mt-12 grid gap-6 lg:grid-cols-3">{[
-{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$1.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$9.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$1.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
+{id:"walk-around",title:"Vehicle Walk-Around Training Guide",price:"$1.99",desc:"A practical 14-page guide to presenting every vehicle with a clear, confident walk-around.",benefits:["A repeatable walk-around flow","Feature-to-benefit language","Practice checklist"]},{id:"leadership",title:"Blamo Closing Leadership Academy",price:"$24.99",desc:"A 40-page leadership manual for sales managers and team leads who want a stronger, more consistent floor.",benefits:["Coach the process, not pressure","Build daily accountability","Develop confident reps"]},{id:"fi-awareness",title:"F&I Awareness Training Manual",price:"$1.99",desc:"A 12-page guide to understanding the finance handoff and keeping customer trust intact.",benefits:["Prepare customers for F&I","Explain the handoff clearly","Protect the customer experience"]}].map((product)=><article key={product.id} className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-sm"><h3 className="text-xl font-bold text-slate-900">{product.title}</h3><p className="mt-3 leading-relaxed text-slate-600">{product.desc}</p><ul className="mt-5 space-y-2 text-sm text-slate-700">{product.benefits.map((b)=><li key={b} className="flex gap-2"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />{b}</li>)}</ul><div className="mt-7 flex items-center justify-between gap-3"><span className="text-xl font-extrabold text-slate-900">{product.price}</span><BuyButton slug={product.id} label={`Get ${product.title} — ${product.price}`} ariaLabel={`Get ${product.title} — ${product.price}`} /></div></article>)}</div></div></section>
 
       {/* CTA band */}
       <section id="buy" className="bg-slate-900 relative overflow-hidden">
@@ -1197,7 +1197,7 @@ function Home() {
             {[
               {
                 q: "What is The Complete Package?",
-                a: "It’s the whole Blamo Closing library in one purchase: all 26 current titles — the $9.99 Sales Rep Starter Kit, the $1.99 Leadership Academy, and every $1.99 playbook and guide, English + Español ($59.74 if bought separately) — for $34.95, about 42% off. One checkout, one unlock, and every future title is included at no extra cost.",
+                a: "It’s the whole Blamo Closing library in one purchase: all 26 current titles — the $9.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $1.99 playbook and guide, English + Español ($105.74 if bought separately) — for $34.95, about 67% off. One checkout, one unlock, and every future title is included at no extra cost.",
               },
               {
                 q: "How does the bundle unlock work?",

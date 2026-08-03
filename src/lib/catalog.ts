@@ -5,12 +5,21 @@ import { PRODUCT_DOWNLOADS } from "./product-downloads";
 export interface CatalogProduct {
   slug: string;
   name: string;
-  unitAmountCents: 199 | 999 | 3495 | 9995;
+  unitAmountCents: 199 | 999 | 2499 | 3495 | 9995;
   confirmationCode: string;
 }
 
 const STARTER_KIT_SLUG = "starter-kit";
 const STARTER_KIT_ES_SLUG = "starter-kit-es";
+const LEADERSHIP_SLUG = "leadership";
+const LEADERSHIP_ES_SLUG = "leadership-es";
+/** Per-slug standalone price: starter kits $9.99, leadership $24.99, all else $1.99. */
+const STANDALONE_PRICE: Record<string, 199 | 999 | 2499> = {
+  [STARTER_KIT_SLUG]: 999,
+  [STARTER_KIT_ES_SLUG]: 999,
+  [LEADERSHIP_SLUG]: 2499,
+  [LEADERSHIP_ES_SLUG]: 2499,
+};
 
 /** Code recorded on the Complete Package ownership row (not a download code). */
 export const BUNDLE_CONFIRMATION_CODE = "BUNDLE-ALL";
@@ -20,7 +29,7 @@ export const PRODUCT_CATALOG: readonly CatalogProduct[] = [
   ...PRODUCT_DOWNLOADS.map((product): CatalogProduct => ({
     slug: product.slug,
     name: product.name,
-    unitAmountCents: product.slug === STARTER_KIT_SLUG || product.slug === STARTER_KIT_ES_SLUG ? 999 : 199,
+    unitAmountCents: STANDALONE_PRICE[product.slug] ?? 199,
     confirmationCode: product.code,
   })),
   { slug: "team-license", name: "Team License — Train Up to 10 Reps", unitAmountCents: 9995, confirmationCode: TEAM_LICENSE_CONFIRMATION_CODE },
