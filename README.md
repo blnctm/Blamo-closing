@@ -6,15 +6,19 @@ Vite 7 + Tailwind CSS 4).
 
 ## Pages
 
-- `/` — landing page / storefront: The Sales Rep Starter Kit, The 10 Steps of
-  the Sale, and The Five Closes in Action video, each with a PayPal buy button.
+- `/` — landing page / storefront: 24+ product guides (The Sales Rep Starter
+  Kit, The 10 Steps of the Sale, objection playbooks, the Complete Package
+  bundle, a Team License, and Spanish versions), each purchased through
+  Stripe Checkout.
 - `/thanks?product=<slug>` — post-purchase download page (`starter-kit`,
-  `ten-steps`, `five-closes`).
+  `ten-steps`, …).
 - `/unsubscribe?email=<address>` — one-click unsubscribe page for the free
   lead-magnet list (flips `subscribed=false` and shows a confirmation page).
 
-Product PDFs, the training video MP4, and ad images live in `public/` and are
-served as static assets. The free lead-magnet PDF is
+Product covers and ad images live in `public/` and are served as static
+assets; paid product files live in `private/` and are served only through the
+code-gated download endpoint (see `server-assets/download-handler.ts`). The
+free lead-magnet PDF is
 `public/3-closes-that-work.pdf` → `/3-closes-that-work.pdf` (public, no gate).
 
 ## Free lead magnet (email capture)
@@ -49,7 +53,7 @@ The repo is wired for [Vercel](https://vercel.com) via `vercel.json` +
 - `build-vercel.sh` runs the vite build and assembles a
   [Build Output API](https://vercel.com/docs/build-output-api) v3 bundle in
   `.vercel/output`: `dist/client` is published as static files (including the
-  PDFs/video/PNGs from `public/`) and the SSR handler
+  covers/PNGs from `public/`) and the SSR handler
   (`vercel-entry.ts` → `dist/server/server.js`) is bundled into a single
   Node 22 function (`render.func`) that serves all routes.
 
@@ -65,6 +69,7 @@ framework preset shows "Other" and the build command above is used).
 
 - `publish.sh` / `serve.ts` / `go-live.sh` are platform-specific (port 3000
   preview hosting) and not used by Vercel.
-- Buy-button links are public PayPal checkout URLs defined as constants at the
-  top of `src/routes/index.tsx` — swap them in one place when the owner
-  provides per-product PayPal Buy Now links.
+- Checkout is Stripe-only: buy buttons call `POST /api/checkout`, which
+  creates a Stripe Checkout session on the owner's account; the webhook
+  unlocks the purchase. Prices live in `src/lib/catalog.ts` and the promo
+  code `BLAMO10` (10% off) is applied server-side.
