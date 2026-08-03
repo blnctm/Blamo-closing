@@ -466,6 +466,7 @@ function ProductCoverCard({
   chipSub,
   desc,
   extraImg,
+  previewHref,
 }: {
   img: string;
   alt: string;
@@ -479,6 +480,8 @@ function ProductCoverCard({
   chipSub: string;
   desc?: string;
   extraImg?: string;
+  /** Optional link to a watermarked sample-page preview (Starter Kit). */
+  previewHref?: string;
 }) {
   return (
     <div className="product-card relative mx-auto w-full max-w-xs lg:max-w-sm">
@@ -528,6 +531,15 @@ function ProductCoverCard({
               ariaLabel={ctaAriaLabel}
             />
           </div>
+          {previewHref && (
+            <a
+              href={previewHref}
+              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 transition hover:text-amber-800"
+            >
+              Preview sample pages
+              <span aria-hidden="true">→</span>
+            </a>
+          )}
         </div>
       </div>
 
@@ -571,6 +583,7 @@ function ProductCard() {
       ctaAriaLabel="Get the Starter Kit — $24.99"
       chipTitle="The complete 10-step process"
       chipSub="27-page packet · Meet & Greet → Follow-up"
+      previewHref="/preview"
     />
   );
 }
@@ -2271,6 +2284,9 @@ function Home() {
             </a>
             <a href="/refunds" className="hover:text-slate-900">
               Refunds
+            </a>
+            <a href="/preview" className="hover:text-slate-900">
+              Preview the Starter Kit
             </a>
             <a href="/thanks" className="hover:text-slate-900">
               Download your PDF
