@@ -461,6 +461,7 @@ function ProductCoverCard({
   chipTitle,
   chipSub,
   desc,
+  extraImg,
 }: {
   img: string;
   alt: string;
@@ -473,6 +474,7 @@ function ProductCoverCard({
   chipTitle: string;
   chipSub: string;
   desc?: string;
+  extraImg?: string;
 }) {
   return (
     <div className="product-card relative mx-auto w-full max-w-xs lg:max-w-sm">
@@ -483,14 +485,27 @@ function ProductCoverCard({
 
       {/* The card: cover on top, title/price/buy below */}
       <div className="relative -rotate-1 overflow-hidden rounded-2xl bg-white shadow-2xl shadow-slate-900/30 ring-1 ring-slate-900/10">
-        <img
-          src={img}
-          alt={alt}
-          width={600}
-          height={800}
-          loading="lazy"
-          className="aspect-[3/4] w-full object-cover"
-        />
+        <div className="relative">
+          <img
+            src={img}
+            alt={alt}
+            width={600}
+            height={800}
+            loading="lazy"
+            className="aspect-[3/4] w-full object-cover"
+          />
+          {extraImg && (
+            <img
+              src={extraImg}
+              alt=""
+              aria-hidden="true"
+              width={480}
+              height={480}
+              loading="lazy"
+              className="pointer-events-none absolute bottom-2 right-2 z-10 w-20 -rotate-3 drop-shadow-lg sm:w-24"
+            />
+          )}
+        </div>
         <div className="px-5 pb-5 pt-4">
           <h3 className="whitespace-normal text-base font-bold leading-snug tracking-tight text-slate-900">
             {title}
@@ -646,6 +661,7 @@ function QualifyingQuestionsProductCard() {
     <ProductCoverCard
       img="/cover-thumbs/qualifying-questions.png"
       alt="The Qualifying Questions Guide cover"
+      extraImg="/cover-thumbs/product-art/qualifying-questions-art.png"
       badge={<QuickCardBadge />}
       title="The Qualifying Questions Guide"
       desc="75 questions in nine categories — the Golden 10 and the full Reason-to-Commitment flow."
@@ -662,7 +678,7 @@ function QualifyingQuestionsProductCard() {
 /* ---------- New product cover cards ---------- */
 function WalkAroundProductCard() { return <ProductCoverCard img="/cover-thumbs/walk-around-guide.png" alt="Vehicle Walk-Around Training Guide cover" badge={<QuickCardBadge />} title="Vehicle Walk-Around Training Guide" desc="The 11-step walk-around: engage the customer, build ownership, and flow into the test drive." price="$6.99" slug="walk-around" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Vehicle Walk-Around Training Guide — $6.99" chipTitle="Present every vehicle with confidence." chipSub="14-page PDF guide" />; }
 function LeadershipProductCard() { return <ProductCoverCard img="/cover-thumbs/leadership-academy.png" alt="Blamo Closing Leadership Academy cover" badge={<QuickCardBadge />} title="Blamo Closing Leadership Academy" desc="A 40-page leadership course: coaching formula, daily meetings, scorecards, motivation, and the Blamo Standards." price="$24.99" slug="leadership" ctaLabel="Buy now — $24.99" ctaAriaLabel="Get Blamo Closing Leadership Academy — $24.99" chipTitle="Lead the floor. Raise the standard." chipSub="40-page PDF manual" />; }
-function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" desc="8-chapter manual: prepare the customer for finance, present protection products, and hand off with confidence." price="$6.99" slug="fi-awareness" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get F&I Awareness Training Manual — $6.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
+function FIAwarenessProductCard() { return <ProductCoverCard img="/cover-thumbs/fi-awareness.png" alt="F&I Awareness Training Manual cover" extraImg="/cover-thumbs/product-art/fi-awareness-art.png" badge={<QuickCardBadge />} title="F&I Awareness Training Manual" desc="8-chapter manual: prepare the customer for finance, present protection products, and hand off with confidence." price="$6.99" slug="fi-awareness" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get F&I Awareness Training Manual — $6.99" chipTitle="Build trust through the finance process." chipSub="12-page PDF manual" />; }
 
 function ProspectingProductCard() { return <ProductCoverCard img="/cover-thumbs/prospecting.png" alt="Prospecting Like a Professional cover" badge={<QuickCardBadge />} title="Prospecting Like a Professional" desc="Build your brand and fill your pipeline: the 100-person list, daily prospecting plan, scripts, and the 30-day challenge." price="$6.99" slug="prospecting" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Prospecting Like a Professional — $6.99" chipTitle="Stop waiting for traffic. Start bringing customers to you." chipSub="14-page PDF guide" />; }
 function FollowUpProductCard() { return <ProductCoverCard img="/cover-thumbs/follow-up-that-creates-customers-for-life.png" alt="Follow-Up That Creates Customers for Life cover" badge={<QuickCardBadge />} title="Follow-Up That Creates Customers for Life" desc="A 14-page guide to the 10-day prospect plan, the SOLD customer process, and follow-up scripts that turn one sale into a customer for life." price="$6.99" slug="follow-up" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Follow-Up That Creates Customers for Life — $6.99" chipTitle="The sale doesn’t end when they leave." chipSub="14-page PDF guide" />; }
