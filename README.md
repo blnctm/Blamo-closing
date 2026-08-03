@@ -10,9 +10,26 @@ Vite 7 + Tailwind CSS 4).
   the Sale, and The Five Closes in Action video, each with a PayPal buy button.
 - `/thanks?product=<slug>` — post-purchase download page (`starter-kit`,
   `ten-steps`, `five-closes`).
+- `/unsubscribe?email=<address>` — one-click unsubscribe page for the free
+  lead-magnet list (flips `subscribed=false` and shows a confirmation page).
 
 Product PDFs, the training video MP4, and ad images live in `public/` and are
-served as static assets.
+served as static assets. The free lead-magnet PDF is
+`public/3-closes-that-work.pdf` → `/3-closes-that-work.pdf` (public, no gate).
+
+## Free lead magnet (email capture)
+
+The homepage band captures an email → `POST /api/lead-magnet` upserts the
+subscriber and returns the download URL for the free PDF. Sequence emails are
+NOT sent from code — the team batch-sends them from the inbox using:
+
+- `GET /api/lead-magnet/due?day=0|3|7|14` — subscribers due for that sequence
+  email (day 0 = immediately; 3/7/14 = that many days after subscribing),
+  protected by the `X-Admin-Key` header (env `ADMIN_KEY`).
+- `POST /api/unsubscribe {email}` and the `/unsubscribe?email=` page both set
+  `subscribed=false` + `unsubscribed_at=now()`.
+
+Schema: `db/migrations/003_lead_magnet_subscribers.sql`.
 
 ## Local dev
 

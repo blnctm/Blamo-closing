@@ -17,6 +17,12 @@ import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
+  handleLeadMagnetCapture,
+  handleLeadMagnetDue,
+  handleUnsubscribeApi,
+  handleUnsubscribePage,
+} from "./src/routes/api/-lead-magnet";
+import {
   handleLogin,
   handleLogout,
   handleMe,
@@ -62,6 +68,11 @@ for (let attempt = 1; ; attempt++) {
         if (pathname === "/api/login") return handleLogin(req);
         if (pathname === "/api/logout") return handleLogout(req);
         if (pathname === "/api/me") return handleMe(req);
+        // Lead-magnet capture + admin batching + unsubscribe (free PDF, no login).
+        if (pathname === "/api/lead-magnet") return handleLeadMagnetCapture(req);
+        if (pathname === "/api/lead-magnet/due") return handleLeadMagnetDue(req);
+        if (pathname === "/api/unsubscribe") return handleUnsubscribeApi(req);
+        if (pathname === "/unsubscribe") return handleUnsubscribePage(req);
         // Code-gated download endpoint (POST only) — handled before static
         // so paid files can never be fetched by their old public URLs.
         if (pathname === DOWNLOAD_PATH) return handleDownloadRequest(req);

@@ -229,6 +229,140 @@ function BuyButton({
   );
 }
 
+
+/* ---------- Free lead-magnet band (3 Closes That Work) ---------- */
+
+const FREE_PDF_URL = "/3-closes-that-work.pdf";
+const FREE_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function FreePdfBand() {
+  const [email, setEmail] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [state, setState] = useState<"idle" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    if (busy) return;
+    const trimmed = email.trim();
+    if (!FREE_EMAIL_RE.test(trimmed)) {
+      setState("error");
+      setErrorMsg("That email doesn’t look right — double-check it and try again.");
+      return;
+    }
+    setBusy(true);
+    setState("idle");
+    setErrorMsg(null);
+    try {
+      const response = await fetch("/api/lead-magnet", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: trimmed }),
+      });
+      const data = (await response.json().catch(() => null)) as
+        | { downloadUrl?: string }
+        | null;
+      if (!response.ok || !data?.downloadUrl) {
+        setState("error");
+        setErrorMsg("Something went wrong — please try again in a moment.");
+        return;
+      }
+      // Trigger the PDF download in the browser (anchor download).
+      const anchor = document.createElement("a");
+      anchor.href = data.downloadUrl;
+      anchor.download = "3-closes-that-work.pdf";
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setState("success");
+    } catch {
+      setState("error");
+      setErrorMsg("Network error — please check your connection and try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section
+      aria-labelledby="free-pdf-heading"
+      className="relative overflow-hidden border-t border-amber-100 bg-gradient-to-br from-amber-50 via-white to-slate-50 scroll-reveal"
+    >
+      <BgArt kind="keys" side="left" />
+      <BgArt kind="handshake" side="right" />
+      <div className="relative mx-auto max-w-4xl px-6 py-14 sm:py-16">
+        <div className="rounded-2xl border border-amber-200/80 bg-white p-6 shadow-lg shadow-amber-500/10 sm:p-10">
+          <div className="text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">
+              Free PDF
+            </p>
+            <h2
+              id="free-pdf-heading"
+              className="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl"
+            >
+              Free PDF: 3 Closes That Work
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Three word-for-word closes from 20+ years on the dealership floor
+              — free.
+            </p>
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-7 flex max-w-xl flex-col gap-3 sm:flex-row"
+            noValidate
+          >
+            <label htmlFor="free-pdf-email" className="sr-only">
+              Email address
+            </label>
+            <input
+              id="free-pdf-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              inputMode="email"
+              placeholder="you@dealership.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              disabled={busy || state === "success"}
+              className="w-full flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-base text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-60"
+            />
+            <button
+              type="submit"
+              disabled={busy || state === "success"}
+              className="shrink-0 rounded-xl bg-amber-500 px-7 py-3.5 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-60"
+            >
+              {busy ? "Getting your PDF…" : "Get the free PDF"}
+            </button>
+          </form>
+          <div className="mt-5 text-center" aria-live="polite">
+            {state === "success" && (
+              <p
+                role="status"
+                className="rounded-lg border border-green-200 bg-green-50 px-3.5 py-2.5 text-sm font-semibold text-green-800"
+              >
+                Check your inbox for more — here’s your PDF.
+              </p>
+            )}
+            {state === "error" && errorMsg && (
+              <p
+                role="alert"
+                className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-medium text-red-700"
+              >
+                {errorMsg}
+              </p>
+            )}
+            <p className="mt-4 text-xs font-medium text-slate-500">
+              No spam. Unsubscribe anytime.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 /* ---------- Header auth (Login/Register vs Account/Logout) ---------- */
 
 function AuthNav() {
@@ -694,6 +828,9 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Free lead magnet — email → instant PDF */}
+      <FreePdfBand />
 
       {/* Benefits */}
       <section id="benefits" className="border-t border-slate-100 bg-white scroll-reveal relative overflow-hidden">
