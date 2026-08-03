@@ -289,6 +289,7 @@ function FreePdfBand() {
 
   return (
     <section
+      id="free-pdf"
       aria-labelledby="free-pdf-heading"
       className="relative overflow-hidden border-t border-amber-100 bg-gradient-to-br from-amber-50 via-white to-slate-50 scroll-reveal"
     >
@@ -763,7 +764,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-dvh bg-white">
+    <div className="page-shell min-h-dvh bg-white">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
@@ -889,9 +890,9 @@ function Home() {
         {/* Keep the shared background art present in this section. */}
         <BgArt kind="car" side="left" />
         <BgArt kind="mascot" side="right" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-6 pb-10 pt-8 sm:gap-12 sm:pb-28 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-32 lg:pt-24">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-4 px-6 pb-4 pt-3 sm:gap-12 sm:pb-28 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-32 lg:pt-24">
           <div className="hero-copy max-w-2xl text-center sm:text-left">
-            <div className="mb-4 flex items-center justify-center gap-3 sm:mb-7 sm:justify-start">
+            <div className="mb-1.5 hidden items-center justify-center gap-3 sm:mb-7 sm:flex sm:justify-start">
               <LogoMark className="h-11 w-11 shadow-lg shadow-slate-900/20" />
               <div className="text-left">
                 <p className="text-xl font-extrabold tracking-tight text-slate-950">Blamo<span className="text-amber-500"> Closing</span></p>
@@ -899,21 +900,21 @@ function Home() {
               </div>
             </div>
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">{HERO_COPY.tagline}</p>
-            <p className="mt-3 flex items-center justify-center gap-2 text-base font-extrabold tracking-tight text-slate-900 sm:justify-start sm:text-lg"><span className="text-amber-500" aria-hidden="true">★</span>{HERO_COPY.credibility}</p>
-            <h1 className="mt-3 max-w-xl text-3xl font-extrabold sm:mt-4 sm:text-6xl leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
-            <p className="mt-4 max-w-xl text-lg font-extrabold sm:mt-6 leading-snug tracking-tight text-slate-900 sm:text-xl">{HERO_COPY.opener}</p>
-            <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{HERO_COPY.subheadline}</p>
-            <ul className="mt-5 grid gap-2 text-left sm:mt-7 sm:grid-cols-3 sm:gap-4">
+            <p className="mt-1 flex items-center justify-center gap-2 text-sm font-extrabold tracking-tight text-slate-900 sm:mt-3 sm:justify-start sm:text-lg"><span className="text-amber-500" aria-hidden="true">★</span>{HERO_COPY.credibility}</p>
+            <h1 className="mt-1.5 max-w-xl text-3xl font-extrabold sm:mt-4 sm:text-6xl leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
+            <p className="mt-2 max-w-xl text-base font-extrabold sm:mt-6 leading-snug tracking-tight text-slate-900 sm:text-xl">{HERO_COPY.opener}</p>
+            <p className="mt-1.5 max-w-xl text-sm leading-snug text-slate-600 sm:mt-3 sm:text-lg sm:leading-relaxed">{HERO_COPY.subheadline}</p>
+            <ul className="mt-3 grid gap-1.5 text-left sm:mt-7 sm:grid-cols-3 sm:gap-4">
               {HERO_COPY.highlights.map((highlight) => (
-                <li key={highlight} className="flex items-start gap-2 text-sm font-semibold leading-snug text-slate-700">
+                <li key={highlight} className="flex items-start gap-2 text-[0.8rem] font-semibold leading-snug text-slate-700 sm:text-sm">
                   <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-400 text-slate-950"><CheckIcon className="h-3.5 w-3.5" /></span>
                   {highlight}
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:mt-9 sm:gap-5 sm:justify-start">
-              <a href="#catalog" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
-              <a href="#faq" className="inline-flex items-center gap-2 rounded-lg py-3 text-sm font-bold text-slate-700 underline decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:mt-9 sm:gap-5 sm:justify-start">
+              <a href="#catalog" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3 text-base font-bold sm:px-7 sm:py-4 text-slate-950 shadow-lg shadow-amber-500/30 transition hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">{HERO_COPY.primaryCta}<ArrowIcon className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></a>
+              <a href="#faq" className="inline-flex items-center gap-2 rounded-lg py-2 text-sm font-bold text-slate-700 underline sm:py-3 decoration-amber-400 decoration-2 underline-offset-4 transition hover:text-slate-950">{HERO_COPY.secondaryCta}<span aria-hidden="true">↓</span></a>
             </div>
           </div>
           <div className="hero-mascot relative mx-auto hidden min-h-[160px] w-full max-w-md items-end justify-center sm:flex sm:min-h-[390px] lg:min-h-[470px]">

@@ -96,3 +96,50 @@
     @apply inline-block rounded-md py-2.5;
   }
 }
+
+/* ── Mobile homepage reorder (below 640px): products first after hero ──────────
+   The page shell is a flex column; on phones #catalog jumps to position 3
+   (header → hero → catalog → free-PDF band → benefits → inside → audience).
+   At sm (640px) and up every child returns to order 0 = natural DOM order,
+   so desktop layout is pixel-identical to the pre-change page. */
+.page-shell {
+  display: flex;
+  flex-direction: column;
+}
+.page-shell > * {
+  order: 8;
+}
+.page-shell > header {
+  order: 1;
+}
+.page-shell > #top {
+  order: 2;
+}
+.page-shell > #catalog {
+  order: 3;
+}
+.page-shell > #free-pdf {
+  order: 4;
+}
+.page-shell > #benefits {
+  order: 5;
+}
+.page-shell > #inside {
+  order: 6;
+}
+.page-shell > #audience {
+  order: 7;
+}
+@media (min-width: 640px) {
+  /* Equal-or-higher specificity than the mobile rules above, so this wins. */
+  .page-shell > *,
+  .page-shell > header,
+  .page-shell > #top,
+  .page-shell > #catalog,
+  .page-shell > #free-pdf,
+  .page-shell > #benefits,
+  .page-shell > #inside,
+  .page-shell > #audience {
+    order: 0;
+  }
+}
