@@ -636,6 +636,9 @@ function TradeInProductCard() {
   );
 }
 
+function TradeInTaxCreditProductCard() {
+  return <ProductCoverCard img="/cover-thumbs/trade-in-tax-credit.png" alt="Understanding Trade-In Tax Credit cover" badge={<QuickCardBadge />} title="Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers" desc="Explain the tax savings clearly, answer common trade-in questions, and transition from education to the close." price="$6.99" slug="trade-in-tax-credit" ctaLabel="Buy now — $6.99" ctaAriaLabel="Get Understanding Trade-In Tax Credit — $6.99" chipTitle="Make the tax savings easy to understand." chipSub="4-page PDF guide" />;
+}
 /* ---------- Qualifying Questions Guide cover card ---------- */
 
 function QualifyingQuestionsProductCard() {
@@ -980,7 +983,7 @@ function Home() {
                   {/* Price */}
                   <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
                     <span className="text-2xl font-extrabold tracking-tight text-white">$79.99</span>
-                    <s className="text-lg font-semibold text-slate-400">$239.76</s>
+                    <s className="text-lg font-semibold text-slate-400">$246.75</s>
                     <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-300 ring-1 ring-emerald-300/40">
                       Save 67%
                     </span>
@@ -992,7 +995,7 @@ function Home() {
                   <ul className="mt-6 space-y-2.5 text-left text-sm leading-relaxed text-slate-300">
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                      All 24 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $239.76 value)
+                      All 25 current titles — playbooks, guides, and the 27-page Starter Kit, English + Español (a $246.75 value)
                     </li>
                     <li className="flex gap-2.5">
                       <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
@@ -1031,7 +1034,7 @@ function Home() {
             {promoApplied && <p className="mt-2 text-sm font-semibold text-emerald-700 sm:mt-0">BLAMO10 applied — discount will show in checkout.</p>}
           </div>
           <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-<ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /><LeadershipProductCard /></div>
+<ProductCard /><InternetSalesProductCard /><SpouseProductCard /><PrayAboutItProductCard /><TradeInProductCard /><TradeInTaxCreditProductCard /><QualifyingQuestionsProductCard /><WalkAroundProductCard /><FIAwarenessProductCard /><ProspectingProductCard /><MeetAndGreetProductCard /><FollowUpProductCard /><LeadershipProductCard /></div>
 
           {/* En Español — Spanish Phase 1 versions (same prices, bundle-included) */}
           <div className="mt-16 border-t border-slate-200 pt-12">
@@ -1101,7 +1104,7 @@ function Home() {
             {[
               {
                 q: "What is The Complete Package?",
-                a: "It’s the whole Blamo Closing library in one purchase: all 24 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide, English + Español ($239.76 if bought separately) — for $79.99, about 67% off. One checkout, one unlock, and every future title is included at no extra cost.",
+                a: "It’s the whole Blamo Closing library in one purchase: all 25 current titles — the $24.99 Sales Rep Starter Kit, the $24.99 Leadership Academy, and every $6.99 playbook and guide, English + Español ($246.75 if bought separately) — for $79.99, about 67% off. One checkout, one unlock, and every future title is included at no extra cost.",
               },
               {
                 q: "How does the bundle unlock work?",
