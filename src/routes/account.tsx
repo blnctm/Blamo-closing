@@ -6,6 +6,7 @@ import {
   logoutAccount,
   me,
   startCheckout,
+  redeemTeamCode,
 } from "~/lib/client-api";
 import type {
   ClientPurchase,
@@ -189,10 +190,18 @@ function PurchaseCard({ purchase }: { purchase: ClientPurchase }) {
   );
 }
 
+function TeamCodeCard({ purchases, onRedeemed }: { purchases: ClientPurchase[]; onRedeemed: () => void }) {
+ const [code,setCode]=useState(""); const [msg,setMsg]=useState(""); const [busy,setBusy]=useState(false);
+ const own=purchases.find(p=>p.productSlug==='team-license' && p.confirmationCode==='TEAM-LICENSE-ALL');
+ async function submit(){setBusy(true);setMsg("");try{await redeemTeamCode(code);setMsg("Team license activated — the whole library is unlocked");onRedeemed();}catch(e){setMsg(e instanceof Error && e.message==='team_code_full'?'This team code is full.':e instanceof Error && e.message==='invalid_team_code'?'That team code is not valid.':'Unable to redeem this code.');}finally{setBusy(false);}}
+ return <section className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-6"><h2 className="text-xl font-bold text-slate-900">{own?'Your Team License':'Redeem a team code'}</h2><p className="mt-2 text-sm text-slate-600">Share or enter a manager’s code to unlock the entire library.</p><div className="mt-4 flex gap-2"><input value={code} onChange={e=>setCode(e.target.value)} placeholder="TEAM-ABC123" className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2"/><button onClick={submit} disabled={busy||!code} className="rounded-lg bg-slate-900 px-4 py-2 font-semibold text-white">{busy?'Activating…':'Redeem'}</button></div>{own&&<p className="mt-3 font-mono font-bold">Your team code is available from your purchase confirmation.</p>}{msg&&<p className="mt-3 text-sm font-semibold text-slate-700">{msg}</p>}</section>;
+}
+
 function Account() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<ClientUser | null>(null);
   const [purchases, setPurchases] = useState<ClientPurchase[]>([]);
+  const [teamCode, setTeamCode] = useState<{code:string;maxSeats:number;seatsUsed:number} | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -202,6 +211,7 @@ function Account() {
         if (data) {
           setUser(data.user);
           setPurchases(data.purchases);
+          setTeamCode(data.teamCode ? { code: data.teamCode.code, maxSeats: data.teamCode.maxSeats, seatsUsed: data.teamCode.seatsUsed } : null);
         }
       })
       .catch(() => {
@@ -300,6 +310,9 @@ function Account() {
                 · {user.email}
               </p>
             </section>
+
+            <>{teamCode && <section className="mt-8 rounded-2xl border-2 border-amber-300 bg-slate-900 p-6 text-white"><h2 className="text-xl font-bold">Your Team License</h2><p className="mt-2 text-slate-300">Share this code with your reps — they redeem it at registration or here.</p><div className="mt-4 flex flex-wrap items-center gap-3"><input readOnly value={teamCode.code} onFocus={(e) => e.currentTarget.select()} className="w-56 rounded-lg border border-amber-300 bg-white px-3 py-2 font-mono font-bold tracking-wider text-slate-900" aria-label="Your team code" /><button type="button" onClick={() => navigator.clipboard?.writeText(teamCode.code)} className="rounded-lg bg-amber-400 px-4 py-2 font-bold text-slate-950">Copy code</button></div><p className="mt-4 font-semibold text-amber-300">{teamCode.seatsUsed} of {teamCode.maxSeats} seats used</p></section>}</>
+      <TeamCodeCard purchases={purchases} onRedeemed={() => me().then(d => d && setPurchases(d.purchases))} />
 
             {/* Purchases */}
             <section className="mt-8">

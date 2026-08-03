@@ -31,9 +31,11 @@ export interface ClientPurchase {
   createdAt: string;
 }
 
+export interface ClientTeamCode { code: string; ownerUserId: string; maxSeats: number; seatsUsed: number; }
 export interface MeResponse {
   user: ClientUser;
   purchases: ClientPurchase[];
+  teamCode?: ClientTeamCode | null;
 }
 
 class ApiError extends Error {
@@ -77,8 +79,9 @@ export async function registerAccount(input: {
   name: string;
   email: string;
   password: string;
-}): Promise<{ user: ClientUser }> {
-  return (await apiPost("/api/register", input)) as { user: ClientUser };
+  teamCode?: string;
+}): Promise<{ user: ClientUser; teamCodeRedemption?: string }> {
+  return (await apiPost("/api/register", input)) as { user: ClientUser; teamCodeRedemption?: string };
 }
 
 export async function loginAccount(input: {
@@ -142,3 +145,4 @@ export async function downloadWithCode(
   // Give the browser a moment to start the download before revoking.
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
+export async function redeemTeamCode(code: string): Promise<void> { await apiPost('/api/redeem-team-code', { code }); }

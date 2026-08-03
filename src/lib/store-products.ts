@@ -11,7 +11,7 @@ export interface StoreProduct {
   slug: string;
   name: string;
   /** Display price in dollars and cents, e.g. "24.99" (no $ sign). */
-  priceCents: 699 | 2499 | 7999;
+  priceCents: 699 | 2499 | 7999 | 29900;
   /**
    * File name the browser saves the download as (used for the <a download>).
    * Absent on the Complete Package bundle — it has no single PDF; buying it
@@ -26,6 +26,7 @@ export interface StoreProduct {
    * 7999, and count copy ("N standalone training products") must exclude it.
    */
   isBundle?: boolean;
+  isTeamLicense?: boolean;
 }
 
 /** Slug of the Complete Package bundle product. */
@@ -39,6 +40,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     kindLabel: "The whole library · every current + future title",
     isBundle: true,
   },
+  { slug: "team-license", name: "Team License — Train Up to 10 Reps", priceCents: 29900, kindLabel: "One purchase · one team code · the whole library for up to 10 reps", isTeamLicense: true },
   {
     slug: "starter-kit",
     name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",

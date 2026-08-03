@@ -5,7 +5,7 @@ import { PRODUCT_DOWNLOADS } from "./product-downloads";
 export interface CatalogProduct {
   slug: string;
   name: string;
-  unitAmountCents: 699 | 2499 | 7999;
+  unitAmountCents: 699 | 2499 | 7999 | 29900;
   confirmationCode: string;
 }
 
@@ -14,6 +14,7 @@ const STARTER_KIT_ES_SLUG = "starter-kit-es";
 
 /** Code recorded on the Complete Package ownership row (not a download code). */
 export const BUNDLE_CONFIRMATION_CODE = "BUNDLE-ALL";
+export const TEAM_LICENSE_CONFIRMATION_CODE = "TEAM-LICENSE-ALL";
 
 export const PRODUCT_CATALOG: readonly CatalogProduct[] = [
   ...PRODUCT_DOWNLOADS.map((product): CatalogProduct => ({
@@ -22,6 +23,7 @@ export const PRODUCT_CATALOG: readonly CatalogProduct[] = [
     unitAmountCents: product.slug === STARTER_KIT_SLUG || product.slug === STARTER_KIT_ES_SLUG || product.slug === "leadership" || product.slug === "leadership-es" ? 2499 : 699,
     confirmationCode: product.code,
   })),
+  { slug: "team-license", name: "Team License — Train Up to 10 Reps", unitAmountCents: 29900, confirmationCode: TEAM_LICENSE_CONFIRMATION_CODE },
   // The Complete Package: a library unlock, not a downloadable file. Checkout
   // needs it so the session is created with unit_amount 7999; the webhook
   // special-cases it to unlock every product (see -stripe-webhook.ts).

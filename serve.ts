@@ -14,6 +14,7 @@ import {
   handleDownloadRequest,
 } from "./server-assets/download-handler";
 import { handleCheckout } from "./src/routes/api/-checkout";
+import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
   handleLogin,
@@ -55,6 +56,7 @@ for (let attempt = 1; ; attempt++) {
         const { pathname } = new URL(req.url);
         // API endpoints are handled before static/SSR.
         if (pathname === "/api/checkout") return handleCheckout(req);
+        if (pathname === "/api/redeem-team-code") return handleRedeemTeamCode(req);
         if (pathname === "/api/stripe-webhook") return handleStripeWebhook(req);
         if (pathname === "/api/register") return handleRegister(req);
         if (pathname === "/api/login") return handleLogin(req);

@@ -16,6 +16,7 @@ import {
   handleDownloadRequest,
 } from "./server-assets/download-handler";
 import { handleCheckout } from "./src/routes/api/-checkout";
+import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
   handleLogin,
@@ -59,6 +60,8 @@ export default async function vercelHandler(
     const pathname = new URL(webRequest.url).pathname;
     const webRes = pathname === "/api/checkout"
       ? await handleCheckout(webRequest)
+      : pathname === "/api/redeem-team-code"
+        ? await handleRedeemTeamCode(webRequest)
       : pathname === "/api/stripe-webhook"
         ? await handleStripeWebhook(webRequest)
         : pathname === "/api/register"

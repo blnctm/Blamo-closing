@@ -1,8 +1,9 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { recordPurchase, unlockCodeForUser } from "../../lib/accounts";
-import { BUNDLE_CONFIRMATION_CODE, findCatalogProduct } from "../../lib/catalog";
+import { BUNDLE_CONFIRMATION_CODE, TEAM_LICENSE_CONFIRMATION_CODE, findCatalogProduct } from "../../lib/catalog";
 import { BUNDLE_SLUG } from "../../lib/store-products";
 import { PRODUCT_DOWNLOADS } from "../../lib/product-downloads";
+import { createTeamCode, getTeamCodeForOwner } from "../../lib/accounts";
 const MAX_AGE_SECONDS = 5 * 60;
 export function verifyStripeSignature(payload: string, header: string | null, secret = process.env.STRIPE_WEBHOOK_SECRET): boolean {
   if (!secret || !header) return false;
@@ -31,6 +32,18 @@ export async function handleStripeWebhook(request: Request): Promise<Response> {
   const productSlug = session?.metadata?.productSlug;
   const product = findCatalogProduct(productSlug);
   if (!userId || !product || !session?.id) return new Response("Invalid session metadata", { status: 400 });
+
+  if (product.slug === "team-license") {
+    await recordPurchase({ userId, productSlug: product.slug, stripeSessionId: session.id, status: "paid" });
+    await unlockCodeForUser(userId, product.slug, TEAM_LICENSE_CONFIRMATION_CODE);
+    const existing = await getTeamCodeForOwner(userId);
+    if (!existing) await createTeamCode(userId);
+    for (const downloadable of PRODUCT_DOWNLOADS) {
+      await recordPurchase({ userId, productSlug: downloadable.slug, stripeSessionId: session.id, status: "paid" });
+      await unlockCodeForUser(userId, downloadable.slug, downloadable.code);
+    }
+    return new Response("ok");
+  }
 
   if (product.slug === BUNDLE_SLUG) {
     // ── Complete Package: one purchase, every title (present AND future). ──

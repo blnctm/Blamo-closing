@@ -52,6 +52,7 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [teamCode, setTeamCode] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -65,7 +66,7 @@ function Register() {
     setStatus("submitting");
     setErrorMsg(null);
     try {
-      await registerAccount({ name, email, password });
+      await registerAccount({ name, email, password, teamCode: teamCode || undefined });
       window.location.href = destination;
     } catch (error) {
       const code = error instanceof Error ? error.message : "";
@@ -170,6 +171,10 @@ function Register() {
             <p className="mt-2 text-xs text-slate-500">
               At least 8 characters. Stored as a secure hash — never plaintext.
             </p>
+
+            <label htmlFor="register-team-code" className="mt-5 block text-sm font-semibold text-slate-800">Have a team code from your manager? <span className="font-normal text-slate-500">(optional)</span></label>
+            <input id="register-team-code" type="text" autoComplete="off" value={teamCode} onChange={(event) => setTeamCode(event.target.value)} placeholder="TEAM-ABC123" className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-3 font-mono uppercase text-slate-900 placeholder-slate-300 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30" />
+            <p className="mt-2 text-xs text-slate-500">Your account will still be created if the code is invalid or full.</p>
 
             {errorMsg && (
               <p
