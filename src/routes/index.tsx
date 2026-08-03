@@ -2269,6 +2269,9 @@ function Home() {
             <a href="#faq" className="hover:text-slate-900">
               FAQs
             </a>
+            <a href="/refunds" className="hover:text-slate-900">
+              Refunds
+            </a>
             <a href="/thanks" className="hover:text-slate-900">
               Download your PDF
             </a>

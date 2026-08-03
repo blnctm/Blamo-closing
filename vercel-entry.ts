@@ -19,6 +19,12 @@ import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
 import { handleStripeWebhook } from "./src/routes/api/-stripe-webhook";
 import {
+  handleRefundApprove,
+  handleRefundReject,
+  handleRefundRequest,
+  handleRefundsPending,
+} from "./src/routes/api/-refunds";
+import {
   handleLeadMagnetCapture,
   handleLeadMagnetDue,
   handleUnsubscribeApi,
@@ -84,11 +90,19 @@ export default async function vercelHandler(
                     ? await handleLeadMagnetDue(webRequest)
                     : pathname === "/api/unsubscribe"
                       ? await handleUnsubscribeApi(webRequest)
-                      : pathname === "/unsubscribe"
-                        ? await handleUnsubscribePage(webRequest)
-                        : pathname === DOWNLOAD_PATH
-                          ? await handleDownloadRequest(webRequest)
-                          : await fetchHandler.fetch(webRequest);
+                    : pathname === "/unsubscribe"
+                      ? await handleUnsubscribePage(webRequest)
+                      : pathname === "/api/refund-request"
+                        ? await handleRefundRequest(webRequest)
+                      : pathname === "/api/refunds/pending"
+                        ? await handleRefundsPending(webRequest)
+                      : pathname === "/api/refunds/approve"
+                        ? await handleRefundApprove(webRequest)
+                      : pathname === "/api/refunds/reject"
+                        ? await handleRefundReject(webRequest)
+                      : pathname === DOWNLOAD_PATH
+                        ? await handleDownloadRequest(webRequest)
+                        : await fetchHandler.fetch(webRequest);
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     if (webRes.body) {

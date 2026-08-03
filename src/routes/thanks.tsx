@@ -534,6 +534,14 @@ function Thanks() {
             © {new Date().getFullYear()} Blamo Closing · Original training
             material
           </p>
+          <nav className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-sm text-slate-500">
+            <a href="/refunds" className="hover:text-slate-900">
+              Refunds
+            </a>
+            <a href="/contact" className="hover:text-slate-900">
+              Contact
+            </a>
+          </nav>
         </div>
       </footer>
     </div>

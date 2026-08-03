@@ -19,7 +19,7 @@ export interface ClientUser {
   createdAt: string;
 }
 
-export type ClientPurchaseStatus = "pending" | "paid" | "unlocked";
+export type ClientPurchaseStatus = "pending" | "paid" | "unlocked" | "refunded";
 
 export interface ClientPurchase {
   id: string;
@@ -29,6 +29,10 @@ export interface ClientPurchase {
   status: ClientPurchaseStatus;
   confirmationCode: string | null;
   createdAt: string;
+  /** ISO-8601 of the FIRST download — the refund policy line. */
+  downloadedAt?: string | null;
+  refundStatus?: "pending" | "approved" | "rejected" | "refunded" | null;
+  refundRequestedAt?: string | null;
 }
 
 export interface ClientTeamCode { code: string; ownerUserId: string; maxSeats: number; seatsUsed: number; }
@@ -146,3 +150,28 @@ export async function downloadWithCode(
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
 export async function redeemTeamCode(code: string): Promise<void> { await apiPost('/api/redeem-team-code', { code }); }
+
+/**
+ * Request a refund for a purchase (30-day / not-downloaded policy is enforced
+ * server-side). Throws an ApiError whose message is the server's human-readable
+ * explanation (e.g. "You've downloaded this guide, so it can't be refunded
+ * under our 30-day policy.") so the account page can show it inline.
+ */
+export async function requestRefund(productSlug: string): Promise<{ ok: true; refundStatus: string }> {
+  const response = await fetch("/api/refund-request", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ productSlug }),
+  });
+  const data = (await response.json().catch(() => null)) as
+    | { ok?: boolean; refundStatus?: string; error?: string; message?: string }
+    | null;
+  if (!response.ok) {
+    const message =
+      data && typeof data.message === "string"
+        ? data.message
+        : "Unable to request a refund right now — please email us from the Contact page.";
+    throw new ApiError(message, response.status);
+  }
+  return { ok: true, refundStatus: data?.refundStatus ?? "pending" };
+}

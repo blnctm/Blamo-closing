@@ -155,9 +155,15 @@ export async function handleMe(request: Request): Promise<Response> {
         userId: user.id,
         productSlug: downloadable.slug,
         stripeSessionId: bundlePurchase.stripeSessionId,
+        stripePaymentIntent: bundlePurchase.stripePaymentIntent,
         status: "unlocked",
         confirmationCode: downloadable.code,
         createdAt: bundlePurchase.createdAt,
+        downloadedAt: null,
+        refundStatus: null,
+        refundRequestedAt: null,
+        refundStripeRefundId: null,
+        refundResolvedAt: null,
       });
     }
   }
