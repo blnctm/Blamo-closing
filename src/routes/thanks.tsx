@@ -2,7 +2,7 @@ import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 
-import { downloadWithCode, me, myTestimonial, submitTestimonial } from "~/lib/client-api";
+import { downloadWithCode, gatedAudioUrl, me, myTestimonial, submitTestimonial } from "~/lib/client-api";
 import type { ClientPurchase, ClientTestimonial, ClientUser } from "~/lib/client-api";
 
 export const Route = createFileRoute("/thanks")({
@@ -337,7 +337,7 @@ function Thanks() {
                 The whole library is in your account
               </p>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Each title has its own unlock code and download button, all
+                Each title includes the PDF plus its MP3 audio companion, with its own unlock code and download button, all
                 ready now. New titles are added automatically as they launch —
                 no extra charge, ever.
               </p>
@@ -391,6 +391,7 @@ function Thanks() {
               </svg>
               {downloading ? "Starting download…" : meta.label}
             </button>
+            <div className="mt-4 w-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-left"><p className="mb-2 text-sm font-semibold text-slate-700">Every purchase includes MP3 audio</p><audio controls preload="none" className="h-11 w-full" src={gatedAudioUrl(effectiveSlug)} aria-label={`Play ${meta.name} audio`} /></div>
             {errorMsg && (
               <p role="alert" className="mt-4 text-sm text-red-600">
                 {errorMsg}

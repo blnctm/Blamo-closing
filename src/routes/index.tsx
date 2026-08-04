@@ -902,6 +902,7 @@ function Home() {
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">{HERO_COPY.tagline}</p>
             <p className="mt-1 flex items-center justify-center gap-2 text-sm font-extrabold tracking-tight text-slate-900 sm:mt-3 sm:justify-start sm:text-lg"><span className="text-amber-500" aria-hidden="true">★</span>{HERO_COPY.credibility}</p>
             <h1 className="mt-1.5 max-w-xl text-3xl font-extrabold sm:mt-4 sm:text-6xl leading-[1.05] tracking-tight text-slate-950 sm:text-6xl lg:text-[4.25rem]">{HERO_COPY.headline}</h1>
+<p className="mt-4 inline-flex rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-900">Every guide now includes the MP3 audio version — listen and learn on the go.</p>
             <p className="mt-2 max-w-xl text-base font-extrabold sm:mt-6 leading-snug tracking-tight text-slate-900 sm:text-xl">{HERO_COPY.opener}</p>
             <p className="mt-1.5 max-w-xl text-sm leading-snug text-slate-600 sm:mt-3 sm:text-lg sm:leading-relaxed">{HERO_COPY.subheadline}</p>
             <ul className="mt-3 grid gap-1.5 text-left sm:mt-7 sm:grid-cols-3 sm:gap-4">

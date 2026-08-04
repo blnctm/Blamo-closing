@@ -11,7 +11,9 @@
 import handler from "./dist/server/server.js";
 import {
   DOWNLOAD_PATH,
+  AUDIO_PATH,
   handleDownloadRequest,
+  handleAudioRequest,
 } from "./server-assets/download-handler";
 import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
@@ -93,6 +95,7 @@ for (let attempt = 1; ; attempt++) {
         // Code-gated download endpoint (POST only) — handled before static
         // so paid files can never be fetched by their old public URLs.
         if (pathname === DOWNLOAD_PATH) return handleDownloadRequest(req);
+        if (pathname === AUDIO_PATH) return handleAudioRequest(req);
         if (pathname !== "/") {
           const file = Bun.file(CLIENT_DIR + pathname);
           if (await file.exists()) return new Response(file);
