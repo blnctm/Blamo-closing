@@ -97,10 +97,10 @@
   }
 }
 
-/* ── Mobile homepage reorder (below 640px): products first after hero ──────────
+/* ── Mobile homepage reorder (below 1024px): products first after hero ──────────
    The page shell is a flex column; on phones #catalog jumps to position 3
    (header → hero → catalog → free-PDF band → benefits → inside → audience).
-   At sm (640px) and up every child returns to order 0 = natural DOM order,
+   At lg (1024px) and up every child returns to order 0 = natural DOM order,
    so desktop layout is pixel-identical to the pre-change page. */
 .page-shell {
   display: flex;
@@ -130,7 +130,7 @@
 .page-shell > #audience {
   order: 7;
 }
-@media (min-width: 640px) {
+@media (min-width: 1024px) {
   /* Equal-or-higher specificity than the mobile rules above, so this wins. */
   .page-shell > *,
   .page-shell > header,
@@ -145,9 +145,9 @@
 }
 
 /* Homepage density pass: keep the first offer in view on small phones.
-   These rules are intentionally below the reorder rules and scoped to phones;
-   the min-width:640px desktop reset above remains unchanged. */
-@media (max-width: 639px) {
+   These rules are intentionally below the reorder rules and scoped to phones and tablets below 1024px;
+   the min-width:1024px desktop reset above remains unchanged. */
+@media (max-width: 1023px) {
   #top > .relative.mx-auto {
     gap: 0;
     padding: 0.75rem 1.5rem 1rem;
@@ -224,7 +224,7 @@
     margin-top: 1.5rem;
   }
 }
-@media (max-width: 639px) {
+@media (max-width: 1023px) {
   /* Keep the primary offer within the initial phone viewport; the secondary
      FAQ jump remains available in the full navigation/footer. */
   #top .hero-copy > div:last-child a:last-child { display: none; }
