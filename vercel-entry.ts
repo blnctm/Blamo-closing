@@ -13,7 +13,9 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import handler from "./dist/server/server.js";
 import {
   DOWNLOAD_PATH,
+  AUDIO_PATH,
   handleDownloadRequest,
+  handleAudioRequest,
 } from "./server-assets/download-handler";
 import { handleCheckout } from "./src/routes/api/-checkout";
 import { handleRedeemTeamCode } from "./src/routes/api/-redeem-team-code";
@@ -71,7 +73,11 @@ export default async function vercelHandler(
     const webRequest = toWebRequest(req);
     // API endpoints are handled before the SSR handler.
     const pathname = new URL(webRequest.url).pathname;
-    const webRes = pathname === "/api/checkout"
+    const webRes = pathname === AUDIO_PATH
+      ? await handleAudioRequest(webRequest)
+      : pathname === DOWNLOAD_PATH
+        ? await handleDownloadRequest(webRequest)
+      : pathname === "/api/checkout"
       ? await handleCheckout(webRequest)
       : pathname === "/api/redeem-team-code"
         ? await handleRedeemTeamCode(webRequest)

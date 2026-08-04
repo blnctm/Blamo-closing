@@ -48,6 +48,7 @@ import {
 } from "../src/lib/product-downloads";
 
 export const DOWNLOAD_PATH = "/api/download";
+export const AUDIO_PATH = "/api/audio";
 
 /**
  * Locate the /private directory at runtime. The files are NOT bundled by
@@ -99,7 +100,8 @@ export async function handleDownloadRequest(
     return jsonResponse(400, "Invalid request body.");
   }
 
-  const { product, code } = (body ?? {}) as Record<string, unknown>;
+  const { product, code, audio } = (body ?? {}) as Record<string, unknown>;
+  const wantsAudio = audio === true;
   if (typeof product !== "string" || typeof code !== "string") {
     return jsonResponse(400, "Both 'product' and 'code' are required.");
   }
@@ -165,12 +167,12 @@ export async function handleDownloadRequest(
     return jsonResponse(500, "Downloads are temporarily unavailable.");
   }
 
-  const filePath = path.join(privateDir, entry.file);
+  const filePath = path.join(privateDir, wantsAudio ? entry.audioFile : entry.file);
   let data: Buffer;
   try {
     data = fs.readFileSync(filePath);
   } catch (error) {
-    console.error(`[download] failed to read ${entry.file}`, error);
+    console.error(`[download] failed to read ${wantsAudio ? entry.audioFile : entry.file}`, error);
     return jsonResponse(500, "Downloads are temporarily unavailable.");
   }
 
@@ -193,11 +195,33 @@ export async function handleDownloadRequest(
   return new Response(new Uint8Array(data), {
     status: 200,
     headers: {
-      "Content-Type": entry.mime,
-      "Content-Disposition": `attachment; filename="${entry.file}"`,
+      "Content-Type": wantsAudio ? "audio/mpeg" : entry.mime,
+      "Content-Disposition": wantsAudio ? `inline; filename="${entry.audioFile.split("/").pop()}"` : `attachment; filename="${entry.file}"`,
       "Content-Length": String(data.byteLength),
       "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff",
     },
   });
+}
+
+
+/** Session-gated native audio stream. GET is intentional so <audio src> can play it. */
+export async function handleAudioRequest(request: Request): Promise<Response> {
+  if (request.method !== "GET") return jsonResponse(405, "Use GET.");
+  const slug = new URL(request.url).searchParams.get("product");
+  const entry = findProduct(slug);
+  if (!entry || slug === BUNDLE_SLUG) return jsonResponse(404, "Unknown product.");
+  const user = await currentUser(request);
+  if (!user) return jsonResponse(401, "Log in to play your audio companion.");
+  const own = await getPurchase(user.id, entry.slug);
+  const bundle = await getPurchase(user.id, BUNDLE_SLUG);
+  if (own?.status !== "unlocked" && bundle?.status !== "unlocked") return jsonResponse(401, "This audio is not unlocked on your account.");
+  const dir = findPrivateDir();
+  if (!dir) return jsonResponse(500, "Downloads are temporarily unavailable.");
+  try {
+    const data = fs.readFileSync(path.join(dir, entry.audioFile));
+    return new Response(new Uint8Array(data), { status: 200, headers: {
+      "Content-Type": "audio/mpeg", "Content-Length": String(data.byteLength), "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
+    }});
+  } catch { return jsonResponse(500, "Downloads are temporarily unavailable."); }
 }

@@ -236,3 +236,5 @@ export async function resolveTestimonial(
 ): Promise<void> {
   await apiPost(`/api/testimonials/${action}`, { id });
 }
+
+export function gatedAudioUrl(product: string): string { return `/api/audio?product=${encodeURIComponent(product)}`; }

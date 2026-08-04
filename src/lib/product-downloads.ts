@@ -33,6 +33,8 @@ export interface ProductDownload {
   name: string;
   kind: ProductKind;
   mime: string;
+  /** Gated companion MP3 inside /private/audio. */
+  audioFile: string;
 }
 
 export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
@@ -43,6 +45,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     name: "The Sales Rep Starter Kit — The 10 Steps of the Sale",
     kind: "pdf",
     mime: "application/pdf",
+    audioFile: "audio/en/starter-kit.mp3",
   },
   {
     slug: "internet-sales",
@@ -51,6 +54,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     name: "The 10 Steps to the Internet Sale",
     kind: "pdf",
     mime: "application/pdf",
+    audioFile: "audio/en/internet-sale.mp3",
   },
   {
     slug: "spouse",
@@ -59,6 +63,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     name: "The Spouse Objection Playbook",
     kind: "pdf",
     mime: "application/pdf",
+    audioFile: "audio/en/spouse.mp3",
   },
   {
     slug: "pray-about-it",
@@ -67,6 +72,7 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     name: "The “Pray About It” Objection Playbook",
     kind: "pdf",
     mime: "application/pdf",
+    audioFile: "audio/en/pray-about-it.mp3",
   },
   {
     slug: "trade-in",
@@ -75,9 +81,10 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     name: "The “I Want More for My Trade-In” Playbook",
     kind: "pdf",
     mime: "application/pdf",
+    audioFile: "audio/en/trade-in.mp3",
   },
-  { slug: "trade-in-tax-credit", code: "BLAMO-27-6721", file: "trade-in-tax-credit.pdf", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", kind: "pdf", mime: "application/pdf" },
-  { slug: "sales-log-template", code: "BLAMO-28-0636", file: "sales-log-template.zip", name: "Sales Log Template — Deals, Gross & Commission", kind: "zip", mime: "application/zip" },
+  { slug: "trade-in-tax-credit", code: "BLAMO-27-6721", file: "trade-in-tax-credit.pdf", name: "Understanding Trade-In Tax Credit — How to Explain It Clearly to Customers", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/trade-in-tax-credit.mp3" },
+  { slug: "sales-log-template", code: "BLAMO-28-0636", file: "sales-log-template.zip", name: "Sales Log Template — Deals, Gross & Commission", kind: "zip", mime: "application/zip" , audioFile: "audio/en/sales-log-intro.mp3" },
   {
     slug: "qualifying-questions",
     code: "BLAMO-08-4836",
@@ -85,28 +92,29 @@ export const PRODUCT_DOWNLOADS: readonly ProductDownload[] = [
     name: "The Qualifying Questions Guide",
     kind: "pdf",
     mime: "application/pdf",
+    audioFile: "audio/en/qualifying-questions.mp3",
   },
-  { slug: "walk-around", code: "BLAMO-09-7284", file: "vehicle-walk-around-training-guide.pdf", name: "Vehicle Walk-Around Training Guide", kind: "pdf", mime: "application/pdf" },
-  { slug: "leadership", code: "BLAMO-10-5738", file: "leadership-academy-manual.pdf", name: "Blamo Closing Leadership Academy", kind: "pdf", mime: "application/pdf" },
-  { slug: "fi-awareness", code: "BLAMO-11-5837", file: "fi-awareness-training-manual.pdf", name: "F&I Awareness Training Manual", kind: "pdf", mime: "application/pdf" },
-  { slug: "prospecting", code: "BLAMO-12-3952", file: "prospecting-like-a-professional.pdf", name: "Prospecting Like a Professional", kind: "pdf", mime: "application/pdf" },
-  { slug: "meet-and-greet", code: "BLAMO-13-4816", file: "meet-and-greet-mastery.pdf", name: "Meet & Greet Mastery", kind: "pdf", mime: "application/pdf" },
-  { slug: "follow-up", code: "BLAMO-14-9062", file: "follow-up-that-creates-customers-for-life.pdf", name: "Follow-Up That Creates Customers for Life", kind: "pdf", mime: "application/pdf" },
+  { slug: "walk-around", code: "BLAMO-09-7284", file: "vehicle-walk-around-training-guide.pdf", name: "Vehicle Walk-Around Training Guide", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/walk-around.mp3" },
+  { slug: "leadership", code: "BLAMO-10-5738", file: "leadership-academy-manual.pdf", name: "Blamo Closing Leadership Academy", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/leadership-academy.mp3" },
+  { slug: "fi-awareness", code: "BLAMO-11-5837", file: "fi-awareness-training-manual.pdf", name: "F&I Awareness Training Manual", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/fi-awareness.mp3" },
+  { slug: "prospecting", code: "BLAMO-12-3952", file: "prospecting-like-a-professional.pdf", name: "Prospecting Like a Professional", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/prospecting.mp3" },
+  { slug: "meet-and-greet", code: "BLAMO-13-4816", file: "meet-and-greet-mastery.pdf", name: "Meet & Greet Mastery", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/meet-and-greet.mp3" },
+  { slug: "follow-up", code: "BLAMO-14-9062", file: "follow-up-that-creates-customers-for-life.pdf", name: "Follow-Up That Creates Customers for Life", kind: "pdf", mime: "application/pdf" , audioFile: "audio/en/follow-up.mp3" },
   // ── Español (Phase 1) — Spanish versions, same prices, bundle-included.
   // The Complete Package webhook iterates PRODUCT_DOWNLOADS, so these are
   // automatically part of the "every current + future title" unlock.
-  { slug: "starter-kit-es", code: "BLAMO-15-3753", file: "starter-kit-10-pasos-es.pdf", name: "El Kit de Inicio del Vendedor — Los 10 Pasos de la Venta", kind: "pdf", mime: "application/pdf" },
-  { slug: "spouse-es", code: "BLAMO-16-1988", file: "spouse-objection-es.pdf", name: "El Manual de la Objeción del Cónyuge", kind: "pdf", mime: "application/pdf" },
-  { slug: "trade-in-es", code: "BLAMO-17-4804", file: "trade-in-es.pdf", name: "El Manual del “Quiero Más por Mi Trade-In”", kind: "pdf", mime: "application/pdf" },
-  { slug: "qualifying-questions-es", code: "BLAMO-18-7769", file: "qualifying-questions-es.pdf", name: "La Guía de Preguntas de Calificación", kind: "pdf", mime: "application/pdf" },
-  { slug: "internet-sale-es", code: "BLAMO-19-4827", file: "internet-sale-es.pdf", name: "Los 10 Pasos de la Venta por Internet", kind: "pdf", mime: "application/pdf" },
-  { slug: "pray-about-it-es", code: "BLAMO-20-7314", file: "pray-about-it-es.pdf", name: "El Manual de la Objeción 'Déjeme Orarlo'", kind: "pdf", mime: "application/pdf" },
-  { slug: "walk-around-es", code: "BLAMO-21-9068", file: "walk-around-es.pdf", name: "Guía de Capacitación del Recorrido del Vehículo", kind: "pdf", mime: "application/pdf" },
-  { slug: "fi-awareness-es", code: "BLAMO-22-1549", file: "fi-awareness-es.pdf", name: "El Manual de Capacitación en F&I", kind: "pdf", mime: "application/pdf" },
-  { slug: "prospecting-es", code: "BLAMO-23-6283", file: "prospecting-es.pdf", name: "Prospectando Como un Profesional", kind: "pdf", mime: "application/pdf" },
-  { slug: "meet-and-greet-es", code: "BLAMO-24-3751", file: "meet-and-greet-es.pdf", name: "Maestría en el Recibimiento y el Saludo", kind: "pdf", mime: "application/pdf" },
-  { slug: "follow-up-es", code: "BLAMO-25-8406", file: "follow-up-es.pdf", name: "El Seguimiento Que Crea Clientes de Por Vida", kind: "pdf", mime: "application/pdf" },
-  { slug: "leadership-es", code: "BLAMO-26-2974", file: "leadership-academy-es.pdf", name: "Academia de Liderazgo de Blamo Closing", kind: "pdf", mime: "application/pdf" },
+  { slug: "starter-kit-es", code: "BLAMO-15-3753", file: "starter-kit-10-pasos-es.pdf", name: "El Kit de Inicio del Vendedor — Los 10 Pasos de la Venta", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/starter-kit.mp3" },
+  { slug: "spouse-es", code: "BLAMO-16-1988", file: "spouse-objection-es.pdf", name: "El Manual de la Objeción del Cónyuge", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/spouse.mp3" },
+  { slug: "trade-in-es", code: "BLAMO-17-4804", file: "trade-in-es.pdf", name: "El Manual del “Quiero Más por Mi Trade-In”", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/trade-in.mp3" },
+  { slug: "qualifying-questions-es", code: "BLAMO-18-7769", file: "qualifying-questions-es.pdf", name: "La Guía de Preguntas de Calificación", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/qualifying-questions.mp3" },
+  { slug: "internet-sale-es", code: "BLAMO-19-4827", file: "internet-sale-es.pdf", name: "Los 10 Pasos de la Venta por Internet", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/internet-sale.mp3" },
+  { slug: "pray-about-it-es", code: "BLAMO-20-7314", file: "pray-about-it-es.pdf", name: "El Manual de la Objeción 'Déjeme Orarlo'", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/pray-about-it.mp3" },
+  { slug: "walk-around-es", code: "BLAMO-21-9068", file: "walk-around-es.pdf", name: "Guía de Capacitación del Recorrido del Vehículo", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/walk-around.mp3" },
+  { slug: "fi-awareness-es", code: "BLAMO-22-1549", file: "fi-awareness-es.pdf", name: "El Manual de Capacitación en F&I", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/fi-awareness.mp3" },
+  { slug: "prospecting-es", code: "BLAMO-23-6283", file: "prospecting-es.pdf", name: "Prospectando Como un Profesional", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/prospecting.mp3" },
+  { slug: "meet-and-greet-es", code: "BLAMO-24-3751", file: "meet-and-greet-es.pdf", name: "Maestría en el Recibimiento y el Saludo", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/meet-and-greet.mp3" },
+  { slug: "follow-up-es", code: "BLAMO-25-8406", file: "follow-up-es.pdf", name: "El Seguimiento Que Crea Clientes de Por Vida", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/follow-up.mp3" },
+  { slug: "leadership-es", code: "BLAMO-26-2974", file: "leadership-academy-es.pdf", name: "Academia de Liderazgo de Blamo Closing", kind: "pdf", mime: "application/pdf" , audioFile: "audio/es/leadership.mp3" },
 ];
 
 /** No param (or unknown) → Starter Kit, matching the pre-gate behaviour. */

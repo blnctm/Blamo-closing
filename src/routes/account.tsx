@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import {
   downloadWithCode,
+  gatedAudioUrl,
   fetchPendingTestimonials,
   logoutAccount,
   me,
@@ -103,6 +104,7 @@ function DownloadButton({
         </svg>
         Download
       </button>
+      <div className="mt-3 rounded-lg bg-slate-50 p-3"><p className="mb-2 text-xs font-semibold text-slate-600">Included MP3 audio</p><audio controls preload="none" className="h-11 w-full" src={gatedAudioUrl(purchase.productSlug)} aria-label={`Play ${product.name} audio`} /></div>
       {errorMsg && (
         <p role="alert" className="mt-2 text-sm text-red-600">
           {errorMsg}
