@@ -152,6 +152,9 @@
     gap: 0;
     padding: 0.75rem 1.5rem 1rem;
   }
+  /* The mascot keeps its sm breakpoint height unless explicitly compressed. */
+  #top > .relative.mx-auto { padding-top: 0.75rem; padding-bottom: 1rem; }
+  #top .hero-mascot { min-height: 160px; }
   #top .hero-copy {
     max-width: none;
   }
