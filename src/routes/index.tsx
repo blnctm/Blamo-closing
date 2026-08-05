@@ -736,7 +736,7 @@ export function TrainingCatalog() {
     if (value) { setPromo(value); setPromoApplied(value === "BLAMO10"); }
   }, []);
   function applyPromo() { const value = promo.trim().toUpperCase(); setPromo(value); setPromoApplied(value === "BLAMO10"); if (value === "BLAMO10") localStorage.setItem("blamo-promo", value); }
-      {/* Complete 11-product catalog */}
+  return (
       <section id="catalog" className="border-t border-slate-100 bg-slate-50 scroll-reveal relative overflow-hidden">
         <BgArt kind="mascot-keys" side="left" className="hidden sm:block top-8 bottom-auto" />
         <BgArt kind="keys" side="right" className="hidden sm:block top-8 bottom-auto" />
@@ -845,7 +845,7 @@ export function TrainingCatalog() {
           </div>
         </div>
       </section>
-
+  );
 }
 
 function Home() {
