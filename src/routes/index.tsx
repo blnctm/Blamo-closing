@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { logoutAccount, me, startCheckout } from "~/lib/client-api";
 import { STORE_PRODUCTS } from "~/lib/store-products";
+import { useScrollReveal } from "~/lib/use-scroll-reveal";
 
 /* Product counts derive from the catalog itself (single source of truth), so
    the hero and catalog copy stay correct automatically as products are added. */
@@ -735,6 +736,7 @@ export function TrainingCatalog() {
     const value = new URLSearchParams(window.location.search).get("promo")?.trim().toUpperCase() || localStorage.getItem("blamo-promo") || "";
     if (value) { setPromo(value); setPromoApplied(value === "BLAMO10"); }
   }, []);
+  useScrollReveal();
   function applyPromo() { const value = promo.trim().toUpperCase(); setPromo(value); setPromoApplied(value === "BLAMO10"); if (value === "BLAMO10") localStorage.setItem("blamo-promo", value); }
   return (
       <section id="catalog" className="border-t border-slate-100 bg-slate-50 scroll-reveal relative overflow-hidden">
@@ -866,23 +868,7 @@ function Home() {
     if (value === "BLAMO10") localStorage.setItem("blamo-promo", value);
     else localStorage.removeItem("blamo-promo");
   }
-  useEffect(() => {
-    const items = document.querySelectorAll<HTMLElement>(".scroll-reveal");
-    if (!("IntersectionObserver" in window)) {
-      items.forEach((item) => item.classList.add("is-visible"));
-      return;
-    }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
-  }, []);
+  useScrollReveal();
 
   return (
     <div className="page-shell min-h-dvh bg-white">

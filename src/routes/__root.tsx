@@ -62,6 +62,15 @@ function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* Runs synchronously before first paint: marks the document as
+            JS-capable so .scroll-reveal elements are hidden only when the
+            reveal script can bring them back. No JS -> class never added ->
+            content stays visible (progressive enhancement). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js');",
+          }}
+        />
         <HeadContent />
       </head>
       <body>

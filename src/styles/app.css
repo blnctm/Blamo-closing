@@ -38,16 +38,21 @@
   .mascot-float { animation: mascot-bob 6s ease-in-out infinite; transform-origin: 50% 100%; }
   .product-card { transition: transform 180ms ease, box-shadow 180ms ease; }
   .product-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 14px 28px rgb(15 23 42 / 0.10); }
-  .scroll-reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms ease; }
-  .scroll-reveal.is-visible { opacity: 1; transform: translateY(0); }
+  /* Scroll-reveal is a progressive enhancement: content is VISIBLE by default.
+     The fade/slide-in only applies when a `js` class on <html> proves JS is
+     available (added by an inline head script before first paint). With no JS
+     (or JS broken) everything stays visible — content never depends on JS. */
+  .js .scroll-reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms ease, transform 600ms ease; }
+  .js .scroll-reveal.is-visible { opacity: 1; transform: translateY(0); }
   a.bg-amber-500 { transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease; }
   a.bg-amber-500:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgb(245 158 11 / 0.22); }
   a.bg-amber-500:active { transform: translateY(1px) scale(0.985); }
   @keyframes mascot-bob { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-7px) rotate(1deg); } }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .mascot-float, .scroll-reveal { animation: none; transition: none; }
-    .scroll-reveal { opacity: 1; transform: none; }
+    .mascot-float, .js .scroll-reveal { animation: none; transition: none; }
+    /* Reduced-motion users always get fully visible content, JS or not. */
+    .scroll-reveal, .js .scroll-reveal { opacity: 1; transform: none; }
     .product-card, a.bg-amber-500 { transition: none; }
   }
 }
