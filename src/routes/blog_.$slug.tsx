@@ -3,7 +3,7 @@ import { BLOG_ARTICLES, getBlogArticle } from "~/lib/blog-content";
 import { renderBlogMarkdown } from "~/lib/blog-markdown";
 import { BlogFooter, BlogHeader } from "./blog";
 
-export const Route = createFileRoute("/blog/$slug")({
+export const Route = createFileRoute("/blog_/$slug")({
   loader: ({ params }) => getBlogArticle(params.slug),
   head: ({ loaderData, params }) => {
     const article = loaderData ?? getBlogArticle(params.slug);
