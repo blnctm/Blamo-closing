@@ -8,7 +8,7 @@ export const Route = createFileRoute("/blog")({
     { property: "og:title", content: "Automotive Sales Training Tips | Blamo Closing Blog" },
     { property: "og:description", content: "Practical automotive sales tips, objection-handling scripts, and dealership training advice from Blamo Closing." },
     { property: "og:type", content: "website" }, { property: "og:url", content: "https://blamoclosing.com/blog" },
-  ], links: matches.some((match) => match.routeId === "/blog/$slug") ? [] : [{ rel: "canonical", href: "https://blamoclosing.com/blog" }] }),
+  ], links: matches.some((match) => match.routeId === "/blog_/$slug") ? [] : [{ rel: "canonical", href: "https://blamoclosing.com/blog" }] }),
   component: BlogIndex,
 });
 
